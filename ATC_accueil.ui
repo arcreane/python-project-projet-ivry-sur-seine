@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>796</width>
-    <height>644</height>
+    <width>861</width>
+    <height>681</height>
    </rect>
   </property>
   <property name="acceptDrops">
@@ -116,7 +116,7 @@
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap>image/carte_france_test.png</pixmap>
+      <pixmap>image/MAP_france.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -358,7 +358,7 @@ color: black;
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>796</width>
+     <width>861</width>
      <height>33</height>
     </rect>
    </property>
