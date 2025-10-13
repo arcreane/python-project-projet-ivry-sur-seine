@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>ATC_paris</class>
- <widget class="QMainWindow" name="ATC_paris">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>863</width>
-    <height>634</height>
+    <width>861</width>
+    <height>639</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -29,7 +29,7 @@
     <property name="frameShadow">
      <enum>QFrame::Shadow::Raised</enum>
     </property>
-    <widget class="QLabel" name="txt_titre">
+    <widget class="QLabel" name="txt_titre_2">
      <property name="geometry">
       <rect>
        <x>0</x>
@@ -49,7 +49,234 @@
       <string notr="true"/>
      </property>
      <property name="text">
-      <string>Paris LFFF</string>
+      <string>Reims LFEE</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignmentFlag::AlignCenter</set>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QFrame" name="frame_stat">
+    <property name="geometry">
+     <rect>
+      <x>620</x>
+      <y>60</y>
+      <width>241</width>
+      <height>391</height>
+     </rect>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::Shape::StyledPanel</enum>
+    </property>
+    <property name="frameShadow">
+     <enum>QFrame::Shadow::Raised</enum>
+    </property>
+    <widget class="QLabel" name="txt_direction_2">
+     <property name="geometry">
+      <rect>
+       <x>100</x>
+       <y>20</y>
+       <width>49</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Heading :</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignmentFlag::AlignCenter</set>
+     </property>
+    </widget>
+    <widget class="QLabel" name="txt_direction_variable_2">
+     <property name="geometry">
+      <rect>
+       <x>100</x>
+       <y>40</y>
+       <width>49</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>XXX</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignmentFlag::AlignCenter</set>
+     </property>
+    </widget>
+    <widget class="QLabel" name="img_cercle_2">
+     <property name="geometry">
+      <rect>
+       <x>80</x>
+       <y>80</y>
+       <width>91</width>
+       <height>91</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="pixmap">
+      <pixmap>image/cercle.png</pixmap>
+     </property>
+     <property name="scaledContents">
+      <bool>true</bool>
+     </property>
+    </widget>
+    <widget class="QLabel" name="txt_nord_2">
+     <property name="geometry">
+      <rect>
+       <x>100</x>
+       <y>60</y>
+       <width>49</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>N</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignmentFlag::AlignCenter</set>
+     </property>
+    </widget>
+    <widget class="QLabel" name="txt_est_2">
+     <property name="geometry">
+      <rect>
+       <x>160</x>
+       <y>120</y>
+       <width>49</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>E</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignmentFlag::AlignCenter</set>
+     </property>
+    </widget>
+    <widget class="QLabel" name="txt_sud_2">
+     <property name="geometry">
+      <rect>
+       <x>100</x>
+       <y>170</y>
+       <width>49</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>S</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignmentFlag::AlignCenter</set>
+     </property>
+    </widget>
+    <widget class="QLabel" name="txt_ouest_2">
+     <property name="geometry">
+      <rect>
+       <x>40</x>
+       <y>120</y>
+       <width>49</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>O</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignmentFlag::AlignCenter</set>
+     </property>
+    </widget>
+    <widget class="QLabel" name="txt_altitude_2">
+     <property name="geometry">
+      <rect>
+       <x>100</x>
+       <y>200</y>
+       <width>49</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Altitude :</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignmentFlag::AlignCenter</set>
+     </property>
+    </widget>
+    <widget class="QLabel" name="txt_altitude_variable_2">
+     <property name="geometry">
+      <rect>
+       <x>100</x>
+       <y>220</y>
+       <width>49</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>XXXXX ft</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignmentFlag::AlignCenter</set>
+     </property>
+    </widget>
+    <widget class="QLabel" name="txt_vitesse_2">
+     <property name="geometry">
+      <rect>
+       <x>100</x>
+       <y>260</y>
+       <width>49</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Vitesse :</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignmentFlag::AlignCenter</set>
+     </property>
+    </widget>
+    <widget class="QLabel" name="txt_vitessev_2">
+     <property name="geometry">
+      <rect>
+       <x>80</x>
+       <y>320</y>
+       <width>101</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Vitesse Verticale :</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignmentFlag::AlignCenter</set>
+     </property>
+    </widget>
+    <widget class="QLabel" name="txt_vitesse_variable_2">
+     <property name="geometry">
+      <rect>
+       <x>100</x>
+       <y>280</y>
+       <width>49</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>XXX kts</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignmentFlag::AlignCenter</set>
+     </property>
+    </widget>
+    <widget class="QLabel" name="txt_vitessev_variable_2">
+     <property name="geometry">
+      <rect>
+       <x>90</x>
+       <y>340</y>
+       <width>81</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>+-XXXX ft/min</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignmentFlag::AlignCenter</set>
@@ -71,13 +298,13 @@
     <property name="frameShadow">
      <enum>QFrame::Shadow::Raised</enum>
     </property>
-    <widget class="QLabel" name="label_5">
+    <widget class="QLabel" name="label_6">
      <property name="geometry">
       <rect>
-       <x>-60</x>
-       <y>70</y>
-       <width>871</width>
-       <height>781</height>
+       <x>-240</x>
+       <y>-20</y>
+       <width>831</width>
+       <height>791</height>
       </rect>
      </property>
      <property name="text">
@@ -87,17 +314,17 @@
       <pixmap>image/MAP_france_2.png</pixmap>
      </property>
     </widget>
-    <widget class="QFrame" name="frame_10">
+    <widget class="QFrame" name="frame_11">
      <property name="geometry">
       <rect>
-       <x>170</x>
-       <y>0</y>
-       <width>291</width>
-       <height>391</height>
+       <x>290</x>
+       <y>80</y>
+       <width>171</width>
+       <height>261</height>
       </rect>
      </property>
      <property name="styleSheet">
-      <string notr="true">background-color: rgba(0,0,100, 10);
+      <string notr="true">background-color: rgba(204,0,204, 10);
 </string>
      </property>
      <property name="frameShape">
@@ -105,6 +332,91 @@
      </property>
      <property name="frameShadow">
       <enum>QFrame::Shadow::Raised</enum>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QFrame" name="frame_boutons">
+    <property name="geometry">
+     <rect>
+      <x>620</x>
+      <y>450</y>
+      <width>241</width>
+      <height>131</height>
+     </rect>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::Shape::StyledPanel</enum>
+    </property>
+    <property name="frameShadow">
+     <enum>QFrame::Shadow::Raised</enum>
+    </property>
+    <widget class="QPushButton" name="btn_accueil_2">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>30</y>
+       <width>61</width>
+       <height>61</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset>
+       <normaloff>image/accueil.png</normaloff>image/accueil.png</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>32</width>
+       <height>32</height>
+      </size>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="btn_parametres_2">
+     <property name="geometry">
+      <rect>
+       <x>90</x>
+       <y>30</y>
+       <width>61</width>
+       <height>61</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset>
+       <normaloff>image/parametres.png</normaloff>image/parametres.png</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>32</width>
+       <height>32</height>
+      </size>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="btn_sortie_2">
+     <property name="geometry">
+      <rect>
+       <x>170</x>
+       <y>30</y>
+       <width>61</width>
+       <height>61</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset>
+       <normaloff>image/sortie.png</normaloff>image/sortie.png</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>32</width>
+       <height>32</height>
+      </size>
      </property>
     </widget>
    </widget>
@@ -123,7 +435,7 @@
     <property name="frameShadow">
      <enum>QFrame::Shadow::Raised</enum>
     </property>
-    <widget class="QFrame" name="frame">
+    <widget class="QFrame" name="frame_12">
      <property name="geometry">
       <rect>
        <x>0</x>
@@ -138,7 +450,7 @@
      <property name="frameShadow">
       <enum>QFrame::Shadow::Raised</enum>
      </property>
-     <widget class="QLabel" name="label">
+     <widget class="QLabel" name="label_7">
       <property name="geometry">
        <rect>
         <x>10</x>
@@ -154,7 +466,7 @@
        <set>Qt::AlignmentFlag::AlignCenter</set>
       </property>
      </widget>
-     <widget class="Line" name="line">
+     <widget class="Line" name="line_2">
       <property name="geometry">
        <rect>
         <x>0</x>
@@ -167,7 +479,7 @@
        <enum>Qt::Orientation::Horizontal</enum>
       </property>
      </widget>
-     <widget class="QLabel" name="label_2">
+     <widget class="QLabel" name="label_8">
       <property name="geometry">
        <rect>
         <x>0</x>
@@ -192,7 +504,7 @@
       </property>
      </widget>
     </widget>
-    <widget class="QFrame" name="frame_2">
+    <widget class="QFrame" name="frame_13">
      <property name="geometry">
       <rect>
        <x>70</x>
@@ -207,7 +519,7 @@
      <property name="frameShadow">
       <enum>QFrame::Shadow::Raised</enum>
      </property>
-     <widget class="QLabel" name="label_3">
+     <widget class="QLabel" name="label_23">
       <property name="geometry">
        <rect>
         <x>10</x>
@@ -223,7 +535,7 @@
        <set>Qt::AlignmentFlag::AlignCenter</set>
       </property>
      </widget>
-     <widget class="Line" name="line_3">
+     <widget class="Line" name="line_4">
       <property name="geometry">
        <rect>
         <x>0</x>
@@ -236,7 +548,7 @@
        <enum>Qt::Orientation::Horizontal</enum>
       </property>
      </widget>
-     <widget class="QLabel" name="label_4">
+     <widget class="QLabel" name="label_24">
       <property name="geometry">
        <rect>
         <x>0</x>
@@ -261,7 +573,7 @@
       </property>
      </widget>
     </widget>
-    <widget class="QFrame" name="frame_3">
+    <widget class="QFrame" name="frame_14">
      <property name="geometry">
       <rect>
        <x>140</x>
@@ -276,7 +588,7 @@
      <property name="frameShadow">
       <enum>QFrame::Shadow::Raised</enum>
      </property>
-     <widget class="Line" name="line_7">
+     <widget class="Line" name="line_10">
       <property name="geometry">
        <rect>
         <x>0</x>
@@ -289,7 +601,7 @@
        <enum>Qt::Orientation::Horizontal</enum>
       </property>
      </widget>
-     <widget class="QLabel" name="label_10">
+     <widget class="QLabel" name="label_25">
       <property name="geometry">
        <rect>
         <x>0</x>
@@ -313,7 +625,7 @@
        <bool>true</bool>
       </property>
      </widget>
-     <widget class="QLabel" name="label_9">
+     <widget class="QLabel" name="label_26">
       <property name="geometry">
        <rect>
         <x>-40</x>
@@ -330,7 +642,7 @@
       </property>
      </widget>
     </widget>
-    <widget class="QFrame" name="frame_5">
+    <widget class="QFrame" name="frame_15">
      <property name="geometry">
       <rect>
        <x>340</x>
@@ -345,7 +657,7 @@
      <property name="frameShadow">
       <enum>QFrame::Shadow::Raised</enum>
      </property>
-     <widget class="QLabel" name="label_15">
+     <widget class="QLabel" name="label_27">
       <property name="geometry">
        <rect>
         <x>10</x>
@@ -361,7 +673,7 @@
        <set>Qt::AlignmentFlag::AlignCenter</set>
       </property>
      </widget>
-     <widget class="Line" name="line_11">
+     <widget class="Line" name="line_15">
       <property name="geometry">
        <rect>
         <x>0</x>
@@ -374,7 +686,7 @@
        <enum>Qt::Orientation::Horizontal</enum>
       </property>
      </widget>
-     <widget class="QLabel" name="label_16">
+     <widget class="QLabel" name="label_28">
       <property name="geometry">
        <rect>
         <x>0</x>
@@ -399,7 +711,7 @@
       </property>
      </widget>
     </widget>
-    <widget class="QFrame" name="frame_6">
+    <widget class="QFrame" name="frame_16">
      <property name="geometry">
       <rect>
        <x>410</x>
@@ -414,7 +726,7 @@
      <property name="frameShadow">
       <enum>QFrame::Shadow::Raised</enum>
      </property>
-     <widget class="QLabel" name="label_17">
+     <widget class="QLabel" name="label_29">
       <property name="geometry">
        <rect>
         <x>10</x>
@@ -430,7 +742,7 @@
        <set>Qt::AlignmentFlag::AlignCenter</set>
       </property>
      </widget>
-     <widget class="Line" name="line_12">
+     <widget class="Line" name="line_16">
       <property name="geometry">
        <rect>
         <x>0</x>
@@ -443,7 +755,7 @@
        <enum>Qt::Orientation::Horizontal</enum>
       </property>
      </widget>
-     <widget class="QLabel" name="label_18">
+     <widget class="QLabel" name="label_30">
       <property name="geometry">
        <rect>
         <x>0</x>
@@ -468,7 +780,7 @@
       </property>
      </widget>
     </widget>
-    <widget class="QFrame" name="frame_7">
+    <widget class="QFrame" name="frame_17">
      <property name="geometry">
       <rect>
        <x>480</x>
@@ -483,7 +795,7 @@
      <property name="frameShadow">
       <enum>QFrame::Shadow::Raised</enum>
      </property>
-     <widget class="QLabel" name="label_19">
+     <widget class="QLabel" name="label_31">
       <property name="geometry">
        <rect>
         <x>10</x>
@@ -499,7 +811,7 @@
        <set>Qt::AlignmentFlag::AlignCenter</set>
       </property>
      </widget>
-     <widget class="Line" name="line_13">
+     <widget class="Line" name="line_17">
       <property name="geometry">
        <rect>
         <x>0</x>
@@ -512,7 +824,7 @@
        <enum>Qt::Orientation::Horizontal</enum>
       </property>
      </widget>
-     <widget class="QLabel" name="label_20">
+     <widget class="QLabel" name="label_32">
       <property name="geometry">
        <rect>
         <x>0</x>
@@ -537,7 +849,7 @@
       </property>
      </widget>
     </widget>
-    <widget class="QFrame" name="frame_8">
+    <widget class="QFrame" name="frame_18">
      <property name="geometry">
       <rect>
        <x>550</x>
@@ -552,7 +864,7 @@
      <property name="frameShadow">
       <enum>QFrame::Shadow::Raised</enum>
      </property>
-     <widget class="QLabel" name="label_21">
+     <widget class="QLabel" name="label_33">
       <property name="geometry">
        <rect>
         <x>10</x>
@@ -568,7 +880,7 @@
        <set>Qt::AlignmentFlag::AlignCenter</set>
       </property>
      </widget>
-     <widget class="Line" name="line_14">
+     <widget class="Line" name="line_18">
       <property name="geometry">
        <rect>
         <x>0</x>
@@ -581,7 +893,7 @@
        <enum>Qt::Orientation::Horizontal</enum>
       </property>
      </widget>
-     <widget class="QLabel" name="label_22">
+     <widget class="QLabel" name="label_34">
       <property name="geometry">
        <rect>
         <x>0</x>
@@ -606,7 +918,7 @@
       </property>
      </widget>
     </widget>
-    <widget class="QFrame" name="frame_4">
+    <widget class="QFrame" name="frame_19">
      <property name="geometry">
       <rect>
        <x>210</x>
@@ -621,7 +933,7 @@
      <property name="frameShadow">
       <enum>QFrame::Shadow::Raised</enum>
      </property>
-     <widget class="QLabel" name="label_11">
+     <widget class="QLabel" name="label_35">
       <property name="geometry">
        <rect>
         <x>10</x>
@@ -637,7 +949,7 @@
        <set>Qt::AlignmentFlag::AlignCenter</set>
       </property>
      </widget>
-     <widget class="Line" name="line_8">
+     <widget class="Line" name="line_19">
       <property name="geometry">
        <rect>
         <x>0</x>
@@ -650,7 +962,7 @@
        <enum>Qt::Orientation::Horizontal</enum>
       </property>
      </widget>
-     <widget class="QLabel" name="label_12">
+     <widget class="QLabel" name="label_36">
       <property name="geometry">
        <rect>
         <x>0</x>
@@ -675,7 +987,7 @@
       </property>
      </widget>
     </widget>
-    <widget class="QFrame" name="frame_9">
+    <widget class="QFrame" name="frame_20">
      <property name="geometry">
       <rect>
        <x>280</x>
@@ -690,7 +1002,7 @@
      <property name="frameShadow">
       <enum>QFrame::Shadow::Raised</enum>
      </property>
-     <widget class="QLabel" name="label_13">
+     <widget class="QLabel" name="label_37">
       <property name="geometry">
        <rect>
         <x>0</x>
@@ -706,7 +1018,7 @@
        <set>Qt::AlignmentFlag::AlignCenter</set>
       </property>
      </widget>
-     <widget class="Line" name="line_9">
+     <widget class="Line" name="line_20">
       <property name="geometry">
        <rect>
         <x>0</x>
@@ -719,7 +1031,7 @@
        <enum>Qt::Orientation::Horizontal</enum>
       </property>
      </widget>
-     <widget class="QLabel" name="label_14">
+     <widget class="QLabel" name="label_38">
       <property name="geometry">
        <rect>
         <x>0</x>
@@ -745,325 +1057,13 @@
      </widget>
     </widget>
    </widget>
-   <widget class="QFrame" name="frame_boutons">
-    <property name="geometry">
-     <rect>
-      <x>620</x>
-      <y>450</y>
-      <width>241</width>
-      <height>131</height>
-     </rect>
-    </property>
-    <property name="frameShape">
-     <enum>QFrame::Shape::StyledPanel</enum>
-    </property>
-    <property name="frameShadow">
-     <enum>QFrame::Shadow::Raised</enum>
-    </property>
-    <widget class="QPushButton" name="btn_accueil">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>30</y>
-       <width>61</width>
-       <height>61</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string/>
-     </property>
-     <property name="icon">
-      <iconset>
-       <normaloff>image/accueil.png</normaloff>image/accueil.png</iconset>
-     </property>
-     <property name="iconSize">
-      <size>
-       <width>32</width>
-       <height>32</height>
-      </size>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="btn_parametres">
-     <property name="geometry">
-      <rect>
-       <x>90</x>
-       <y>30</y>
-       <width>61</width>
-       <height>61</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string/>
-     </property>
-     <property name="icon">
-      <iconset>
-       <normaloff>image/parametres.png</normaloff>image/parametres.png</iconset>
-     </property>
-     <property name="iconSize">
-      <size>
-       <width>32</width>
-       <height>32</height>
-      </size>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="btn_sortie">
-     <property name="geometry">
-      <rect>
-       <x>170</x>
-       <y>30</y>
-       <width>61</width>
-       <height>61</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string/>
-     </property>
-     <property name="icon">
-      <iconset>
-       <normaloff>image/sortie.png</normaloff>image/sortie.png</iconset>
-     </property>
-     <property name="iconSize">
-      <size>
-       <width>32</width>
-       <height>32</height>
-      </size>
-     </property>
-    </widget>
-   </widget>
-   <widget class="QFrame" name="frame_stat">
-    <property name="geometry">
-     <rect>
-      <x>620</x>
-      <y>60</y>
-      <width>241</width>
-      <height>391</height>
-     </rect>
-    </property>
-    <property name="frameShape">
-     <enum>QFrame::Shape::StyledPanel</enum>
-    </property>
-    <property name="frameShadow">
-     <enum>QFrame::Shadow::Raised</enum>
-    </property>
-    <widget class="QLabel" name="txt_direction">
-     <property name="geometry">
-      <rect>
-       <x>100</x>
-       <y>20</y>
-       <width>49</width>
-       <height>16</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Heading :</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignmentFlag::AlignCenter</set>
-     </property>
-    </widget>
-    <widget class="QLabel" name="txt_direction_variable">
-     <property name="geometry">
-      <rect>
-       <x>100</x>
-       <y>40</y>
-       <width>49</width>
-       <height>16</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>XXX</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignmentFlag::AlignCenter</set>
-     </property>
-    </widget>
-    <widget class="QLabel" name="img_cercle">
-     <property name="geometry">
-      <rect>
-       <x>80</x>
-       <y>80</y>
-       <width>91</width>
-       <height>91</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string/>
-     </property>
-     <property name="pixmap">
-      <pixmap>image/cercle.png</pixmap>
-     </property>
-     <property name="scaledContents">
-      <bool>true</bool>
-     </property>
-    </widget>
-    <widget class="QLabel" name="txt_nord">
-     <property name="geometry">
-      <rect>
-       <x>100</x>
-       <y>60</y>
-       <width>49</width>
-       <height>16</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>N</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignmentFlag::AlignCenter</set>
-     </property>
-    </widget>
-    <widget class="QLabel" name="txt_est">
-     <property name="geometry">
-      <rect>
-       <x>160</x>
-       <y>120</y>
-       <width>49</width>
-       <height>16</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>E</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignmentFlag::AlignCenter</set>
-     </property>
-    </widget>
-    <widget class="QLabel" name="txt_sud">
-     <property name="geometry">
-      <rect>
-       <x>100</x>
-       <y>170</y>
-       <width>49</width>
-       <height>16</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>S</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignmentFlag::AlignCenter</set>
-     </property>
-    </widget>
-    <widget class="QLabel" name="txt_ouest">
-     <property name="geometry">
-      <rect>
-       <x>40</x>
-       <y>120</y>
-       <width>49</width>
-       <height>16</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>O</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignmentFlag::AlignCenter</set>
-     </property>
-    </widget>
-    <widget class="QLabel" name="txt_altitude">
-     <property name="geometry">
-      <rect>
-       <x>100</x>
-       <y>200</y>
-       <width>49</width>
-       <height>16</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Altitude :</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignmentFlag::AlignCenter</set>
-     </property>
-    </widget>
-    <widget class="QLabel" name="txt_altitude_variable">
-     <property name="geometry">
-      <rect>
-       <x>100</x>
-       <y>220</y>
-       <width>49</width>
-       <height>16</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>XXXXX ft</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignmentFlag::AlignCenter</set>
-     </property>
-    </widget>
-    <widget class="QLabel" name="txt_vitesse">
-     <property name="geometry">
-      <rect>
-       <x>100</x>
-       <y>260</y>
-       <width>49</width>
-       <height>16</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Vitesse :</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignmentFlag::AlignCenter</set>
-     </property>
-    </widget>
-    <widget class="QLabel" name="txt_vitessev">
-     <property name="geometry">
-      <rect>
-       <x>80</x>
-       <y>320</y>
-       <width>101</width>
-       <height>16</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Vitesse Verticale :</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignmentFlag::AlignCenter</set>
-     </property>
-    </widget>
-    <widget class="QLabel" name="txt_vitesse_variable">
-     <property name="geometry">
-      <rect>
-       <x>100</x>
-       <y>280</y>
-       <width>49</width>
-       <height>16</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>XXX kts</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignmentFlag::AlignCenter</set>
-     </property>
-    </widget>
-    <widget class="QLabel" name="txt_vitessev_variable">
-     <property name="geometry">
-      <rect>
-       <x>90</x>
-       <y>340</y>
-       <width>81</width>
-       <height>16</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>+-XXXX ft/min</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignmentFlag::AlignCenter</set>
-     </property>
-    </widget>
-   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>863</width>
+     <width>861</width>
      <height>33</height>
     </rect>
    </property>
