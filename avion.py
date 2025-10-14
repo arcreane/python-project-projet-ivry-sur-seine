@@ -46,7 +46,7 @@ class avion:
     def exit(self):
         pass
 
-    def __str__(self):
+    def __del__(self):
         avion.nb_avion -= 1
 
 
