@@ -1,3 +1,5 @@
+import re
+
 class avion:
 
     nb_avion = 0
@@ -25,24 +27,24 @@ class avion:
         avion.nb_avion += 1
 
     def horizontal(self):
-
+        pass
     def vertical(self):
-
+        pass
     def comm_tx(self):
-
+        pass
     def comm_rx(self, receveid):
         if "climb" or "descend" in receveid:
-
+            pass
         elif "turn left" or "turn right" in receveid:
-
+            pass
         elif "accelerate" or "decelerate" in receveid:
-
+            pass
         elif "increase" or "decrease" in receveid:
-
+            pass
         elif "contact" in receveid:
-
+            pass
     def exit(self):
-
+        pass
 
     def __str__(self):
         avion.nb_avion -= 1
