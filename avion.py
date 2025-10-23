@@ -134,5 +134,8 @@ if __name__ == '__main__':
         print(f'VS: {Test.vs}\n')
         print(f'Pos: {Test.pos}\n')
         print(f'Alt: {Test.alt}')
+        print(f'Nb avion : {Avion.nb_avion}')
+        Test.__del__()
+        print(f'Nb avion : {Avion.nb_avion}')
 
     test()
