@@ -32,6 +32,8 @@ class Ui_ATC_accueil(object):
         self.centralwidget.setObjectName(u"centralwidget")
         self.horizontalLayout_3 = QHBoxLayout(self.centralwidget)
         self.horizontalLayout_3.setObjectName(u"horizontalLayout_3")
+
+        #_______________________________________________________________________________________
         self.frame_carte = QFrame(self.centralwidget)
         self.frame_carte.setObjectName(u"frame_carte")
         sizePolicy = QSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Preferred)
@@ -42,6 +44,8 @@ class Ui_ATC_accueil(object):
         self.frame_carte.setMinimumSize(QSize(561, 531))
         self.frame_carte.setFrameShape(QFrame.Shape.StyledPanel)
         self.frame_carte.setFrameShadow(QFrame.Shadow.Raised)
+
+        #______________________________________________________________________________________
         self.carte_france = QLabel(self.frame_carte)
         self.carte_france.setObjectName(u"carte_france")
         self.carte_france.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
@@ -54,8 +58,14 @@ class Ui_ATC_accueil(object):
         sizePolicy1.setHeightForWidth(self.carte_france.sizePolicy().hasHeightForWidth())
         self.carte_france.setSizePolicy(sizePolicy1)
         self.carte_france.setPixmap(QPixmap(u"image/MAP_france.png"))
-        self.carte_france.setScaledContents(True)
+        self.carte_france.setScaledContents(False)
         self.carte_france.setWordWrap(False)
+
+
+
+
+
+        #_______________________________________________________________________________
         self.ATC_brestlfrr = QPushButton(self.frame_carte)
         self.ATC_brestlfrr.setObjectName(u"ATC_brestlfrr")
         self.ATC_brestlfrr.setGeometry(QRect(32, 60, 161, 171))
@@ -78,6 +88,9 @@ class Ui_ATC_accueil(object):
 "QPushButton{\n"
 "color: black;\n"
 "}")
+
+
+        #_________________________________________________________________________
         self.ATC_parislfff = QPushButton(self.frame_carte)
         self.ATC_parislfff.setObjectName(u"ATC_parislfff")
         self.ATC_parislfff.setGeometry(QRect(192, 20, 181, 211))
@@ -97,6 +110,9 @@ class Ui_ATC_accueil(object):
 "QPushButton{\n"
 "color: black;\n"
 "}")
+
+
+        #____________________________________________________________________________
         self.ATC_reimslfee = QPushButton(self.frame_carte)
         self.ATC_reimslfee.setObjectName(u"ATC_reimslfee")
         self.ATC_reimslfee.setGeometry(QRect(372, 100, 111, 131))
@@ -115,6 +131,10 @@ class Ui_ATC_accueil(object):
 "QPushButton{\n"
 "color: black;\n"
 "}")
+
+
+
+        #___________________________________________________________________________________
         self.ATC_marseillelfmm = QPushButton(self.frame_carte)
         self.ATC_marseillelfmm.setObjectName(u"ATC_marseillelfmm")
         self.ATC_marseillelfmm.setGeometry(QRect(300, 230, 171, 281))
@@ -133,6 +153,10 @@ class Ui_ATC_accueil(object):
 "QPushButton{\n"
 "color: black;\n"
 "}")
+
+
+
+        #__________________________________________________________________________________
         self.ATC_bordeauxlfbb = QPushButton(self.frame_carte)
         self.ATC_bordeauxlfbb.setObjectName(u"ATC_bordeauxlfbb")
         self.ATC_bordeauxlfbb.setGeometry(QRect(110, 230, 191, 231))
@@ -289,12 +313,3 @@ class Ui_ATC_accueil(object):
         self.btn_sortie.setText("")
     # retranslateUi
 
-if __name__ == "__main__":   # test pour ouvrir la fenetre
-    import sys
-    from PySide6.QtWidgets import QApplication, QMainWindow
-    app = QApplication(sys.argv)
-    MainWindow = QMainWindow()
-    ui = Ui_ATC_accueil()  # instancie ton interface
-    ui.setupUi(MainWindow)  # applique-la à ta QMainWindow
-    MainWindow.show()  # affiche la fenêtre
-    sys.exit(app.exec_())

@@ -1,13 +1,16 @@
+
+
+#___________________________________________________________________________
 import sys
 from PySide6.QtWidgets import QApplication, QMainWindow
 from ATC_accueil import Ui_ATC_accueil  #import de la main window
-#_________________________________________________________________
+#___________________________________________________________________________
 from ATC_paris import Ui_ATC_paris  # import de la window paris
 from ATC_reims import Ui_ATC_reims# import de la window reims
 from ATC_brest import Ui_ATC_brest# import de la window brest
 from ATC_bordeaux import Ui_ATC_bordeaux# import de la window bordeaux
 from ATC_marseille import Ui_ATC_marseille# import de la window marseille
-#_________________________________________________________________________
+#___________________________________________________________________________
 from PySide6.QtWidgets import QApplication
 
 
@@ -133,7 +136,7 @@ class ATC_marseillelfmm(QMainWindow, Ui_ATC_marseille):       #def de la page pa
         self.accueil.show()     #ouvre la fenetre
         self.close()       # permet de refermer la fenetre
 
-
+#__________________________________________________________
 
 if __name__ == "__main__":   # lance par defaut la fenetre accueil
     app = QApplication(sys.argv)
