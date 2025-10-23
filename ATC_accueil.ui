@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>858</width>
-    <height>603</height>
+    <width>891</width>
+    <height>582</height>
    </rect>
   </property>
   <property name="acceptDrops">
@@ -33,7 +33,7 @@
     <item>
      <widget class="QFrame" name="frame_carte">
       <property name="sizePolicy">
-       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
         <horstretch>0</horstretch>
         <verstretch>0</verstretch>
        </sizepolicy>
@@ -278,7 +278,7 @@ color: black;
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_3">
        <item>
-        <widget class="QFrame" name="frame_2">
+        <widget class="QFrame" name="frame_titre_et_txt">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
            <horstretch>0</horstretch>
@@ -286,7 +286,7 @@ color: black;
           </sizepolicy>
          </property>
          <property name="frameShape">
-          <enum>QFrame::Shape::StyledPanel</enum>
+          <enum>QFrame::Shape::NoFrame</enum>
          </property>
          <property name="frameShadow">
           <enum>QFrame::Shadow::Raised</enum>
@@ -301,7 +301,7 @@ color: black;
              </sizepolicy>
             </property>
             <property name="frameShape">
-             <enum>QFrame::Shape::StyledPanel</enum>
+             <enum>QFrame::Shape::Box</enum>
             </property>
             <property name="frameShadow">
              <enum>QFrame::Shadow::Raised</enum>
@@ -337,7 +337,7 @@ color: black;
            </widget>
           </item>
           <item>
-           <widget class="QFrame" name="frame">
+           <widget class="QFrame" name="frame_txt">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
               <horstretch>0</horstretch>
@@ -379,7 +379,7 @@ color: black;
         </widget>
        </item>
        <item>
-        <layout class="QHBoxLayout" name="horizontalLayout">
+        <layout class="QHBoxLayout" name="layout_btn">
          <property name="sizeConstraint">
           <enum>QLayout::SizeConstraint::SetFixedSize</enum>
          </property>
@@ -449,7 +449,7 @@ color: black;
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>858</width>
+     <width>891</width>
      <height>33</height>
     </rect>
    </property>
