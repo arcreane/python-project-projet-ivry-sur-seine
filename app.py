@@ -1,14 +1,14 @@
 import sys
 from PySide6.QtWidgets import QApplication, QMainWindow
 from ATC_accueil import Ui_ATC_accueil  #import de la main window
+#_________________________________________________________________
 from ATC_paris import Ui_ATC_paris  # import de la window paris
-from ATC_reims import Ui_ATC_reims
-from ATC_brest import Ui_ATC_brest
-from ATC_bordeaux import Ui_ATC_bordeaux
-from ATC_marseille import Ui_ATC_marseille
-
-
-
+from ATC_reims import Ui_ATC_reims# import de la window reims
+from ATC_brest import Ui_ATC_brest# import de la window brest
+from ATC_bordeaux import Ui_ATC_bordeaux# import de la window bordeaux
+from ATC_marseille import Ui_ATC_marseille# import de la window marseille
+#_________________________________________________________________________
+from PySide6.QtWidgets import QApplication
 
 
 #_________________________________________________________
@@ -33,6 +33,8 @@ class ATC_accueil(QMainWindow, Ui_ATC_accueil):          #def de la page accueil
         #_____________________________brest
         self.ATC_brestlfrr.clicked.connect(self.ouvrir_brest)  # déclenchement du bouton et ouvre brest
         self.fenetre_brest = None
+        #______________________________btn_sorti
+        self.btn_sortie.clicked.connect(QApplication.quit)
 
     def ouvrir_paris(self):           #fonction qui ouvre paris
         self.fenetre_paris = ATC_parislfff()
@@ -67,6 +69,7 @@ class ATC_parislfff(QMainWindow, Ui_ATC_paris):       #def de la page paris
         self.setupUi(self)
         self.setWindowTitle("ATC_parisfLFFF") #titre de la page
         self.btn_accueil.clicked.connect(self.retour_accueil)   #declenchement du bouton et ouvre la page daccueil
+        self.btn_sortie.clicked.connect(QApplication.quit)
 
     def retour_accueil(self):        #fonction btn_accueil
         from app import ATC_accueil
@@ -80,6 +83,7 @@ class ATC_reimslfee(QMainWindow, Ui_ATC_reims):       #def de la page paris
         self.setupUi(self)
         self.setWindowTitle("ATC_reimsLFEE") #titre de la page
         self.btn_accueil.clicked.connect(self.retour_accueil)   #declenchement du bouton et ouvre la page daccueil
+        self.btn_sortie.clicked.connect(QApplication.quit)
 
     def retour_accueil(self):        #fonction btn_accueil
         from app import ATC_accueil
@@ -93,6 +97,7 @@ class ATC_brestlfrr(QMainWindow, Ui_ATC_brest):       #def de la page paris
         self.setupUi(self)
         self.setWindowTitle("ATC_brestLFRR") #titre de la page
         self.btn_accueil.clicked.connect(self.retour_accueil)   #declenchement du bouton et ouvre la page daccueil
+        self.btn_sortie.clicked.connect(QApplication.quit)
 
     def retour_accueil(self):        #fonction btn_accueil
         from app import ATC_accueil
@@ -106,6 +111,7 @@ class ATC_bordeauxlfbb(QMainWindow, Ui_ATC_bordeaux):       #def de la page pari
         self.setupUi(self)
         self.setWindowTitle("ATC_bordeauxLFBB") #titre de la page
         self.btn_accueil.clicked.connect(self.retour_accueil)   #declenchement du bouton et ouvre la page daccueil
+        self.btn_sortie.clicked.connect(QApplication.quit)
 
     def retour_accueil(self):        #fonction btn_accueil
         from app import ATC_accueil
@@ -119,6 +125,7 @@ class ATC_marseillelfmm(QMainWindow, Ui_ATC_marseille):       #def de la page pa
         self.setupUi(self)
         self.setWindowTitle("ATC_marseilleLFmm") #titre de la page
         self.btn_accueil.clicked.connect(self.retour_accueil)   #declenchement du bouton et ouvre la page daccueil
+        self.btn_sortie.clicked.connect(QApplication.quit)
 
     def retour_accueil(self):        #fonction btn_accueil
         from app import ATC_accueil
