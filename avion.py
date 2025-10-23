@@ -1,4 +1,4 @@
-from math import sin, cos
+from math import sin, cos, radians, ceil
 
 class Avion:
 
@@ -26,10 +26,10 @@ class Avion:
         Avion.nb_avion += 1
 
     def horizontal_move(self):
-        vx = (self.speed * sin(self.heading) / 3600)
-        vy = (self.speed * cos(self.heading) / 3600)
+        vx = ceil((self.speed * sin(radians(self.heading)) / 3600) * 100)
+        vy = ceil((self.speed * cos(radians(self.heading)) / 3600) * 100)
         self.pos[0] += vx
-        self.pos[0] += vy
+        self.pos[1] += vy
 
 
     def vertical_move(self):
@@ -114,10 +114,25 @@ if __name__ == '__main__':
                  360,
                  1000,
                  53.2,
-                 (5.0, 6.0),
+                 [0.0, 0.0],
                  000,
                  450,
                  0,
                  7.5,
                  32000,
                  )
+
+    def test():
+        Test.consigne = {'alt' : 31850, 'heading' : 3, 'speed' : 455, 'vs' : 150}
+        Test.heading_change()
+        Test.speed_change()
+        Test.vs_change()
+        Test.horizontal_move()
+        Test.vertical_move()
+        print(f'Heading: {Test.heading}\n')
+        print(f'Speed: {Test.speed}\n')
+        print(f'VS: {Test.vs}\n')
+        print(f'Pos: {Test.pos}\n')
+        print(f'Alt: {Test.alt}')
+
+    test()
