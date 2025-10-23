@@ -581,33 +581,17 @@
        <property name="frameShadow">
         <enum>QFrame::Shadow::Raised</enum>
        </property>
-       <widget class="QLabel" name="txt_direction">
+       <widget class="QLabel" name="txt_heading">
         <property name="geometry">
          <rect>
           <x>100</x>
-          <y>20</y>
+          <y>10</y>
           <width>49</width>
           <height>16</height>
          </rect>
         </property>
         <property name="text">
          <string>Heading :</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignmentFlag::AlignCenter</set>
-        </property>
-       </widget>
-       <widget class="QLabel" name="txt_direction_variable">
-        <property name="geometry">
-         <rect>
-          <x>100</x>
-          <y>40</y>
-          <width>49</width>
-          <height>16</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>XXX</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignmentFlag::AlignCenter</set>
@@ -712,17 +696,17 @@
          <set>Qt::AlignmentFlag::AlignCenter</set>
         </property>
        </widget>
-       <widget class="QLabel" name="txt_altitude_variable">
+       <widget class="QLabel" name="unit_altitude">
         <property name="geometry">
          <rect>
-          <x>100</x>
-          <y>220</y>
+          <x>150</x>
+          <y>230</y>
           <width>49</width>
           <height>16</height>
          </rect>
         </property>
         <property name="text">
-         <string>XXXXX ft</string>
+         <string> ft</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignmentFlag::AlignCenter</set>
@@ -744,7 +728,7 @@
          <set>Qt::AlignmentFlag::AlignCenter</set>
         </property>
        </widget>
-       <widget class="QLabel" name="txt_vitessev">
+       <widget class="QLabel" name="txt_vitesse_verticale">
         <property name="geometry">
          <rect>
           <x>80</x>
@@ -760,36 +744,121 @@
          <set>Qt::AlignmentFlag::AlignCenter</set>
         </property>
        </widget>
-       <widget class="QLabel" name="txt_vitesse_variable">
+       <widget class="QLabel" name="unit_vitesse">
         <property name="geometry">
          <rect>
-          <x>100</x>
-          <y>280</y>
+          <x>160</x>
+          <y>290</y>
           <width>49</width>
           <height>16</height>
          </rect>
         </property>
         <property name="text">
-         <string>XXX kts</string>
+         <string>kts</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignmentFlag::AlignCenter</set>
         </property>
        </widget>
-       <widget class="QLabel" name="txt_vitessev_variable">
+       <widget class="QLabel" name="unit_vitesse_verticale">
         <property name="geometry">
          <rect>
-          <x>90</x>
-          <y>340</y>
+          <x>150</x>
+          <y>350</y>
           <width>81</width>
           <height>16</height>
          </rect>
         </property>
         <property name="text">
-         <string>+-XXXX ft/min</string>
+         <string> ft/min</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignmentFlag::AlignCenter</set>
+        </property>
+       </widget>
+       <widget class="QTextEdit" name="txt_altitude_valeur">
+        <property name="geometry">
+         <rect>
+          <x>70</x>
+          <y>220</y>
+          <width>101</width>
+          <height>31</height>
+         </rect>
+        </property>
+       </widget>
+       <widget class="QTextEdit" name="txt_vitesse_valeur">
+        <property name="geometry">
+         <rect>
+          <x>70</x>
+          <y>280</y>
+          <width>104</width>
+          <height>31</height>
+         </rect>
+        </property>
+       </widget>
+       <widget class="QTextEdit" name="txt_vitesse_verticale_valeur">
+        <property name="geometry">
+         <rect>
+          <x>70</x>
+          <y>340</y>
+          <width>104</width>
+          <height>31</height>
+         </rect>
+        </property>
+       </widget>
+       <widget class="QTextEdit" name="txt_heading_valeur">
+        <property name="geometry">
+         <rect>
+          <x>70</x>
+          <y>30</y>
+          <width>104</width>
+          <height>31</height>
+         </rect>
+        </property>
+       </widget>
+       <widget class="QLabel" name="img_icon_avion">
+        <property name="geometry">
+         <rect>
+          <x>90</x>
+          <y>90</y>
+          <width>71</width>
+          <height>61</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="pixmap">
+         <pixmap>image/avion_icon.png</pixmap>
+        </property>
+        <property name="scaledContents">
+         <bool>true</bool>
+        </property>
+       </widget>
+       <widget class="QLabel" name="unit_heading">
+        <property name="geometry">
+         <rect>
+          <x>180</x>
+          <y>30</y>
+          <width>21</width>
+          <height>16</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>°</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="btn_apply">
+        <property name="geometry">
+         <rect>
+          <x>78</x>
+          <y>393</y>
+          <width>91</width>
+          <height>31</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Apply</string>
         </property>
        </widget>
       </widget>
