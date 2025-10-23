@@ -1,58 +1,109 @@
-import re
+from math import sin, cos
 
-class avion:
+class Avion:
 
     nb_avion = 0
 
-    def __init__(self, callsign, phonetic, From, to, type, immat, turb, pax, final_level, sqwk, fuel, pos, heading, speed, vs, freq, conso, alt, route):
+    def __init__(self, callsign, phonetic, from_, to, type_, immat, turb, pax, final_level, sqwk, fuel, pos, heading, speed, vs, conso, alt):
         self.callsign = callsign
         self.phonetic = phonetic
-        self.From = From
+        self.from_ = from_
         self.to = to
-        self.type = type
+        self.type_ = type_
         self.immat = immat
-        self.turb = pax
+        self.turb = turb
+        self.pax = pax
         self.final_level = final_level
         self.sqwk = sqwk
         self.fuel = fuel
         self.pos = pos
-        self.heading = heading
+        self.heading = heading % 360
         self.speed = speed
         self.vs = vs
-        self.freq = freq
         self.conso = conso
         self.alt = alt
-        self.consigne = {'alt' : 0, 'heading' : None, 'speed' : None, 'vs' : None, 'freq' : 122.8}
-        self.route = route
-        avion.nb_avion += 1
+        self.consigne = {'alt' : 0, 'heading' : None, 'speed' : None, 'vs' : None}
+        Avion.nb_avion += 1
 
-    def horizontal(self):
-        pass
-    def vertical(self):
-        pass
-    def comm_tx(self):
-        pass
-    def comm_rx(self, receveid):
-        if "climb" or "descend" in receveid:
-            pass
-        elif "turn left" or "turn right" in receveid:
-            pass
-        elif "accelerate" or "decelerate" in receveid:
-            pass
-        elif "increase" or "decrease" in receveid:
-            pass
-        elif "contact" in receveid:
-            pass
-    def exit(self):
-        pass
+    def horizontal_move(self):
+        vx = (self.speed * sin(self.heading) / 3600)
+        vy = (self.speed * cos(self.heading) / 3600)
+        self.pos[0] += vx
+        self.pos[0] += vy
+
+
+    def vertical_move(self):
+        vs = self.vs / 60
+        delta_alt = self.alt - self.consigne['alt']
+        if  delta_alt < 0:
+            if delta_alt < vs :
+                self.alt += vs
+            else:
+                self.alt = self.consigne['alt']
+        if delta_alt > 0:
+            if delta_alt > vs:
+                self.alt -= vs
+            else:
+                self.alt = self.consigne['alt']
+
+    def heading_change(self):
+        delta_angle = self.consigne['heading'] - self.heading
+        angle_speed = 3
+        if 0 < delta_angle <= 180:
+            if abs(delta_angle) > 3:
+                self.heading += angle_speed
+                self.heading %= 360
+            else:
+                self.heading = self.consigne['heading']
+        elif 360 > delta_angle > 180:
+            if abs(delta_angle) > 3:
+                self.heading -= angle_speed
+                self.heading %= 360
+            else:
+                self.heading = self.consigne['heading']
+        elif delta_angle < 0:
+            if abs(delta_angle) > 3:
+                self.heading += angle_speed
+                self.heading %= 360
+            else:
+                self.heading = self.consigne['heading']
+
+    def speed_change(self):
+        delta_speed = self.speed - self.consigne['speed']
+        if delta_speed < 0:
+            if delta_speed < 5:
+                self.speed += 5
+            else:
+                self.speed = self.consigne['speed']
+        elif delta_speed > 0:
+            if delta_speed > 5:
+                self.speed -= 5
+            else:
+                self.speed = self.consigne['speed']
+
+
+    def vs_change(self):
+        delta_vs = self.vs - self.consigne['vs']
+        if delta_vs < 0:
+            if delta_vs < -150:
+                self.vs += 150
+            else:
+                self.vs = self.consigne['vs']
+        elif delta_vs > 0:
+            if delta_vs > -150:
+                self.vs -= 150
+            else:
+                self.vs = self.consigne['vs']
+
+
 
     def __del__(self):
-        avion.nb_avion -= 1
+        Avion.nb_avion -= 1
 
 
 
 if __name__ == '__main__':
-    Test = avion('Afr002 Heavy',
+    Test = Avion('Afr002 Heavy',
                  'air frans',
                  'LFPG',
                  'KJFK',
@@ -67,8 +118,6 @@ if __name__ == '__main__':
                  000,
                  450,
                  0,
-                 122.800,
                  7.5,
                  32000,
-                 [(7.0,6.0), (10.0,6.0)])
-
+                 )
