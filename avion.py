@@ -1,4 +1,4 @@
-from math import sin, cos, radians, ceil
+from math import sin, cos, radians
 
 class Avion:
 
@@ -22,78 +22,82 @@ class Avion:
         self.vs = vs
         self.conso = conso
         self.alt = alt
-        self.consigne = {'alt' : 0, 'heading' : None, 'speed' : None, 'vs' : None}
+        self.consigne = {'alt' : None, 'heading' : None, 'speed' : None, 'vs' : None}
         Avion.nb_avion += 1
 
     def horizontal_move(self):
-        vx = ceil((self.speed * sin(radians(self.heading)) / 3600) * 100)
-        vy = ceil((self.speed * cos(radians(self.heading)) / 3600) * 100)
+        vx = round((self.speed * sin(radians(self.heading)) / 3600) * 100)
+        vy = round((self.speed * cos(radians(self.heading)) / 3600) * 100)
         self.pos[0] += vx
         self.pos[1] += vy
 
 
     def vertical_move(self):
-        vs = self.vs / 60
-        delta_alt = self.alt - self.consigne['alt']
-        if  delta_alt < 0:
-            if delta_alt < vs :
-                self.alt += vs
-            else:
-                self.alt = self.consigne['alt']
-        if delta_alt > 0:
-            if delta_alt > vs:
-                self.alt -= vs
-            else:
-                self.alt = self.consigne['alt']
+        if self.consigne['alt'] is not None:
+            vs = self.vs / 60
+            delta_alt = self.alt - self.consigne['alt']
+            if  delta_alt < 0:
+                if delta_alt < vs :
+                    self.alt += vs
+                else:
+                    self.alt = self.consigne['alt']
+            if delta_alt > 0:
+                if delta_alt > vs:
+                    self.alt -= vs
+                else:
+                    self.alt = self.consigne['alt']
 
     def heading_change(self):
-        delta_angle = self.consigne['heading'] - self.heading
-        angle_speed = 3
-        if 0 < delta_angle <= 180:
-            if abs(delta_angle) > 3:
-                self.heading += angle_speed
-                self.heading %= 360
-            else:
-                self.heading = self.consigne['heading']
-        elif 360 > delta_angle > 180:
-            if abs(delta_angle) > 3:
-                self.heading -= angle_speed
-                self.heading %= 360
-            else:
-                self.heading = self.consigne['heading']
-        elif delta_angle < 0:
-            if abs(delta_angle) > 3:
-                self.heading += angle_speed
-                self.heading %= 360
-            else:
-                self.heading = self.consigne['heading']
+        if self.consigne['heading'] is not None:
+            delta_angle = self.consigne['heading'] - self.heading
+            angle_speed = 3
+            if 0 < delta_angle <= 180:
+                if abs(delta_angle) > 3:
+                    self.heading += angle_speed
+                    self.heading %= 360
+                else:
+                    self.heading = self.consigne['heading']
+            elif 360 > delta_angle > 180:
+                if abs(delta_angle) > 3:
+                    self.heading -= angle_speed
+                    self.heading %= 360
+                else:
+                    self.heading = self.consigne['heading']
+            elif delta_angle < 0:
+                if abs(delta_angle) > 3:
+                    self.heading += angle_speed
+                    self.heading %= 360
+                else:
+                    self.heading = self.consigne['heading']
 
     def speed_change(self):
-        delta_speed = self.speed - self.consigne['speed']
-        if delta_speed < 0:
-            if delta_speed < 5:
-                self.speed += 5
-            else:
-                self.speed = self.consigne['speed']
-        elif delta_speed > 0:
-            if delta_speed > 5:
-                self.speed -= 5
-            else:
-                self.speed = self.consigne['speed']
+        if self.consigne['speed'] is not None:
+            delta_speed = self.speed - self.consigne['speed']
+            if delta_speed < 0:
+                if delta_speed < 5:
+                    self.speed += 5
+                else:
+                    self.speed = self.consigne['speed']
+            elif delta_speed > 0:
+                if delta_speed > 5:
+                    self.speed -= 5
+                else:
+                    self.speed = self.consigne['speed']
 
 
     def vs_change(self):
-        delta_vs = self.vs - self.consigne['vs']
-        if delta_vs < 0:
-            if delta_vs < -150:
-                self.vs += 150
-            else:
-                self.vs = self.consigne['vs']
-        elif delta_vs > 0:
-            if delta_vs > -150:
-                self.vs -= 150
-            else:
-                self.vs = self.consigne['vs']
+        if self.consigne['vs'] is not None:
+            delta_vs = self.vs - self.consigne['vs']
+            if delta_vs < 0:
+                if delta_vs < -150:
+                    self.vs += 150
+                else:
+                    self.vs = self.consigne['vs']
+            elif delta_vs > 0:
+                if delta_vs > -150:
+                    self.vs -= 150
+                else:
+                    self.vs = self.consigne['vs']
 
 
 
