@@ -41,27 +41,27 @@ class ATC_accueil(QMainWindow, Ui_ATC_accueil):          #def de la page accueil
 
     def ouvrir_paris(self):           #fonction qui ouvre paris
         self.fenetre_paris = ATC_parislfff()
-        self.fenetre_paris.show()
+        self.fenetre_paris.showMaximized() #permet douvrir la fenetre en pleine ecran
         self.close()
 
     def ouvrir_reims(self):           #fonction qui ouvre reims
         self.fenetre_reims = ATC_reimslfee()
-        self.fenetre_reims.show()
+        self.fenetre_reims.showMaximized() #permet douvrir la fenetre en pleine ecran
         self.close()
 
     def ouvrir_marseille(self):           #fonction qui ouvre marseille
         self.fenetre_marseille = ATC_marseillelfmm()
-        self.fenetre_marseille.show()
+        self.fenetre_marseille.showMaximized() #permet douvrir la fenetre en pleine ecran
         self.close()
 
     def ouvrir_bordeaux(self):           #fonction qui ouvre bordeaux
         self.fenetre_bordeaux = ATC_bordeauxlfbb()
-        self.fenetre_bordeaux.show()
+        self.fenetre_bordeaux.showMaximized() #permet douvrir la fenetre en pleine ecran
         self.close()
 
     def ouvrir_brest(self):           #fonction qui ouvre brest
         self.fenetre_brest = ATC_brestlfrr()
-        self.fenetre_brest.show()
+        self.fenetre_brest.showMaximized() #permet douvrir la fenetre en pleine ecran
         self.close()
 
 #_________________________________________________________
@@ -77,7 +77,7 @@ class ATC_parislfff(QMainWindow, Ui_ATC_paris):       #def de la page paris
     def retour_accueil(self):        #fonction btn_accueil
         from app import ATC_accueil
         self.accueil = ATC_accueil()
-        self.accueil.show()     #ouvre la fenetre
+        self.accueil.showMaximized()      #permet douvrir la fenetre en pleine ecran
         self.close()       # permet de refermer la fenetre
 
 class ATC_reimslfee(QMainWindow, Ui_ATC_reims):       #def de la page paris
@@ -91,7 +91,7 @@ class ATC_reimslfee(QMainWindow, Ui_ATC_reims):       #def de la page paris
     def retour_accueil(self):        #fonction btn_accueil
         from app import ATC_accueil
         self.accueil = ATC_accueil()
-        self.accueil.show()     #ouvre la fenetre
+        self.accueil.showMaximized()      #permet douvrir la fenetre en pleine ecran
         self.close()       # permet de refermer la fenetre
 
 class ATC_brestlfrr(QMainWindow, Ui_ATC_brest):       #def de la page paris
@@ -105,7 +105,7 @@ class ATC_brestlfrr(QMainWindow, Ui_ATC_brest):       #def de la page paris
     def retour_accueil(self):        #fonction btn_accueil
         from app import ATC_accueil
         self.accueil = ATC_accueil()
-        self.accueil.show()     #ouvre la fenetre
+        self.accueil.showMaximized()      #permet douvrir la fenetre en pleine ecran
         self.close()       # permet de refermer la fenetre
 
 class ATC_bordeauxlfbb(QMainWindow, Ui_ATC_bordeaux):       #def de la page paris
@@ -119,7 +119,7 @@ class ATC_bordeauxlfbb(QMainWindow, Ui_ATC_bordeaux):       #def de la page pari
     def retour_accueil(self):        #fonction btn_accueil
         from app import ATC_accueil
         self.accueil = ATC_accueil()
-        self.accueil.show()     #ouvre la fenetre
+        self.accueil.showMaximized()      #permet douvrir la fenetre en pleine ecran
         self.close()       # permet de refermer la fenetre
 
 class ATC_marseillelfmm(QMainWindow, Ui_ATC_marseille):       #def de la page paris
@@ -133,7 +133,7 @@ class ATC_marseillelfmm(QMainWindow, Ui_ATC_marseille):       #def de la page pa
     def retour_accueil(self):        #fonction btn_accueil
         from app import ATC_accueil
         self.accueil = ATC_accueil()
-        self.accueil.show()     #ouvre la fenetre
+        self.accueil.showMaximized()      #permet douvrir la fenetre en pleine ecran
         self.close()       # permet de refermer la fenetre
 
 #__________________________________________________________
@@ -141,5 +141,5 @@ class ATC_marseillelfmm(QMainWindow, Ui_ATC_marseille):       #def de la page pa
 if __name__ == "__main__":   # lance par defaut la fenetre accueil
     app = QApplication(sys.argv)
     window = ATC_accueil()
-    window.show()
+    window.showMaximized()
     sys.exit(app.exec())
