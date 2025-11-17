@@ -40,7 +40,7 @@ class Ui_ATC_accueil(object):
 
         # Layout de superposition
         self.overlay = QGridLayout(self.frame_carte)
-        self.overlay.setContentsMargins(0, 0, 0, 0)
+        self.overlay.setContentsMargins(0, 0, 0, 0) #on dit quil y a aucun espace entre les case de la grille
         self.overlay.setSpacing(0)
 
 
@@ -58,13 +58,15 @@ class Ui_ATC_accueil(object):
         self.overlay.setRowStretch(3, 1)  # ligne du bas (Bordeaux/Marseille)
         self.frame_carte.setMaximumSize(780, 780)
 
+        #chaques boutons dans les grilles va sarreter a la cellule et ne va pas setendre
+
         # ---- CREATION DE LA CARTE------------------------------------------------------------
         self.carte_france = QLabel(self.frame_carte)
         self.carte_france.setObjectName("carte_france")
         self.carte_france.setPixmap(QPixmap("image/MAP_france.png"))
         self.carte_france.setAlignment(Qt.AlignCenter)
         self.carte_france.setScaledContents(True)
-        self.carte_france.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
+        self.carte_france.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding) # on la fait sagrandir avec la page
 
 
 
@@ -81,7 +83,6 @@ class Ui_ATC_accueil(object):
         #______________________________________________________________________________________
 
 
-        #self.carte_france.setGeometry(QRect(22, 20, 521, 491))
         sizePolicy1 = QSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
         sizePolicy1.setHorizontalStretch(0)
         sizePolicy1.setVerticalStretch(0)
@@ -91,11 +92,12 @@ class Ui_ATC_accueil(object):
         self.carte_france.setScaledContents(True)
         self.carte_france.setWordWrap(False)
 
-        self.overlay.addWidget(self.carte_france, 0, 0, 4, 4) # On l’ajoute en premier dans la grille
+        self.overlay.addWidget(self.carte_france, 0, 0, 4, 4) #on ajoute la carte dans le tableau
 
 
         #__________________________________BOUTONS_____________________________________________
 
+        #___________________________________brest________________________________________________
         font = QFont()
         font.setPointSize(12)
 
@@ -103,8 +105,6 @@ class Ui_ATC_accueil(object):
         self.ATC_brestlfrr.setObjectName(u"ATC_brestlfrr")
         self.ATC_brestlfrr.setFont(font)
         self.ATC_brestlfrr.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
-
-
 
         font = QFont()
         font.setPointSize(11)
@@ -126,8 +126,7 @@ class Ui_ATC_accueil(object):
 "color: black;\n"
 "}")
 
-
-        #_________________________________________________________________________
+        #____________________________________paris_____________________________________
         self.ATC_parislfff = QPushButton(self.frame_carte)
         self.ATC_parislfff.setObjectName(u"ATC_parislfff")
         self.ATC_parislfff.setFont(font)
@@ -152,7 +151,7 @@ class Ui_ATC_accueil(object):
 "}")
 
 
-        #____________________________________________________________________________
+        #______________________________________reims______________________________________
         self.ATC_reimslfee = QPushButton(self.frame_carte)
         self.ATC_reimslfee.setObjectName(u"ATC_reimslfee")
         self.ATC_reimslfee.setFont(font)
@@ -177,7 +176,7 @@ class Ui_ATC_accueil(object):
 
 
 
-        #___________________________________________________________________________________
+        #_______________________________________marseille____________________________________________
         self.ATC_marseillelfmm = QPushButton(self.frame_carte)
         self.ATC_marseillelfmm.setObjectName(u"ATC_marseillelfmm")
         self.ATC_marseillelfmm.setFont(font)
@@ -202,7 +201,7 @@ class Ui_ATC_accueil(object):
 
 
 
-        #__________________________________________________________________________________
+        #___________________________________________bordeaux_______________________________________
         self.ATC_bordeauxlfbb = QPushButton(self.frame_carte)
         self.ATC_bordeauxlfbb.setObjectName(u"ATC_bordeauxlfbb")
         self.ATC_bordeauxlfbb.setFont(font)
@@ -231,6 +230,8 @@ class Ui_ATC_accueil(object):
         self.overlay.addWidget(self.ATC_reimslfee, 1, 3, 1, 1)
         self.overlay.addWidget(self.ATC_bordeauxlfbb, 2, 0, 2, 2)
         self.overlay.addWidget(self.ATC_marseillelfmm, 2, 2, 2 ,2)
+        #on positionne les boutons dans le tableau
+
 
         # On ajoute la frame au layout principal
         self.horizontalLayout_3.addWidget(self.frame_carte)
