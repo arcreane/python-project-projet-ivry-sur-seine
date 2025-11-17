@@ -64,7 +64,7 @@ class ATC_accueil(QMainWindow, Ui_ATC_accueil):          #def de la page accueil
         self.fenetre_brest.showMaximized() #permet douvrir la fenetre en pleine ecran
         self.close()
 
-#_________________________________________________________
+#_____________________BOUTONS____________________________________
 
 class ATC_parislfff(QMainWindow, Ui_ATC_paris):       #def de la page paris
     def __init__(self):

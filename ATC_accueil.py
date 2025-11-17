@@ -17,17 +17,18 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QPalette, QPixmap, QRadialGradient, QTransform)
 from PySide6.QtWidgets import (QApplication, QFrame, QHBoxLayout, QLabel,
     QLayout, QMainWindow, QMenuBar, QPushButton,
-    QSizePolicy, QVBoxLayout, QWidget)
+    QSizePolicy, QVBoxLayout, QWidget,QGridLayout)
 
 class Ui_ATC_accueil(object):
     def setupUi(self, ATC_accueil):
         if not ATC_accueil.objectName():
             ATC_accueil.setObjectName(u"ATC_accueil")
-        ATC_accueil.resize(858, 603)
         ATC_accueil.setAcceptDrops(False)
         ATC_accueil.setStyleSheet(u"")
         ATC_accueil.setIconSize(QSize(30, 24))
         ATC_accueil.setAnimated(False)
+
+
         self.centralwidget = QWidget(ATC_accueil)
         self.centralwidget.setObjectName(u"centralwidget")
         self.horizontalLayout_3 = QHBoxLayout(self.centralwidget)
@@ -35,7 +36,39 @@ class Ui_ATC_accueil(object):
 
         #_______________________________________________________________________________________
         self.frame_carte = QFrame(self.centralwidget)
-        self.frame_carte.setObjectName(u"frame_carte")
+        self.frame_carte.setObjectName("frame_carte")
+
+        # Layout de superposition
+        self.overlay = QGridLayout(self.frame_carte)
+        self.overlay.setContentsMargins(0, 0, 0, 0)
+        self.overlay.setSpacing(0)
+
+
+        #________________________________________________________________________________________
+        # etendre chaque colonne de maniere proportionnelle
+        self.overlay.setColumnStretch(0, 1)
+        self.overlay.setColumnStretch(1, 1)
+        self.overlay.setColumnStretch(2, 1)
+        self.overlay.setColumnStretch(3, 1)
+
+        # etendre chaque ligne
+        self.overlay.setRowStretch(0, 1)  # ligne du haut (Brest/Paris)
+        self.overlay.setRowStretch(1, 1)  # ligne du haut (Paris/Reims)
+        self.overlay.setRowStretch(2, 1)  # ligne du bas (Bordeaux/Marseille)
+        self.overlay.setRowStretch(3, 1)  # ligne du bas (Bordeaux/Marseille)
+        self.frame_carte.setMaximumSize(780, 780)
+
+        # ---- CREATION DE LA CARTE------------------------------------------------------------
+        self.carte_france = QLabel(self.frame_carte)
+        self.carte_france.setObjectName("carte_france")
+        self.carte_france.setPixmap(QPixmap("image/MAP_france.png"))
+        self.carte_france.setAlignment(Qt.AlignCenter)
+        self.carte_france.setScaledContents(True)
+        self.carte_france.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
+
+
+
+
         sizePolicy = QSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -46,10 +79,7 @@ class Ui_ATC_accueil(object):
         self.frame_carte.setFrameShadow(QFrame.Shadow.Raised)
 
         #______________________________________________________________________________________
-        self.carte_france = QLabel(self.frame_carte)
-        self.carte_france.setObjectName(u"carte_france")
-        self.carte_france.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
-        self.carte_france.setAlignment(Qt.AlignCenter)
+
 
         #self.carte_france.setGeometry(QRect(22, 20, 521, 491))
         sizePolicy1 = QSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
@@ -58,17 +88,24 @@ class Ui_ATC_accueil(object):
         sizePolicy1.setHeightForWidth(self.carte_france.sizePolicy().hasHeightForWidth())
         self.carte_france.setSizePolicy(sizePolicy1)
         self.carte_france.setPixmap(QPixmap(u"image/MAP_france.png"))
-        self.carte_france.setScaledContents(False)
+        self.carte_france.setScaledContents(True)
         self.carte_france.setWordWrap(False)
 
+        self.overlay.addWidget(self.carte_france, 0, 0, 4, 4) # On l’ajoute en premier dans la grille
 
 
+        #__________________________________BOUTONS_____________________________________________
 
+        font = QFont()
+        font.setPointSize(12)
 
-        #_______________________________________________________________________________
         self.ATC_brestlfrr = QPushButton(self.frame_carte)
         self.ATC_brestlfrr.setObjectName(u"ATC_brestlfrr")
-        self.ATC_brestlfrr.setGeometry(QRect(32, 60, 161, 171))
+        self.ATC_brestlfrr.setFont(font)
+        self.ATC_brestlfrr.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
+
+
+
         font = QFont()
         font.setPointSize(11)
         font.setBold(False)
@@ -93,7 +130,10 @@ class Ui_ATC_accueil(object):
         #_________________________________________________________________________
         self.ATC_parislfff = QPushButton(self.frame_carte)
         self.ATC_parislfff.setObjectName(u"ATC_parislfff")
-        self.ATC_parislfff.setGeometry(QRect(192, 20, 181, 211))
+        self.ATC_parislfff.setFont(font)
+        self.ATC_parislfff.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
+
+
         self.ATC_parislfff.setMinimumSize(QSize(181, 211))
         self.ATC_parislfff.setFont(font)
         self.ATC_parislfff.setStyleSheet(u"QPushButton {\n"
@@ -115,7 +155,10 @@ class Ui_ATC_accueil(object):
         #____________________________________________________________________________
         self.ATC_reimslfee = QPushButton(self.frame_carte)
         self.ATC_reimslfee.setObjectName(u"ATC_reimslfee")
-        self.ATC_reimslfee.setGeometry(QRect(372, 100, 111, 131))
+        self.ATC_reimslfee.setFont(font)
+        self.ATC_reimslfee.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
+
+
         self.ATC_reimslfee.setFont(font)
         self.ATC_reimslfee.setStyleSheet(u"QPushButton {\n"
 "    background-color: rgba(204, 0, 204, 0.4);\n"
@@ -137,7 +180,10 @@ class Ui_ATC_accueil(object):
         #___________________________________________________________________________________
         self.ATC_marseillelfmm = QPushButton(self.frame_carte)
         self.ATC_marseillelfmm.setObjectName(u"ATC_marseillelfmm")
-        self.ATC_marseillelfmm.setGeometry(QRect(300, 230, 171, 281))
+        self.ATC_marseillelfmm.setFont(font)
+        self.ATC_marseillelfmm.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
+
+
         self.ATC_marseillelfmm.setFont(font)
         self.ATC_marseillelfmm.setStyleSheet(u"QPushButton {\n"
 "    background-color: rgba(255, 255, 0, 0.4);\n"
@@ -159,7 +205,10 @@ class Ui_ATC_accueil(object):
         #__________________________________________________________________________________
         self.ATC_bordeauxlfbb = QPushButton(self.frame_carte)
         self.ATC_bordeauxlfbb.setObjectName(u"ATC_bordeauxlfbb")
-        self.ATC_bordeauxlfbb.setGeometry(QRect(110, 230, 191, 231))
+        self.ATC_bordeauxlfbb.setFont(font)
+        self.ATC_bordeauxlfbb.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
+
+
         self.ATC_bordeauxlfbb.setFont(font)
         self.ATC_bordeauxlfbb.setStyleSheet(u"QPushButton {\n"
 "    background-color: rgba(255, 128, 0, 0.4);\n"
@@ -175,6 +224,21 @@ class Ui_ATC_accueil(object):
 "QPushButton{\n"
 "color: black;\n"
 "}")
+
+        # ---- POSITIONNEMENT ----
+        self.overlay.addWidget(self.ATC_brestlfrr, 1, 0, 1, 1)
+        self.overlay.addWidget(self.ATC_parislfff, 0, 1, 2, 2)
+        self.overlay.addWidget(self.ATC_reimslfee, 1, 3, 1, 1)
+        self.overlay.addWidget(self.ATC_bordeauxlfbb, 2, 0, 2, 2)
+        self.overlay.addWidget(self.ATC_marseillelfmm, 2, 2, 2 ,2)
+
+        # On ajoute la frame au layout principal
+        self.horizontalLayout_3.addWidget(self.frame_carte)
+
+
+
+
+
 
         self.horizontalLayout_3.addWidget(self.frame_carte)
 
