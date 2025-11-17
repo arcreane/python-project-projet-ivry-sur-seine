@@ -9,15 +9,16 @@
 ################################################################################
 
 from PySide6.QtCore import (QCoreApplication, QDate, QDateTime, QLocale,
-    QMetaObject, QObject, QPoint, QRect,
-    QSize, QTime, QUrl, Qt)
+                            QMetaObject, QObject, QPoint, QRect,
+                            QSize, QTime, QUrl, Qt)
 from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
-    QFont, QFontDatabase, QGradient, QIcon,
-    QImage, QKeySequence, QLinearGradient, QPainter,
-    QPalette, QPixmap, QRadialGradient, QTransform)
+                           QFont, QFontDatabase, QGradient, QIcon,
+                           QImage, QKeySequence, QLinearGradient, QPainter,
+                           QPalette, QPixmap, QRadialGradient, QTransform)
 from PySide6.QtWidgets import (QApplication, QFrame, QHBoxLayout, QLabel,
-    QMainWindow, QMenuBar, QPushButton, QSizePolicy,
-    QStatusBar, QTextEdit, QVBoxLayout, QWidget)
+                               QMainWindow, QMenuBar, QPushButton, QSizePolicy,
+                               QStatusBar, QTextEdit, QVBoxLayout, QWidget)
+
 
 class Ui_ATC_paris(object):
     def setupUi(self, ATC_paris):
@@ -25,6 +26,7 @@ class Ui_ATC_paris(object):
             ATC_paris.setObjectName(u"ATC_paris")
         ATC_paris.resize(900, 648)
         ATC_paris.setMinimumSize(QSize(900, 620))
+
         self.centralwidget = QWidget(ATC_paris)
         self.centralwidget.setObjectName(u"centralwidget")
         self.frame_carte = QFrame(self.centralwidget)
@@ -40,7 +42,7 @@ class Ui_ATC_paris(object):
         self.frame_10.setObjectName(u"frame_10")
         self.frame_10.setGeometry(QRect(170, 0, 291, 391))
         self.frame_10.setStyleSheet(u"background-color: rgba(0,0,100, 10);\n"
-"")
+                                    "")
         self.frame_10.setFrameShape(QFrame.Shape.StyledPanel)
         self.frame_10.setFrameShadow(QFrame.Shadow.Raised)
         self.frame_strip = QFrame(self.centralwidget)
@@ -79,7 +81,6 @@ class Ui_ATC_paris(object):
 
         self.verticalLayout_9.addWidget(self.label_2)
 
-
         self.horizontalLayout_2.addWidget(self.frame)
 
         self.frame_2 = QFrame(self.frame_strip)
@@ -108,7 +109,6 @@ class Ui_ATC_paris(object):
         self.label_4.setWordWrap(True)
 
         self.verticalLayout_8.addWidget(self.label_4)
-
 
         self.horizontalLayout_2.addWidget(self.frame_2)
 
@@ -139,7 +139,6 @@ class Ui_ATC_paris(object):
 
         self.verticalLayout_7.addWidget(self.label_10)
 
-
         self.horizontalLayout_2.addWidget(self.frame_3)
 
         self.frame_4 = QFrame(self.frame_strip)
@@ -168,7 +167,6 @@ class Ui_ATC_paris(object):
         self.label_12.setWordWrap(True)
 
         self.verticalLayout_6.addWidget(self.label_12)
-
 
         self.horizontalLayout_2.addWidget(self.frame_4)
 
@@ -199,7 +197,6 @@ class Ui_ATC_paris(object):
 
         self.verticalLayout_5.addWidget(self.label_14)
 
-
         self.horizontalLayout_2.addWidget(self.frame_9)
 
         self.frame_5 = QFrame(self.frame_strip)
@@ -228,7 +225,6 @@ class Ui_ATC_paris(object):
         self.label_16.setWordWrap(True)
 
         self.verticalLayout_4.addWidget(self.label_16)
-
 
         self.horizontalLayout_2.addWidget(self.frame_5)
 
@@ -259,7 +255,6 @@ class Ui_ATC_paris(object):
 
         self.verticalLayout_3.addWidget(self.label_18)
 
-
         self.horizontalLayout_2.addWidget(self.frame_6)
 
         self.frame_7 = QFrame(self.frame_strip)
@@ -288,7 +283,6 @@ class Ui_ATC_paris(object):
         self.label_20.setWordWrap(True)
 
         self.verticalLayout_2.addWidget(self.label_20)
-
 
         self.horizontalLayout_2.addWidget(self.frame_7)
 
@@ -319,7 +313,6 @@ class Ui_ATC_paris(object):
 
         self.verticalLayout.addWidget(self.label_22)
 
-
         self.horizontalLayout_2.addWidget(self.frame_8)
 
         self.frame_11 = QFrame(self.centralwidget)
@@ -347,7 +340,6 @@ class Ui_ATC_paris(object):
         self.txt_titre.setAlignment(Qt.AlignmentFlag.AlignCenter)
 
         self.verticalLayout_10.addWidget(self.txt_titre)
-
 
         self.verticalLayout_11.addWidget(self.frame_titre)
 
@@ -468,7 +460,6 @@ class Ui_ATC_paris(object):
 
         self.horizontalLayout.addWidget(self.btn_sortie)
 
-
         self.verticalLayout_11.addWidget(self.frame_boutons)
 
         ATC_paris.setCentralWidget(self.centralwidget)
@@ -483,6 +474,7 @@ class Ui_ATC_paris(object):
         self.retranslateUi(ATC_paris)
 
         QMetaObject.connectSlotsByName(ATC_paris)
+
     # setupUi
 
     def retranslateUi(self, ATC_paris):
