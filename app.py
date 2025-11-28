@@ -12,6 +12,7 @@ from ATC_bordeaux import Ui_ATC_bordeaux# import de la window bordeaux
 from ATC_marseille import Ui_ATC_marseille# import de la window marseille
 #___________________________________________________________________________
 from PySide6.QtWidgets import QApplication
+from PySide6.QtCore import (QPointF)
 
 
 #__________________________class_accueil________________________________
@@ -73,6 +74,53 @@ class ATC_parislfff(QMainWindow, Ui_ATC_paris):       #def de la page paris
         self.setWindowTitle("ATC_parisfLFFF") #titre de la page
         self.btn_accueil.clicked.connect(self.retour_accueil)   #declenchement du bouton et ouvre la page daccueil
         self.btn_sortie.clicked.connect(QApplication.quit)
+        self.aircraft_details = {
+            "AFR123": {"heading": 45, "altitude": 32000, "speed": 450, "vertical_speed": 0, "pos": QPointF(250, 200)},
+            "BAW456": {"heading": 180, "altitude": 28000, "speed": 480, "vertical_speed": 1000,
+                       "pos": QPointF(500, 400)},
+        }
+        self.selected_callsign = None
+
+        self._load_aircraft_on_map()
+        self._connect_signals()
+
+    def _load_aircraft_on_map(self):
+        """Charge les avions sur le widget carte."""
+        for callsign, data in self.aircraft_details.items():
+            # Utilise l'objet label_5 (qui est maintenant AircraftMapWidget)
+            self.label_5.add_aircraft(callsign, data['pos'], data['heading'])
+
+    def _connect_signals(self):
+        """Connecte le signal de clic de la carte à la méthode d'affichage des stats."""
+        # 🟢 CONNEXION SIGNAL -> SLOT
+        # self.label_5 est l'AircraftMapWidget
+        self.label_5.aircraft_clicked.connect(self.display_aircraft_stats)
+
+        # Connectez vos autres boutons ici (Apply, Land, etc.)
+        # self.btn_apply.clicked.connect(self.apply_new_command)
+
+    # 2. 🟢 MÉTHODE (SLOT) POUR METTRE À JOUR LE PANNEAU
+    def display_aircraft_stats(self, callsign):
+        """
+        Reçoit le callsign de l'avion cliqué et remplit les champs de texte du panneau.
+        """
+        if callsign not in self.aircraft_details:
+            return
+
+        self.selected_callsign = callsign
+        data = self.aircraft_details[callsign]
+
+        # Mise à jour du titre
+        self.txt_titre.setText(f"Contrôle - {callsign}")
+
+        # 🎯 Mise à jour du CAP/HEADING (Requis)
+        # self.txt_heading_valeur est un QTextEdit
+        self.txt_heading_valeur.setText(str(data["heading"]))
+
+        # Mise à jour des autres champs pour la complétude
+        self.txt_altitude_valeur.setText(str(data["altitude"]))
+        self.txt_vitesse_valeur.setText(str(data["speed"]))
+        self.txt_vitesse_verticale_valeur.setText(str(data["vertical_speed"]))
 
     def retour_accueil(self):  #fonction btn_accueil
         from app import ATC_accueil

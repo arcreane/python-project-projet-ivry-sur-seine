@@ -8,7 +8,7 @@
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
 
-from PySide6.QtCore import (QCoreApplication, QDate, QDateTime, QLocale,
+from PySide6.QtCore import (QPointF,QCoreApplication, QDate, QDateTime, QLocale,
                             QMetaObject, QObject, QPoint, QRect,
                             QSize, QTime, QUrl, Qt)
 from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
@@ -19,6 +19,9 @@ from PySide6.QtWidgets import (QApplication, QFrame, QHBoxLayout,
                                QLabel, QMainWindow, QMenuBar, QPushButton,
                                QSizePolicy, QStatusBar, QTextEdit, QVBoxLayout,
                                QWidget, QGridLayout)
+
+from spawn_plane import AircraftMapWidget
+
 
 
 class Ui_ATC_paris(object):
@@ -36,7 +39,7 @@ class Ui_ATC_paris(object):
         self.main_grid_layout = QGridLayout(self.centralwidget)
         self.main_grid_layout.setObjectName(u"main_grid_layout")
         self.main_grid_layout.setContentsMargins(5, 5, 5, 5)
-        self.main_grid_layout.setColumnStretch(0, 7)
+        self.main_grid_layout.setColumnStretch(0, 8)
 
         sizePolicy_expanding = QSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
         sizePolicy_strip = QSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
@@ -52,16 +55,17 @@ class Ui_ATC_paris(object):
 
         self.frame_carte.setFrameShape(QFrame.Shape.StyledPanel)
         self.frame_carte.setFrameShadow(QFrame.Shadow.Raised)
-        self.label_5 = QLabel(self.frame_carte)
+        self.label_5 = AircraftMapWidget(self.frame_carte)
         self.label_5.setObjectName(u"label_5")
 
         self.label_5.setScaledContents(False)
         self.label_5.setSizePolicy(sizePolicy_expanding)
         self.carte_inner_layout.addWidget(self.label_5)
         self.label_5.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        self.label_5.setContentsMargins(0, 0, 0, 0)
         self.main_grid_layout.addWidget(self.frame_carte, 0, 0, 1, 1)
 
-        self.label_5.setPixmap(QPixmap(u"image/MAP_paris.png"))
+        self.label_5.set_map_image(u"image/MAP_paris.png")
 
         self.frame_strip = QFrame(self.centralwidget)
         self.frame_strip.setObjectName(u"frame_strip")
@@ -342,7 +346,7 @@ class Ui_ATC_paris(object):
         self.frame_11.setObjectName(u"frame_11")
         sizePolicy_panel = QSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
         self.frame_11.setSizePolicy(sizePolicy_panel)
-        self.main_grid_layout.setColumnStretch(1, 3)
+        self.main_grid_layout.setColumnStretch(1, 2)
         self.frame_11.setMinimumWidth(300)
         self.main_grid_layout.addWidget(self.frame_11, 0, 1, 2, 1)
 
@@ -606,6 +610,19 @@ class Ui_ATC_paris(object):
         self.statusbar = QStatusBar(ATC_paris)
         self.statusbar.setObjectName(u"statusbar")
         ATC_paris.setStatusBar(self.statusbar)
+
+        if not self.label_5.map_pixmap.isNull():
+            map_width = self.label_5.map_pixmap.width()
+            map_height = self.label_5.map_pixmap.height()
+
+            # Positionne un avion au centre de la carte avec un cap de 45 degrés
+            self.label_5.add_aircraft("AFR123", QPointF(map_width / 2, map_height / 2), 45)
+            # Ajoute un deuxième avion un peu décalé avec un cap différent
+            self.label_5.add_aircraft("BAW456", QPointF(map_width / 3, map_height / 4), 180)
+
+
+
+
 
         self.retranslateUi(ATC_paris)
 
