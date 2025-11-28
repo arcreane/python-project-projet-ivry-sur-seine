@@ -1,18 +1,12 @@
 from avion import Avion
-from fonction_json import import_json
 from random import randint
 from time import sleep
+from utilities import distance_avion, import_json_avion, import_json_data
 
 FIR = "reims"
 L = []
 dict_avion = {}
-ALPHA = [0, 0]
-BRAVO = [0, 0]
-CHARLIE = [0, 0]
-DELTA = [0, 0]
-ECHO = [0, 0]
-FOXTROT = [0, 0]
-GOLF = [0, 0]
+dict_data = import_json_data(FIR)
 
 count = 0
 
@@ -24,24 +18,7 @@ while count != 2:
                 while n in L:
                     n = randint(0, 6)
                 L.append(n)
-                dict_cara = import_json(FIR, n)
-                match dict_cara['pos']:
-                    case 'ALPHA':
-                        position = ALPHA
-                    case 'BRAVO':
-                        position = BRAVO
-                    case 'CHARLIE':
-                        position = CHARLIE
-                    case 'DELTA':
-                        position = DELTA
-                    case 'ECHO':
-                        position = ECHO
-                    case 'FOXTROT':
-                        position = FOXTROT
-                    case 'GOLF':
-                        position = GOLF
-                    case _ :
-                        position = ALPHA
+                dict_cara = import_json_avion(FIR, n)
                 dict_avion[i] = Avion(dict_cara['callsign'],
                                                 dict_cara['phonetic'],
                                                 dict_cara['from_'],
@@ -53,7 +30,7 @@ while count != 2:
                                                 dict_cara['final_level'],
                                                 dict_cara['sqwk'],
                                                 float(dict_cara['fuel']),
-                                                position,
+                                                dict_data[dict_cara['pos']],
                                                 int(dict_cara['heading']),
                                                 int(dict_cara['speed']),
                                                 int(dict_cara['vs']),
@@ -67,6 +44,12 @@ while count != 2:
         dict_avion[key].vs_change()
         dict_avion[key].horizontal_move()
         dict_avion[key].vertical_move()
+        dict_avion[key].distance_aiport(dict_data[dict_cara['to']])
+        for key__ in dict_avion.keys():
+            if key__ == key:
+                continue
+            else:
+                distance_avion(dict_avion[key], dict_avion[key__])
 
         print(dict_avion[key].callsign)
         print(dict_avion[key].heading)

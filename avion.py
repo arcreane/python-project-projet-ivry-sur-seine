@@ -1,4 +1,4 @@
-from math import sin, cos, radians
+from math import sin, cos, radians, sqrt
 
 class Avion:
 
@@ -22,7 +22,8 @@ class Avion:
         self.vs = vs
         self.conso = conso
         self.alt = alt
-        self.consigne = {'alt' : None, 'heading' : None, 'speed' : None, 'vs' : None}
+        self.consigne = {'alt' : None, 'heading' : None, 'speed' : None, 'vs' : None, 'landing' : False}
+        self.etat = {'can_land' : False, 'TCAS' : False}
         Avion.nb_avion += 1
 
     def horizontal_move(self):
@@ -98,6 +99,11 @@ class Avion:
                     self.vs -= 150
                 else:
                     self.vs = self.consigne['vs']
+
+    def distance_airport(self, airport_pos):
+        distance = sqrt((self.pos[0] - airport_pos[0]) ** 2 + (self.pos[1] - airport_pos[1]) ** 2)
+        if distance < 50:
+            self.etat['can_land'] = True
 
 
 
