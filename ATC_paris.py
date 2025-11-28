@@ -15,41 +15,63 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
                            QFont, QFontDatabase, QGradient, QIcon,
                            QImage, QKeySequence, QLinearGradient, QPainter,
                            QPalette, QPixmap, QRadialGradient, QTransform)
-from PySide6.QtWidgets import (QApplication, QFrame, QHBoxLayout, QLabel,
-                               QMainWindow, QMenuBar, QPushButton, QSizePolicy,
-                               QStatusBar, QTextEdit, QVBoxLayout, QWidget)
+from PySide6.QtWidgets import (QApplication, QFrame, QHBoxLayout,
+                               QLabel, QMainWindow, QMenuBar, QPushButton,
+                               QSizePolicy, QStatusBar, QTextEdit, QVBoxLayout,
+                               QWidget, QGridLayout)
 
 
 class Ui_ATC_paris(object):
     def setupUi(self, ATC_paris):
         if not ATC_paris.objectName():
             ATC_paris.setObjectName(u"ATC_paris")
+
         ATC_paris.resize(900, 648)
         ATC_paris.setMinimumSize(QSize(900, 620))
 
-        self.centralwidget = QWidget(ATC_paris)
+
+        self.centralwidget = QWidget(ATC_paris)  # Ligne de création
         self.centralwidget.setObjectName(u"centralwidget")
+
+        self.main_grid_layout = QGridLayout(self.centralwidget)
+        self.main_grid_layout.setObjectName(u"main_grid_layout")
+        self.main_grid_layout.setContentsMargins(5, 5, 5, 5)
+        self.main_grid_layout.setColumnStretch(0, 9)
+
+        sizePolicy_expanding = QSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
+        sizePolicy_strip = QSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+        sizePolicy_panel = QSizePolicy(QSizePolicy.Policy.Fixed, QSizePolicy.Policy.Expanding)
+
+
+
+
         self.frame_carte = QFrame(self.centralwidget)
         self.frame_carte.setObjectName(u"frame_carte")
-        self.frame_carte.setGeometry(QRect(0, 0, 621, 451))
+
+        self.frame_carte.setSizePolicy(sizePolicy_expanding)
+        self.carte_inner_layout = QVBoxLayout(self.frame_carte)
+        self.carte_inner_layout.setContentsMargins(0, 0, 0, 0)
+
         self.frame_carte.setFrameShape(QFrame.Shape.StyledPanel)
         self.frame_carte.setFrameShadow(QFrame.Shadow.Raised)
         self.label_5 = QLabel(self.frame_carte)
         self.label_5.setObjectName(u"label_5")
-        self.label_5.setGeometry(QRect(-60, 70, 871, 781))
+
+        self.label_5.setScaledContents(True)
+        self.label_5.setSizePolicy(sizePolicy_expanding)
+        self.carte_inner_layout.addWidget(self.label_5)
+        self.main_grid_layout.addWidget(self.frame_carte, 0, 0, 1, 1)
+
         self.label_5.setPixmap(QPixmap(u"image/MAP_france_2.png"))
-        self.frame_10 = QFrame(self.frame_carte)
-        self.frame_10.setObjectName(u"frame_10")
-        self.frame_10.setGeometry(QRect(170, 0, 291, 391))
-        self.frame_10.setStyleSheet(u"background-color: rgba(0,0,100, 10);\n"
-                                    "")
-        self.frame_10.setFrameShape(QFrame.Shape.StyledPanel)
-        self.frame_10.setFrameShadow(QFrame.Shadow.Raised)
+
         self.frame_strip = QFrame(self.centralwidget)
         self.frame_strip.setObjectName(u"frame_strip")
-        self.frame_strip.setGeometry(QRect(0, 450, 621, 141))
+
+        self.frame_strip.setSizePolicy(sizePolicy_strip)
+
         self.frame_strip.setFrameShape(QFrame.Shape.StyledPanel)
         self.frame_strip.setFrameShadow(QFrame.Shadow.Raised)
+        self.frame_strip.setMinimumHeight(180)
         self.horizontalLayout_2 = QHBoxLayout(self.frame_strip)
         self.horizontalLayout_2.setObjectName(u"horizontalLayout_2")
         self.frame = QFrame(self.frame_strip)
@@ -59,6 +81,7 @@ class Ui_ATC_paris(object):
         self.verticalLayout_9 = QVBoxLayout(self.frame)
         self.verticalLayout_9.setObjectName(u"verticalLayout_9")
         self.label = QLabel(self.frame)
+        self.main_grid_layout.addWidget(self.frame_strip, 1, 0, 1, 1)
         self.label.setObjectName(u"label")
         self.label.setAlignment(Qt.AlignmentFlag.AlignCenter)
 
@@ -317,7 +340,12 @@ class Ui_ATC_paris(object):
 
         self.frame_11 = QFrame(self.centralwidget)
         self.frame_11.setObjectName(u"frame_11")
-        self.frame_11.setGeometry(QRect(620, 0, 261, 591))
+        sizePolicy_panel = QSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
+        self.frame_11.setSizePolicy(sizePolicy_panel)
+        self.main_grid_layout.setColumnStretch(1, 2)
+        self.frame_11.setMinimumWidth(250)
+        self.main_grid_layout.addWidget(self.frame_11, 0, 1, 2, 1)
+
         self.frame_11.setMinimumSize(QSize(0, 0))
         self.frame_11.setFrameShape(QFrame.Shape.StyledPanel)
         self.frame_11.setFrameShadow(QFrame.Shadow.Raised)

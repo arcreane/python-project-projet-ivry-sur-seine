@@ -1,6 +1,6 @@
 
 
-#___________________________________________________________________________
+#___________________________________les_imports________________________________________
 import sys
 from PySide6.QtWidgets import QApplication, QMainWindow
 from ATC_accueil import Ui_ATC_accueil  #import de la main window
@@ -14,7 +14,7 @@ from ATC_marseille import Ui_ATC_marseille# import de la window marseille
 from PySide6.QtWidgets import QApplication
 
 
-#_________________________________________________________
+#__________________________class_accueil________________________________
 
 class ATC_accueil(QMainWindow, Ui_ATC_accueil):          #def de la page accueil
     def __init__(self):
@@ -74,7 +74,7 @@ class ATC_parislfff(QMainWindow, Ui_ATC_paris):       #def de la page paris
         self.btn_accueil.clicked.connect(self.retour_accueil)   #declenchement du bouton et ouvre la page daccueil
         self.btn_sortie.clicked.connect(QApplication.quit)
 
-    def retour_accueil(self):        #fonction btn_accueil
+    def retour_accueil(self):  #fonction btn_accueil
         from app import ATC_accueil
         self.accueil = ATC_accueil()
         self.accueil.showMaximized()      #permet douvrir la fenetre en pleine ecran
