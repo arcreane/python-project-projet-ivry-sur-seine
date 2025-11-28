@@ -36,12 +36,10 @@ class Ui_ATC_paris(object):
         self.main_grid_layout = QGridLayout(self.centralwidget)
         self.main_grid_layout.setObjectName(u"main_grid_layout")
         self.main_grid_layout.setContentsMargins(5, 5, 5, 5)
-        self.main_grid_layout.setColumnStretch(0, 9)
+        self.main_grid_layout.setColumnStretch(0, 7)
 
         sizePolicy_expanding = QSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
         sizePolicy_strip = QSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
-        sizePolicy_panel = QSizePolicy(QSizePolicy.Policy.Fixed, QSizePolicy.Policy.Expanding)
-
 
 
 
@@ -57,12 +55,13 @@ class Ui_ATC_paris(object):
         self.label_5 = QLabel(self.frame_carte)
         self.label_5.setObjectName(u"label_5")
 
-        self.label_5.setScaledContents(True)
+        self.label_5.setScaledContents(False)
         self.label_5.setSizePolicy(sizePolicy_expanding)
         self.carte_inner_layout.addWidget(self.label_5)
+        self.label_5.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.main_grid_layout.addWidget(self.frame_carte, 0, 0, 1, 1)
 
-        self.label_5.setPixmap(QPixmap(u"image/MAP_france_2.png"))
+        self.label_5.setPixmap(QPixmap(u"image/MAP_paris.png"))
 
         self.frame_strip = QFrame(self.centralwidget)
         self.frame_strip.setObjectName(u"frame_strip")
@@ -71,6 +70,7 @@ class Ui_ATC_paris(object):
 
         self.frame_strip.setFrameShape(QFrame.Shape.StyledPanel)
         self.frame_strip.setFrameShadow(QFrame.Shadow.Raised)
+        self.frame_strip.setStyleSheet(u"font-size: 11pt;")
         self.frame_strip.setMinimumHeight(180)
         self.horizontalLayout_2 = QHBoxLayout(self.frame_strip)
         self.horizontalLayout_2.setObjectName(u"horizontalLayout_2")
@@ -342,8 +342,8 @@ class Ui_ATC_paris(object):
         self.frame_11.setObjectName(u"frame_11")
         sizePolicy_panel = QSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
         self.frame_11.setSizePolicy(sizePolicy_panel)
-        self.main_grid_layout.setColumnStretch(1, 2)
-        self.frame_11.setMinimumWidth(250)
+        self.main_grid_layout.setColumnStretch(1, 3)
+        self.frame_11.setMinimumWidth(300)
         self.main_grid_layout.addWidget(self.frame_11, 0, 1, 2, 1)
 
         self.frame_11.setMinimumSize(QSize(0, 0))
@@ -371,87 +371,195 @@ class Ui_ATC_paris(object):
 
         self.verticalLayout_11.addWidget(self.frame_titre)
 
-        self.frame_stat = QFrame(self.frame_11)
+        # 🟢 DÉBUT DU BLOC DE REMPLACEMENT (Commence à self.frame_stat)
+
+        self.frame_stat = QFrame(self.frame_11)  # Le parent est frame_11
         self.frame_stat.setObjectName(u"frame_stat")
-        sizePolicy = QSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Expanding)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.frame_stat.sizePolicy().hasHeightForWidth())
-        self.frame_stat.setSizePolicy(sizePolicy)
+
+        # Policy Verticale Expand pour que ce bloc remplisse la majorité de frame_11
+        sizePolicy_stat = QSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Expanding)
+        self.frame_stat.setSizePolicy(sizePolicy_stat)
         self.frame_stat.setFrameShape(QFrame.Shape.StyledPanel)
         self.frame_stat.setFrameShadow(QFrame.Shadow.Raised)
+
+        # 🟢 LAYOUT PRINCIPAL DE LA SECTION STATS (Empilement vertical)
+        self.stat_main_layout = QVBoxLayout(self.frame_stat)
+        self.stat_main_layout.setObjectName(u"stat_main_layout")
+        self.stat_main_layout.setContentsMargins(10, 10, 10, 10)
+        self.stat_main_layout.setSpacing(15)  # Espacement entre les blocs
+
+        # ----------------------------------------------------
+        # BLOC 1 : HEADING ET INPUT
+        # ----------------------------------------------------
         self.txt_heading = QLabel(self.frame_stat)
         self.txt_heading.setObjectName(u"txt_heading")
-        self.txt_heading.setGeometry(QRect(100, 10, 49, 16))
         self.txt_heading.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        self.img_cercle = QLabel(self.frame_stat)
-        self.img_cercle.setObjectName(u"img_cercle")
-        self.img_cercle.setGeometry(QRect(80, 80, 91, 91))
-        self.img_cercle.setPixmap(QPixmap(u"image/cercle.png"))
-        self.img_cercle.setScaledContents(True)
-        self.txt_nord = QLabel(self.frame_stat)
-        self.txt_nord.setObjectName(u"txt_nord")
-        self.txt_nord.setGeometry(QRect(100, 60, 49, 16))
-        self.txt_nord.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        self.txt_est = QLabel(self.frame_stat)
-        self.txt_est.setObjectName(u"txt_est")
-        self.txt_est.setGeometry(QRect(160, 120, 49, 16))
-        self.txt_est.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        self.txt_sud = QLabel(self.frame_stat)
-        self.txt_sud.setObjectName(u"txt_sud")
-        self.txt_sud.setGeometry(QRect(100, 170, 49, 16))
-        self.txt_sud.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        self.txt_ouest = QLabel(self.frame_stat)
-        self.txt_ouest.setObjectName(u"txt_ouest")
-        self.txt_ouest.setGeometry(QRect(40, 120, 49, 16))
-        self.txt_ouest.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        self.txt_altitude = QLabel(self.frame_stat)
-        self.txt_altitude.setObjectName(u"txt_altitude")
-        self.txt_altitude.setGeometry(QRect(100, 200, 49, 16))
-        self.txt_altitude.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        self.unit_altitude = QLabel(self.frame_stat)
-        self.unit_altitude.setObjectName(u"unit_altitude")
-        self.unit_altitude.setGeometry(QRect(150, 230, 49, 16))
-        self.unit_altitude.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        self.txt_vitesse = QLabel(self.frame_stat)
-        self.txt_vitesse.setObjectName(u"txt_vitesse")
-        self.txt_vitesse.setGeometry(QRect(100, 260, 49, 16))
-        self.txt_vitesse.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        self.txt_vitesse_verticale = QLabel(self.frame_stat)
-        self.txt_vitesse_verticale.setObjectName(u"txt_vitesse_verticale")
-        self.txt_vitesse_verticale.setGeometry(QRect(80, 320, 101, 16))
-        self.txt_vitesse_verticale.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        self.unit_vitesse = QLabel(self.frame_stat)
-        self.unit_vitesse.setObjectName(u"unit_vitesse")
-        self.unit_vitesse.setGeometry(QRect(160, 290, 49, 16))
-        self.unit_vitesse.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        self.unit_vitesse_verticale = QLabel(self.frame_stat)
-        self.unit_vitesse_verticale.setObjectName(u"unit_vitesse_verticale")
-        self.unit_vitesse_verticale.setGeometry(QRect(150, 350, 81, 16))
-        self.unit_vitesse_verticale.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        self.txt_altitude_valeur = QTextEdit(self.frame_stat)
-        self.txt_altitude_valeur.setObjectName(u"txt_altitude_valeur")
-        self.txt_altitude_valeur.setGeometry(QRect(70, 220, 101, 31))
-        self.txt_vitesse_valeur = QTextEdit(self.frame_stat)
-        self.txt_vitesse_valeur.setObjectName(u"txt_vitesse_valeur")
-        self.txt_vitesse_valeur.setGeometry(QRect(70, 280, 104, 31))
-        self.txt_vitesse_verticale_valeur = QTextEdit(self.frame_stat)
-        self.txt_vitesse_verticale_valeur.setObjectName(u"txt_vitesse_verticale_valeur")
-        self.txt_vitesse_verticale_valeur.setGeometry(QRect(70, 340, 104, 31))
+        self.stat_main_layout.addWidget(self.txt_heading)
+
+        self.heading_input_layout = QHBoxLayout()  # Layout Horizontal pour le champ + unité
+        self.heading_input_layout.setObjectName(u"heading_input_layout")
+
         self.txt_heading_valeur = QTextEdit(self.frame_stat)
         self.txt_heading_valeur.setObjectName(u"txt_heading_valeur")
-        self.txt_heading_valeur.setGeometry(QRect(70, 30, 104, 31))
-        self.img_icon_avion = QLabel(self.frame_stat)
-        self.img_icon_avion.setObjectName(u"img_icon_avion")
-        self.img_icon_avion.setGeometry(QRect(90, 90, 71, 61))
-        self.img_icon_avion.setPixmap(QPixmap(u"image/avion_icon.png"))
-        self.img_icon_avion.setScaledContents(True)
+        self.txt_heading_valeur.setMinimumHeight(31)
+        self.txt_heading_valeur.setMaximumHeight(31)
+
         self.unit_heading = QLabel(self.frame_stat)
         self.unit_heading.setObjectName(u"unit_heading")
-        self.unit_heading.setGeometry(QRect(180, 30, 21, 16))
+        self.unit_heading.setAlignment(Qt.AlignmentFlag.AlignVCenter)
+        self.unit_heading.setMaximumWidth(25)  # Largeur fixe pour l'unité
+
+        # Ajout au layout horizontal, centré horizontalement
+        self.heading_input_layout.addStretch(1)  # Pousse à droite
+        self.heading_input_layout.addWidget(self.txt_heading_valeur, alignment=Qt.AlignmentFlag.AlignCenter)
+        self.heading_input_layout.addWidget(self.unit_heading)
+        self.heading_input_layout.addStretch(1)  # Pousse à gauche
+
+        self.stat_main_layout.addLayout(self.heading_input_layout)
+
+        # ----------------------------------------------------
+        # BLOC 2 : ROSE DES VENTS / COMPAS
+        # ----------------------------------------------------
+        self.frame_compas = QFrame(self.frame_stat)
+        self.frame_compas.setObjectName(u"frame_compas")
+        self.frame_compas.setMinimumSize(QSize(100, 100))  # Taille minimale pour le compas
+
+        # 🟢 LAYOUT EN GRILLE POUR LE COMPAS (N, S, E, O, Avion)
+        self.compas_grid = QGridLayout(self.frame_compas)
+        self.compas_grid.setContentsMargins(0, 0, 0, 0)
+
+        # Le Cercle et l'Icône de l'avion (au centre de la grille)
+        self.img_cercle = QLabel(self.frame_compas)
+        self.img_cercle.setObjectName(u"img_cercle")
+        self.img_cercle.setPixmap(QPixmap(u"image/cercle.png"))
+        self.img_cercle.setScaledContents(True)  # Le cercle peut s'étirer
+
+        self.img_icon_avion = QLabel(self.frame_compas)
+        self.img_icon_avion.setObjectName(u"img_icon_avion")
+        self.img_icon_avion.setPixmap(QPixmap(u"image/avion_icon.png"))
+        self.img_icon_avion.setScaledContents(True)
+        self.img_icon_avion.setFixedSize(60, 60)  # Taille fixe pour l'avion
+
+        # Positionnement dans la grille (Ligne, Colonne, RowSpan, ColSpan)
+        self.compas_grid.addWidget(self.img_cercle, 1, 1, 3, 3)  # Cercle (étend sur L1-3, C1-3)
+        self.compas_grid.addWidget(self.img_icon_avion, 2, 2, 1, 1, Qt.AlignmentFlag.AlignCenter)  # Avion (au centre)
+
+        # Les points cardinaux (labels N, S, E, O)
+        # Note : Les variables txt_nord, txt_est, txt_sud, txt_ouest doivent être déclarées et configurées (objetName) avant ces lignes.
+        # Nous supposons qu'elles sont créées par le reste du code généré et sont réutilisées ici.
+        self.txt_nord = QLabel(self.frame_compas)
+        self.txt_nord.setObjectName(u"txt_nord")
+        self.compas_grid.addWidget(self.txt_nord, 0, 2, 1, 1, Qt.AlignmentFlag.AlignCenter)
+        self.txt_est = QLabel(self.frame_compas)
+        self.txt_est.setObjectName(u"txt_est")
+        self.compas_grid.addWidget(self.txt_est, 2, 4, 1, 1, Qt.AlignmentFlag.AlignCenter)
+        self.txt_sud = QLabel(self.frame_compas)
+        self.txt_sud.setObjectName(u"txt_sud")
+        self.compas_grid.addWidget(self.txt_sud, 4, 2, 1, 1, Qt.AlignmentFlag.AlignCenter)
+        self.txt_ouest = QLabel(self.frame_compas)
+        self.txt_ouest.setObjectName(u"txt_ouest")
+        self.compas_grid.addWidget(self.txt_ouest, 2, 0, 1, 1, Qt.AlignmentFlag.AlignCenter)
+
+        self.stat_main_layout.addWidget(self.frame_compas,
+                                        stretch=2)  # Ajout du bloc Compas (stretch 2 pour prendre plus de place)
+        # ----------------------------------------------------
+        # BLOC 3 : ALTITUDE, VITESSE, VITESSE VERTICALE
+        # ----------------------------------------------------
+
+        # ALTITUDE
+        self.txt_altitude = QLabel(self.frame_stat)
+        self.txt_altitude.setObjectName(u"txt_altitude")
+        self.txt_altitude.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        self.txt_altitude_valeur = QTextEdit(self.frame_stat)
+        self.txt_altitude_valeur.setObjectName(u"txt_altitude_valeur")
+        self.txt_altitude_valeur.setMaximumHeight(31)
+        self.unit_altitude = QLabel(self.frame_stat)
+        self.unit_altitude.setObjectName(u"unit_altitude")
+        self.unit_altitude.setMaximumWidth(25)
+
+        altitude_h_layout = QHBoxLayout()
+        altitude_h_layout.addStretch(1)
+        altitude_h_layout.addWidget(self.txt_altitude_valeur, alignment=Qt.AlignmentFlag.AlignCenter)
+        altitude_h_layout.addWidget(self.unit_altitude)
+        altitude_h_layout.addStretch(1)
+
+        self.stat_main_layout.addWidget(self.txt_altitude)
+        self.stat_main_layout.addLayout(altitude_h_layout)
+
+        # VITESSE
+        self.txt_vitesse = QLabel(self.frame_stat)
+        self.txt_vitesse.setObjectName(u"txt_vitesse")
+        self.txt_vitesse.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        self.txt_vitesse_valeur = QTextEdit(self.frame_stat)
+        self.txt_vitesse_valeur.setObjectName(u"txt_vitesse_valeur")
+        self.txt_vitesse_valeur.setMaximumHeight(31)
+        self.unit_vitesse = QLabel(self.frame_stat)
+        self.unit_vitesse.setObjectName(u"unit_vitesse")
+        self.unit_vitesse.setMaximumWidth(25)
+
+        vitesse_h_layout = QHBoxLayout()
+        vitesse_h_layout.addStretch(1)
+        vitesse_h_layout.addWidget(self.txt_vitesse_valeur, alignment=Qt.AlignmentFlag.AlignCenter)
+        vitesse_h_layout.addWidget(self.unit_vitesse)
+        vitesse_h_layout.addStretch(1)
+
+        self.stat_main_layout.addWidget(self.txt_vitesse)
+        self.stat_main_layout.addLayout(vitesse_h_layout)
+
+        # VITESSE VERTICALE
+        self.txt_vitesse_verticale = QLabel(self.frame_stat)
+        self.txt_vitesse_verticale.setObjectName(u"txt_vitesse_verticale")
+        self.txt_vitesse_verticale.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        self.txt_vitesse_verticale_valeur = QTextEdit(self.frame_stat)
+        self.txt_vitesse_verticale_valeur.setObjectName(u"txt_vitesse_verticale_valeur")
+        self.txt_vitesse_verticale_valeur.setMaximumHeight(31)
+        self.unit_vitesse_verticale = QLabel(self.frame_stat)
+        self.unit_vitesse_verticale.setObjectName(u"unit_vitesse_verticale")
+        self.unit_vitesse_verticale.setMaximumWidth(40)
+
+        vitesse_vert_h_layout = QHBoxLayout()
+        vitesse_vert_h_layout.addStretch(1)
+        vitesse_vert_h_layout.addWidget(self.txt_vitesse_verticale_valeur, alignment=Qt.AlignmentFlag.AlignCenter)
+        vitesse_vert_h_layout.addWidget(self.unit_vitesse_verticale)
+        vitesse_vert_h_layout.addStretch(1)
+
+        self.stat_main_layout.addWidget(self.txt_vitesse_verticale)
+        self.stat_main_layout.addLayout(vitesse_vert_h_layout)
+
+        # ----------------------------------------------------
+        # BLOC 4 : BOUTON APPLY
+        # ----------------------------------------------------
+
+        #bouton apply
         self.btn_apply = QPushButton(self.frame_stat)
         self.btn_apply.setObjectName(u"btn_apply")
-        self.btn_apply.setGeometry(QRect(78, 393, 91, 31))
+        self.btn_apply.setFixedSize(91, 31)  # Taille fixe pour le bouton
+
+        apply_h_layout = QHBoxLayout()
+        apply_h_layout.addStretch(1)  # Pousse le bouton au centre
+        apply_h_layout.addWidget(self.btn_apply)
+        apply_h_layout.addStretch(1)
+
+        self.stat_main_layout.addLayout(apply_h_layout)
+
+        #bouton land
+        self.btn_land = QPushButton(self.frame_stat)
+        self.btn_land.setObjectName(u"btn_land")
+        self.btn_land.setText(u"Land")
+        self.btn_land.setFixedSize(91, 31)  # Utilise la même taille que Apply
+
+        # Layout Horizontal pour centrer le bouton Land
+        land_h_layout = QHBoxLayout()
+        land_h_layout.addStretch(1)  # Pousse le bouton au centre
+        land_h_layout.addWidget(self.btn_land)
+        land_h_layout.addStretch(1)
+
+        self.stat_main_layout.addLayout(land_h_layout)
+
+        self.stat_main_layout.addStretch(1)  # Pousse tous les éléments vers le haut de la frame_stat
+
+        # 🟢 FIN DU BLOC DE REMPLACEMENT
+        self.verticalLayout_11.addWidget(self.frame_stat)
 
         self.verticalLayout_11.addWidget(self.frame_stat)
 
