@@ -105,7 +105,11 @@ class Avion:
         if distance < 50:
             self.etat['can_land'] = True
 
+    def landing(self, airport_pos):
 
+    def distance_PTS(self, PTS_remarquable):
+        for key in PTS_remarquable.keys():
+            PTS_remarquable[key] = sqrt((self.pos[0] - ))
 
     def __del__(self):
         Avion.nb_avion -= 1

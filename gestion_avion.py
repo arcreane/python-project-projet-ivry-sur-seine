@@ -50,13 +50,9 @@ while count != 2:
                 continue
             else:
                 distance_avion(dict_avion[key], dict_avion[key__])
+        if dict_avion[key].consigne['landing'] == True:
+            dict_avion[key].landing(dict_data[dict_cara['to']])
 
-        print(dict_avion[key].callsign)
-        print(dict_avion[key].heading)
-        print(dict_avion[key].speed)
-        print(dict_avion[key].vs)
-        print(dict_avion[key].pos)
-        print(dict_avion[key].alt, '\n')
 
     sleep(1)
     count += 1
