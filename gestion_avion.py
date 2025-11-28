@@ -1,6 +1,7 @@
 from avion import Avion
 from random import randint
 from utilities import distance_avion, import_json_avion, import_json_data
+from time import sleep
 
 FIR = "reims"
 L = []
@@ -54,3 +55,5 @@ while True:
     for key,value in dict_data.items():
         dict_avion[key][0] = value[0] * scale_x
         dict_avion[key][1] = value[1] * scale_y
+
+    sleep(1)
