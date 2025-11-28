@@ -109,6 +109,12 @@ class Avion:
         if distance < 50:
             self.etat['can_land'] = True
 
+    def exit_scope(self, lim_x, lim_y):
+        distance_x = abs(lim_x - self.pos[0])
+        distance_y = abs(lim_y - self.pos[1])
+        if (distance_x < 25 or distance_y < 25) or (distance_x < 25 and distance_y < 25):
+            self.consigne['heading'] = (self.heading + 180) % 360
+
     def landing(self, airport_infos):
         distance_airport = sqrt((self.pos[0] - airport_infos[0]) ** 2 + (self.pos[1] - airport_infos[1]) ** 2)
         distance_x = abs(self.pos[0] - airport_infos[0])

@@ -7,6 +7,8 @@ FIR = "reims"
 L = []
 dict_avion = {}
 dict_data = import_json_data(FIR)
+new_size_x =
+new_size_y =
 
 while True:
     while len(dict_avion.keys()) <= 4:
@@ -44,6 +46,7 @@ while True:
         dict_avion[key].horizontal_move(scale_x, scale_y)
         dict_avion[key].vertical_move()
         dict_avion[key].distance_aiport(dict_data[dict_cara['to']])
+        dict_avion[key].exit_scope(new_size_x, new_size_y)
         for key__ in dict_avion.keys():
             if key__ == key:
                 continue
