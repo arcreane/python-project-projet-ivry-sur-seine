@@ -51,9 +51,18 @@ while True:
             if key__ == key:
                 continue
             else:
-                distance_avion(dict_avion[key], dict_avion[key__])
+                distance, delta_altitude = distance_avion(dict_avion[key], dict_avion[key__])
+                if distance < 50 and delta_altitude <= 1000:
+                    dict_avion[key]['etat']['TCAS'] = True
+                    dict_avion[key__]['etat']['TCAS'] = True
+                elif distance == 0 and delta_altitude == 0:
+                    dict_avion[key].__del__()
+                    dict_avion[key__].__del__()
+                    dict_avion.pop(key, None)
+                    dict_avion.pop(key__, None)
         if dict_avion[key].consigne['landing'] == True:
             dict_avion[key].landing(dict_data[dict_cara['to']])
+            dict_avion.pop(key, None)
 
     for key,value in dict_data.items():
         dict_data[key][0] = value[0] * scale_x
