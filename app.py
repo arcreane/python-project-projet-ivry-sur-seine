@@ -95,6 +95,7 @@ class ATC_parislfff(QMainWindow, Ui_ATC_paris):       #def de la page paris
         # 🟢 CONNEXION SIGNAL -> SLOT
         # self.label_5 est l'AircraftMapWidget
         self.label_5.aircraft_clicked.connect(self.display_aircraft_stats)
+        self.btn_apply.clicked.connect(self.apply_new_command)
 
         # Connectez vos autres boutons ici (Apply, Land, etc.)
         # self.btn_apply.clicked.connect(self.apply_new_command)
@@ -121,6 +122,45 @@ class ATC_parislfff(QMainWindow, Ui_ATC_paris):       #def de la page paris
         self.txt_altitude_valeur.setText(str(data["altitude"]))
         self.txt_vitesse_valeur.setText(str(data["speed"]))
         self.txt_vitesse_verticale_valeur.setText(str(data["vertical_speed"]))
+
+    def apply_new_command(self):
+        """
+        Lit les valeurs des champs de texte de la colonne de droite,
+        met à jour les données de l'avion sélectionné et met à jour l'affichage de l'avion.
+        """
+        # 1. Vérifier si un avion est sélectionné
+        callsign = self.selected_callsign
+        if not callsign or callsign not in self.aircraft_details:
+            # Vous pouvez ajouter un message d'erreur/alerte ici pour l'utilisateur
+            print("Erreur: Aucun avion sélectionné ou callsign inconnu.")
+            return
+
+        try:
+            # 2. Lire les nouvelles valeurs des champs QTextEdit
+            # .toPlainText() est nécessaire pour lire le contenu d'un QTextEdit
+            new_heading = int(self.txt_heading_valeur.toPlainText())
+            new_altitude = int(self.txt_altitude_valeur.toPlainText())
+            new_speed = int(self.txt_vitesse_valeur.toPlainText())
+            new_vertical_speed = int(self.txt_vitesse_verticale_valeur.toPlainText())
+
+            # 3. Mettre à jour les données de l'avion dans le dictionnaire
+            aircraft_data = self.aircraft_details[callsign]
+            aircraft_data["heading"] = new_heading
+            aircraft_data["altitude"] = new_altitude
+            aircraft_data["speed"] = new_speed
+            aircraft_data["vertical_speed"] = new_vertical_speed
+
+            # 4. Demander au widget de carte de mettre à jour l'affichage de l'avion
+            # 💡 NOTE : Cette ligne suppose que votre AircraftMapWidget (label_5)
+            # a une méthode 'update_aircraft' qui prend un callsign et un cap.
+            self.label_5.update_aircraft(callsign, new_heading)
+
+            # Message de confirmation (optionnel)
+            self.statusBar().showMessage(f"Commande appliquée à {callsign}: Cap {new_heading}°")
+
+        except ValueError:
+            # Gérer le cas où l'utilisateur entre du texte non numérique
+            print("Erreur de saisie: Veuillez entrer des nombres entiers valides dans tous les champs.")
 
     def retour_accueil(self):  #fonction btn_accueil
         from app import ATC_accueil

@@ -17,6 +17,7 @@ class AircraftMapWidget(QLabel):
         self.setMinimumSize(QSize(1, 1)) # Important pour les QLabels dans les layouts
         self.setMouseTracking(True)  #active le suivi de la souris
         self.hovered_aircraft = None
+        self.aircraft_items = {}
 
     def set_map_image(self, pixmap_path):
         #Définit l'image de fond de la carte
@@ -207,3 +208,15 @@ class AircraftMapWidget(QLabel):
 
         # Affiche la bulle d'aide à la position globale du curseur
         QToolTip.showText(global_pos.toPoint(), info_text, self)  #
+
+    def update_aircraft(self, callsign, new_heading):
+        """
+        Met à jour le cap d'un avion existant.
+        """
+        if callsign in self.aircraft_items:
+            # 🟢 Mettre à jour le cap dans l'objet de l'avion
+            self.aircraft_items[callsign]['heading'] = new_heading
+            # 🟢 Demander à Qt de repeindre le widget pour appliquer la rotation
+            self.update()
+        else:
+            print(f"Erreur: Avion {callsign} non trouvé pour la mise à jour.")
