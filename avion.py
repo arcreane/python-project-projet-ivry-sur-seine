@@ -26,9 +26,9 @@ class Avion:
         self.etat = {'can_land' : False, 'TCAS' : False}
         Avion.nb_avion += 1
 
-    def horizontal_move(self):
-        vx = round((self.speed * sin(radians(self.heading)) / 3600) * 100)
-        vy = round((self.speed * cos(radians(self.heading)) / 3600) * 100)
+    def horizontal_move(self, scale_x, scale_y):
+        vx = round((self.speed * sin(radians(self.heading)) / 3600) * 100 * scale_x)
+        vy = round((self.speed * cos(radians(self.heading)) / 3600) * 100 * scale_y)
         self.pos[0] += vx
         self.pos[1] += vy
 
@@ -107,9 +107,6 @@ class Avion:
 
     def landing(self, airport_pos):
 
-    def distance_PTS(self, PTS_remarquable):
-        for key in PTS_remarquable.keys():
-            PTS_remarquable[key] = sqrt((self.pos[0] - ))
 
     def __del__(self):
         Avion.nb_avion -= 1

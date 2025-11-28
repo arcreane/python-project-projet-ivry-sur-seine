@@ -1,6 +1,5 @@
 from avion import Avion
 from random import randint
-from time import sleep
 from utilities import distance_avion, import_json_avion, import_json_data
 
 FIR = "reims"
@@ -8,9 +7,7 @@ L = []
 dict_avion = {}
 dict_data = import_json_data(FIR)
 
-count = 0
-
-while count != 2:
+while True:
     while len(dict_avion.keys()) <= 4:
         for i in range(5 + 1):
             if i not in dict_avion.keys():
@@ -37,12 +34,13 @@ while count != 2:
                                                 float(dict_cara['conso']),
                                                 int(dict_cara['alt']))
 
-
+    scale_x = new_size_x /
+    scale_y = new_size_y /
     for key in dict_avion.keys():
         dict_avion[key].heading_change()
         dict_avion[key].speed_change()
         dict_avion[key].vs_change()
-        dict_avion[key].horizontal_move()
+        dict_avion[key].horizontal_move(scale_x, scale_y)
         dict_avion[key].vertical_move()
         dict_avion[key].distance_aiport(dict_data[dict_cara['to']])
         for key__ in dict_avion.keys():
@@ -53,6 +51,6 @@ while count != 2:
         if dict_avion[key].consigne['landing'] == True:
             dict_avion[key].landing(dict_data[dict_cara['to']])
 
-
-    sleep(1)
-    count += 1
+    for key,value in dict_data.items():
+        dict_avion[key][0] = value[0] * scale_x
+        dict_avion[key][1] = value[1] * scale_y
