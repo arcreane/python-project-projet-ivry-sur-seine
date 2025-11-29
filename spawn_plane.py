@@ -214,9 +214,9 @@ class AircraftMapWidget(QLabel):
         Met à jour le cap d'un avion existant.
         """
         if callsign in self.aircraft_items:
-            # 🟢 Mettre à jour le cap dans l'objet de l'avion
+            # mettre à jour le cap dans l'objet de l'avion
             self.aircraft_items[callsign]['heading'] = new_heading
-            # 🟢 Demander à Qt de repeindre le widget pour appliquer la rotation
+            # demander à Qt de repeindre le widget pour appliquer la rotation
             self.update()
         else:
             print(f"Erreur: Avion {callsign} non trouvé pour la mise à jour.")
