@@ -1,31 +1,45 @@
 
+#_____________________________________les_imports_________________________________
+
+
 from PySide6.QtWidgets import QLabel, QWidget
 from PySide6.QtGui import QPainter, QPixmap, QColor, QTransform, QPen
 from PySide6.QtCore import Qt, QPointF, QRectF, QSize, Signal
 from PySide6.QtWidgets import QToolTip, QApplication
 import math
 
+#________________________________________________________________________________
+
+
+
 class AircraftMapWidget(QLabel):
 
-    aircraft_clicked = Signal(str)
+    aircraft_clicked = Signal(str) #declaration du signal
+
+
 
     def __init__(self, parent=None):
         super().__init__(parent)
-        self.setScaledContents(True) # La carte elle-même sera mise à l'échelle
-        self.setAlignment(Qt.AlignmentFlag.AlignCenter) # Centre la carte
-        self.aircraft_data = {}  # Stocke les avions : {'callsign': {'position': QPointF, 'heading': float}}
-        self.setMinimumSize(QSize(1, 1)) # Important pour les QLabels dans les layouts
-        self.setMouseTracking(True)  #active le suivi de la souris
-        self.hovered_aircraft = None
-        self.aircraft_items = {}
+        self.setScaledContents(True) # la carte elle-même sera mise à l'échelle
+        self.setAlignment(Qt.AlignmentFlag.AlignCenter) #centre la carte
+        self.aircraft_data = {}  # stock les avions : {'callsign': {'position': QPointF, 'heading': float}}, liste de liste
+        self.setMinimumSize(QSize(1, 1)) # important pour les QLabels dans les layouts
+        self.setMouseTracking(True)  #active le suivi de la souris pour leffet "hover"
+        self.hovered_aircraft = None #par defaut mis a none
 
-    def set_map_image(self, pixmap_path):
+
+
+
+
+    def set_map_image(self, pixmap_path):     #defini limage détude comme etant limage en fond
         #Définit l'image de fond de la carte
         self.map_pixmap = QPixmap(pixmap_path)
         self.setPixmap(self.map_pixmap)
-        self.update()
+        self.update() #actualise l'image en fond
 
-    def add_aircraft(self, callsign, position: QPointF, heading: float):
+
+
+    def add_aircraft(self, callsign, position: QPointF, heading: float):    # conception dun avion et actualisation des infos
         """Ajoute ou met à jour un avion sur la carte.
         :param position: QPointF(x, y) - position en pixels sur la carte.
         :param heading: Angle en degrés (0=Nord, 90=Est).
@@ -33,33 +47,39 @@ class AircraftMapWidget(QLabel):
         self.aircraft_data[callsign] = {'position': position, 'heading': heading}
         self.update() # Déclenche un redessinage pour afficher le nouvel avion
 
-    def remove_aircraft(self, callsign):
-        """Supprime un avion de la carte."""
+
+
+    def remove_aircraft(self, callsign):    #pour enlever un avion en fonction de son callsign
+        #Supprime un avion de la carte
         if callsign in self.aircraft_data:
             del self.aircraft_data[callsign]
             self.update()
 
-    def paintEvent(self, event):
-        """Surcharge la méthode de dessin pour inclure les avions."""
-        super().paintEvent(event) # Dessine d'abord la carte de fond
+
+
+    def paintEvent(self, event):               #methode pour dessiner les icones davion
+
+        #surcharge la méthode de dessin pour inclure les avions
+        super().paintEvent(event) #dessine d'abord la carte de fond et apres les avions
 
         if not self.map_pixmap.isNull():
-            painter = QPainter(self)
 
-            # Ajuster le peintre pour dessiner sur l'image à l'échelle
-            # Ceci est crucial pour que les coordonnées de l'avion correspondent à l'image affichée
+            painter = QPainter(self)         # permet de dessiner les icones d'avions
+
+            #permet de dessiner a lechelle par dessus la carte
+            # important pour faire coincider limage et les coorodnnes
             current_pixmap = self.pixmap()
             if not current_pixmap.isNull():
-                scale_x = current_pixmap.width() / self.map_pixmap.width()
-                scale_y = current_pixmap.height() / self.map_pixmap.height()
+                scale_x=current_pixmap.width()/self.map_pixmap.width()
+                scale_y=current_pixmap.height()/self.map_pixmap.height()
 
-                offset_x = (self.width() - current_pixmap.width()) / 2
-                offset_y = (self.height() - current_pixmap.height()) / 2
+                offset_x=(self.width()-current_pixmap.width())/2
+                offset_y=(self.height()-current_pixmap.height())/2
 
-                # Déplacer l'origine du peintre pour correspondre au coin supérieur gauche de la pixmap
-                painter.translate(offset_x, offset_y)
+                #déplacer l'origine du peintre pour correspondre au coin supérieur gauche de la map
+                painter.translate(offset_x,offset_y)
 
-                # Appliquer la mise à l'échelle
+                #appliquer la mise à l'échelle
                 painter.scale(scale_x, scale_y)
 
             # Dessiner chaque avion
@@ -68,7 +88,7 @@ class AircraftMapWidget(QLabel):
                 heading = data['heading']
 
                 # Dessiner le carré de l'avion
-                square_size = 8 # Taille du carré en pixels de l'image originale
+                square_size = 8 # taille du carré en pixels de l'image originale
                 square_rect = QRectF(pos.x() - square_size /2, pos.y() - square_size /2, square_size, square_size)
                 painter.fillRect(square_rect, QColor(255, 0, 0)) # Rouge
 
@@ -102,34 +122,36 @@ class AircraftMapWidget(QLabel):
                 # Ensuite, on applique la rotation du heading directement.
                 painter.rotate(heading) # Applique la rotation de l'avion (0 = vers le haut)
 
-                painter.setPen(QPen(QColor(0, 255, 0), 2)) # Ligne verte
-                painter.drawLine(QPointF(0, 0), QPointF(0, -line_length)) # Dessine la ligne vers le haut (Nord)
+                painter.setPen(QPen(QColor(0, 255, 0), 2))              #ligne verte
+                painter.drawLine(QPointF(0, 0), QPointF(0, -line_length))        # Dessine la ligne vers le haut (Nord)
 
                 painter.restore() # Restaure l'état du peintre (supprime la translation et la rotation)
 
-            painter.end()
+            painter.end()             #fin du dessin
+
+
 
     def mouseMoveEvent(self, event):
-        """Détecte si le curseur de la souris survole un avion."""
+        #detecte si le curseur de la souris survole un avion
 
         current_pixmap = self.pixmap()
         if current_pixmap.isNull():
             return
 
-        # Calcul de l'échelle et du décalage (code réutilisé de paintEvent)
+        #calcul de l'échelle et du décalage (code réutilisé de paintEvent)
         map_pixmap_size = self.map_pixmap.size()
-        scale_x = current_pixmap.width() / map_pixmap_size.width()
-        scale_y = current_pixmap.height() / map_pixmap_size.height()
+        scale_x=current_pixmap.width()/map_pixmap_size.width()
+        scale_y=current_pixmap.height()/map_pixmap_size.height()
 
-        offset_x = (self.width() - current_pixmap.width()) / 2
-        offset_y = (self.height() - current_pixmap.height()) / 2
+        offset_x=(self.width()-current_pixmap.width()) /2
+        offset_y=(self.height()-current_pixmap.height()) /2
 
-        # Position du curseur dans les coordonnées de l'image originale
+        #positions du curseur dans le coordonnées de l'image originale
         pos_widget = event.position()
         pos_map_x = (pos_widget.x() - offset_x) / scale_x
         pos_map_y = (pos_widget.y() - offset_y) / scale_y
 
-        # Rayon de détection (en pixels de l'image originale)
+        #rayon de détection (en pixels de l'image originale)
         hit_radius = 15
 
         newly_hovered = None
@@ -146,7 +168,7 @@ class AircraftMapWidget(QLabel):
                 newly_hovered = callsign
                 break
 
-        # Affichage/Masquage du ToolTip
+        #affichage/Masquage du ToolTip
         if newly_hovered:
             if newly_hovered != self.hovered_aircraft:
                 self.show_aircraft_tooltip(newly_hovered, event.globalPosition())
@@ -156,6 +178,9 @@ class AircraftMapWidget(QLabel):
             self.hovered_aircraft = None
 
         super().mouseMoveEvent(event)
+
+
+
 
     def mousePressEvent(self, event):
         #Détecte le clic et vérifie si un avion a été cliqué
@@ -186,12 +211,15 @@ class AircraftMapWidget(QLabel):
                 distance = math.sqrt(dx ** 2 + dy ** 2)
 
                 if distance < hit_radius:
-                    # 🟢 AVION DÉTECTÉ : Émettre le signal avec le callsign
+                    #  AVION DÉTECTÉ : Émettre le signal avec le callsign
                     self.aircraft_clicked.emit(callsign)
                     break
 
+
+
+
     def show_aircraft_tooltip(self, callsign, global_pos: QPointF):
-        """Construit et affiche la bulle d'aide pour l'avion."""
+        #Construit et affiche la bulle d'aide pour l'avion
 
         data = self.aircraft_data.get(callsign)
         if not data:
@@ -203,16 +231,19 @@ class AircraftMapWidget(QLabel):
             f"Cap : {data['heading']:.0f}°<br>"
             f"Pos X : {data['position'].x():.1f}<br>"
             f"Pos Y : {data['position'].y():.1f}"
+
             # Ajoutez ici toutes les autres caractéristiques de l'avion (altitude, vitesse, etc.)
         )
 
         # Affiche la bulle d'aide à la position globale du curseur
         QToolTip.showText(global_pos.toPoint(), info_text, self)  #
 
+
+
     def update_aircraft(self, callsign, new_heading):
-        """
-        Met à jour le cap d'un avion existant.
-        """
+
+        #met à jour le cap d'un avion existant.
+
         if callsign in self.aircraft_items:
             # mettre à jour le cap dans l'objet de l'avion
             self.aircraft_items[callsign]['heading'] = new_heading
