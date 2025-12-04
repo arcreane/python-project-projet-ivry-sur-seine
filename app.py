@@ -12,7 +12,7 @@ from ATC_bordeaux import Ui_ATC_bordeaux# import de la window bordeaux
 from ATC_marseille import Ui_ATC_marseille# import de la window marseille
 #___________________________________________________________________________
 from PySide6.QtWidgets import QApplication
-from PySide6.QtCore import (QPointF)
+from PySide6.QtCore import QTimer, QPointF
 
 
 #__________________________class_accueil________________________________
@@ -84,6 +84,19 @@ class ATC_parislfff(QMainWindow, Ui_ATC_paris):       #def de la page paris
         self._load_aircraft_on_map()
         self._connect_signals()
 
+
+        #on introduit la notion de temps pour faire bouger les avions
+        self.simulation_timer = QTimer(self)
+        self.simulation_timer.timeout.connect(self.run_simulation_step)
+        self.simulation_timer.start(100)  # Rafraîchit toutes les 100 ms (delta_time = 0.1s)
+
+    def run_simulation_step(self):
+        #déclenche la mise à jour des positions de tous les avions
+        delta_time = 0.1  # 100 ms / 1000 ms = 0.1 seconde
+
+        #le widget carte gère le déplacement de tous les avions
+        self.label_5.move_aircrafts(delta_time)
+
     def _load_aircraft_on_map(self):
         """Charge les avions sur le widget carte."""
         for callsign, data in self.aircraft_details.items():
@@ -100,7 +113,7 @@ class ATC_parislfff(QMainWindow, Ui_ATC_paris):       #def de la page paris
         # Connectez vos autres boutons ici (Apply, Land, etc.)
         # self.btn_apply.clicked.connect(self.apply_new_command)
 
-    # 2. 🟢 MÉTHODE (SLOT) POUR METTRE À JOUR LE PANNEAU
+    # 2.  MÉTHODE (SLOT) POUR METTRE À JOUR LE PANNEAU
     def display_aircraft_stats(self, callsign):
         """
         Reçoit le callsign de l'avion cliqué et remplit les champs de texte du panneau.
