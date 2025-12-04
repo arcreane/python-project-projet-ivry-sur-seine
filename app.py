@@ -75,10 +75,13 @@ class ATC_parislfff(QMainWindow, Ui_ATC_paris):       #def de la page paris
         self.btn_accueil.clicked.connect(self.retour_accueil)   #declenchement du bouton et ouvre la page daccueil
         self.btn_sortie.clicked.connect(QApplication.quit)
         self.aircraft_details = {
-            "AFR123": {"heading": 45, "altitude": 32000, "speed": 450, "vertical_speed": 0, "pos": QPointF(250, 200)},
-            "BAW456": {"heading": 180, "altitude": 28000, "speed": 480, "vertical_speed": 1000,
+            "AFR123": {"heading": 45, "altitude": 32000, "speed": 50, "vertical_speed": 0, "pos": QPointF(250, 200)},
+            "BAW456": {"heading": 180, "altitude": 28000, "speed": 50, "vertical_speed": 1000,
                        "pos": QPointF(500, 400)},
         }
+
+        self.label_5.all_aircraft_details = self.aircraft_details #on assigne le dico au widget map
+
         self.selected_callsign = None
 
         self._load_aircraft_on_map()
@@ -88,7 +91,11 @@ class ATC_parislfff(QMainWindow, Ui_ATC_paris):       #def de la page paris
         #on introduit la notion de temps pour faire bouger les avions
         self.simulation_timer = QTimer(self)
         self.simulation_timer.timeout.connect(self.run_simulation_step)
-        self.simulation_timer.start(100)  # Rafraîchit toutes les 100 ms (delta_time = 0.1s)
+        self.simulation_timer.start(1000)  # Rafraîchit toutes les 100 ms (delta_time = 0.1s)
+
+
+
+
 
     def run_simulation_step(self):
         #déclenche la mise à jour des positions de tous les avions
@@ -96,6 +103,8 @@ class ATC_parislfff(QMainWindow, Ui_ATC_paris):       #def de la page paris
 
         #le widget carte gère le déplacement de tous les avions
         self.label_5.move_aircrafts(delta_time)
+        if self.selected_callsign:
+            self.display_aircraft_stats(self.selected_callsign)
 
     def _load_aircraft_on_map(self):
         """Charge les avions sur le widget carte."""

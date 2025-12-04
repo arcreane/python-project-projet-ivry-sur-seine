@@ -26,6 +26,7 @@ class AircraftMapWidget(QLabel):
         self.setMinimumSize(QSize(1, 1)) # important pour les QLabels dans les layouts
         self.setMouseTracking(True)  #active le suivi de la souris pour leffet "hover"
         self.hovered_aircraft = None #par defaut mis a none
+        self.all_aircraft_details = None
 
 
 
@@ -239,6 +240,58 @@ class AircraftMapWidget(QLabel):
         QToolTip.showText(global_pos.toPoint(), info_text, self)  #
 
 
+
+
+    def add_aircraft(self, callsign, position: QPointF, heading: float, speed: float = 0):  #ajout de speed
+        """Ajoute ou met à jour un avion sur la carte.
+        :param position: QPointF(x, y) - position en pixels sur la carte.
+        :param heading: Angle en degrés (0=Nord, 90=Est).
+        """
+        #stocke la vitesse et met à jour le dictionnaire
+        self.aircraft_data[callsign] = {'position': position, 'heading': heading, 'speed': speed}
+        self.update()  # Déclenche un redessinage
+
+
+
+
+    def move_aircrafts(self, delta_time):
+
+        #Calcule la nouvelle position pour tous les avions et force le redessinage
+
+        for callsign, data in self.aircraft_data.items():
+            pos = data['position']
+            heading = data['heading']
+            speed = self.all_aircraft_details[callsign]['speed']
+
+            # --- CALCUL DE LA NOUVELLE POSITION ---
+
+            # 1. Convertir le cap en radians (ajustement pour 0°=Nord, 90°=Est)
+            # En maths, 0 est l'axe X positif. Pour Qt/ATC (0=Nord, 90=Est), on utilise un angle ajusté.
+            # L'axe X est lié au sinus du cap, et l'axe Y au cosinus du cap.
+            heading_rad = math.radians(heading)
+
+            # 2. Calcul des déplacements (dx, dy)
+            # Déplacement X : lié au sinus (cap 90°/Est donne sin(90)=1)
+            dx = speed * delta_time * math.sin(heading_rad)
+            # Déplacement Y : lié au cosinus (cap 0°/Nord donne cos(0)=1, et on va vers le haut, donc négatif)
+            dy = speed * delta_time * -math.cos(
+                heading_rad)  # Y est inversé dans les coordonnées écran (Y+ est le bas)
+
+
+            #mise à jour de la position dans le dictionnaire de la carte
+            data['position'] = QPointF(pos.x() + dx, pos.y() + dy)
+            if self.all_aircraft_details:
+                self.all_aircraft_details[callsign]['pos'] = data['position']
+
+            # 3. Mise à jour de la position
+            new_x = pos.x() + dx
+            new_y = pos.y() + dy
+
+            # 4. Enregistrer la nouvelle position
+            data['position'] = QPointF(new_x, new_y)
+
+        # 5. Demander un redessinage global
+        self.update()
 
     def update_aircraft(self, callsign, new_heading):
 
