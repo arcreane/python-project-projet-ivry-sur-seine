@@ -3,7 +3,7 @@
 
 # Imports PySide6.QtWidgets
 from PySide6.QtWidgets import QGraphicsView, QGraphicsScene, QToolTip, QApplication,QGraphicsPolygonItem
-from PySide6.QtWidgets import QGraphicsEllipseItem, QGraphicsTextItem
+from PySide6.QtWidgets import QGraphicsEllipseItem,QGraphicsLineItem, QGraphicsTextItem
 from PySide6.QtWidgets import QLabel, QWidget, QToolTip # QLabel et QWidget peuvent être supprimés si non utilisés
 
 # Imports PySide6.QtGui (Contient QPainter, QPixmap, QColor, QPen, QBrush, etc.)
@@ -16,21 +16,51 @@ import math
 
 #________________________________________________________________________________
 
+# Taille du carré central (à ajuster)
+SQUARE_SIZE = 8
+# Longueur du vecteur de direction (à ajuster)
+VECTOR_LENGTH = 15
 
-class AircraftDotItem(QGraphicsEllipseItem):
-    def __init__(self, callsign, data: dict, size=10):
+class AircraftItem(QGraphicsEllipseItem):
+    def __init__(self, callsign, data: dict,size=SQUARE_SIZE, vector_len=VECTOR_LENGTH):
 
         position = data['pos']
         heading = data['heading']
 
-        super().__init__(position.x() - size/2,
-                         position.y() - size/2,
-                         size,size)
+        # 1. Dessiner le carré central (corps de l'avion)
+        # Le rectangle est dessiné autour de l'origine (0,0) pour faciliter la rotation
+        super().__init__(-size / 2, -size / 2, size, size)
+
 
         self.callsign = callsign
         self.data = data
         self.size = size
 
+        # 2. Dessiner le vecteur de direction (la petite droite)
+        # La ligne va de (0, 0) au haut (-Y)
+        self.vector = QGraphicsLineItem(0, 0, 0, -vector_len, self)  # 'self' rend la ligne enfant du carré
+        self.vector.setPen(QPen(QColor(0, 255, 0), 2))  # Ligne Verte (standard ATC)
+
+        # 3. Couleurs et Rotation
+        self.default_brush = QBrush(QColor(255, 0, 0))  # Rouge
+        self.hover_brush = QBrush(QColor(255, 128, 0))  # Orange
+
+        self.setBrush(self.default_brush)
+        self.setPen(QPen(QColor(0, 0, 0), 1))
+
+        # définir le centre de rotation au centre du carré (très important !)
+        self.setTransformOriginPoint(0, 0)
+
+        # Placer l'icône à la position initiale
+        self.setPos(position)
+        self.setRotation(heading)
+
+        self.setAcceptHoverEvents(True)
+        self.tooltip_text = self.create_tooltip_text()
+
+        # 4. Assurer que le ToolTip fonctionne sur la bonne référence
+        self.setToolTip(self.tooltip_text)
+        """
         # Définition des couleurs pour l'effet de survol
         self.default_brush = QBrush(QColor(255, 0, 0))  # Rouge par défaut
         self.hover_brush = QBrush(QColor(255, 128, 0))  # Orange plus clair pour survol
@@ -51,7 +81,7 @@ class AircraftDotItem(QGraphicsEllipseItem):
         # Important : définit le centre de rotation au centre de l'item
         self.setTransformOriginPoint(size/2, size/2)
         # Stocke les données pour l'interaction
-        self.data = {'position': position, 'heading': heading} # Stockage temporaire des données
+        self.data = {'position': position, 'heading': heading} # Stockage temporaire des données"""
 
     def create_tooltip_text(self):
         #Construit le texte du ToolTip à partir des données de l'avion
@@ -128,8 +158,6 @@ class AircraftMapWidget(QGraphicsView):
             # 1. Applique fitInView à chaque fois que le widget est redimensionné
             # Cela force la scène à s'adapter à la nouvelle taille du QGraphicsView.
             self.fitInView(self.scene.sceneRect(), Qt.AspectRatioMode.KeepAspectRatio)
-
-
 
     def remove_aircraft(self, callsign):    #pour enlever un avion en fonction de son callsign
         #Supprime un avion de la carte
@@ -312,12 +340,11 @@ class AircraftMapWidget(QGraphicsView):
         # 2. Demander à la VUE quel item se trouve à cette position
         item = self.itemAt(pos_view)
 
-        if item and isinstance(item, AircraftDotItem):
+        if item and isinstance(item, AircraftItem):
             # 3. Avion détecté : Émettre le signal avec le callsign
             self.aircraft_clicked.emit(item.callsign)
 
         super().mousePressEvent(event)
-
 
     def show_aircraft_tooltip(self, callsign, global_pos: QPointF):
         #Construit et affiche la bulle d'aide pour l'avion
@@ -339,29 +366,23 @@ class AircraftMapWidget(QGraphicsView):
         # Affiche la bulle d'aide à la position globale du curseur
         QToolTip.showText(global_pos.toPoint(), info_text, self)  #
 
-
     def add_aircraft(self, callsign, data: dict):  #ajout de speed
         """Ajoute ou met à jour un avion sur la carte.
         :param position: QPointF(x, y) - position en pixels sur la carte.
         :param heading: Angle en degrés (0=Nord, 90=Est).
         """
-        position = data['pos']
         heading = data['heading']
         speed = data['speed']
 
-        aircraft_item = AircraftDotItem(callsign, data)
-        aircraft_item.setPos(position)
-
+        aircraft_item = AircraftItem(callsign, data)
+        aircraft_item.setPos(data['pos'])
         self.scene.addItem(aircraft_item)
 
-
-        self.aircraft_data[callsign] = {'item': aircraft_item, 'heading': data['heading']}
-        #stocke la vitesse et met à jour le dictionnaire
         self.aircraft_data[callsign] = {
             'item': aircraft_item,
             'heading': heading,
             'speed': speed
-        }
+        }#stocke la vitesse et met à jour le dictionnaire
 
 
 
