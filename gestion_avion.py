@@ -4,44 +4,43 @@ from utilities import distance_avion, import_json_avion, import_json_data
 
 dict_data = {}
 dict_avion = {}
+L = []
 
+# creation du dico contenant les objets avion
 def init_avion(FIR):
-    L = []
+    global L
     global dict_avion
     global dict_data
     dict_data = import_json_data(FIR)
     while len(dict_avion.keys()) <= 4:
-        for i in range(5 + 1):
-            if i not in dict_avion.keys():
+            n = randint(0, 6)
+            while n in L:
                 n = randint(0, 6)
-                while n in L:
-                    n = randint(0, 6)
-                L.append(n)
-                dict_cara = import_json_avion(FIR, n)
-                dict_avion[i] = Avion(dict_cara['callsign'],
-                                                dict_cara['phonetic'],
-                                                dict_cara['from_'],
-                                                dict_cara['to'],
-                                                dict_cara['type_'],
-                                                dict_cara['immat'],
-                                                dict_cara['turb'],
-                                                dict_cara['pax'],
-                                                dict_cara['final_level'],
-                                                dict_cara['sqwk'],
-                                                float(dict_cara['fuel']),
-                                                dict_data[dict_cara['pos']],
-                                                int(dict_cara['heading']),
-                                                int(dict_cara['speed']),
-                                                int(dict_cara['vs']),
-                                                float(dict_cara['conso']),
-                                                int(dict_cara['alt']))
+            L.append(n)
+            dict_cara = import_json_avion(FIR, n)
+            dict_avion[n] = Avion(dict_cara['callsign'],
+                                  dict_cara['phonetic'],
+                                  dict_cara['from_'],
+                                  dict_cara['to'],
+                                  dict_cara['type_'],
+                                  dict_cara['immat'],
+                                  dict_cara['turb'],
+                                  dict_cara['pax'],
+                                  dict_cara['final_level'],
+                                  dict_cara['sqwk'],
+                                  float(dict_cara['fuel']),
+                                  dict_data[dict_cara['pos']],
+                                  int(dict_cara['heading']),
+                                  int(dict_cara['speed']),
+                                  int(dict_cara['vs']),
+                                  float(dict_cara['conso']),
+                                  int(dict_cara['alt']))
     return dict_avion
 
-def gestion_avion(new_size_x = 621, new_size_y = 431):
+# gestion des mise à jours des paramètres avions et de la carte en fonction de l'échelle
+def gestion_avion(scale_x, scale_y):
     global dict_avion
     global dict_data
-    scale_x = new_size_x / 621
-    scale_y = new_size_y / 431
     for key in dict_avion.keys():
         dict_avion[key].heading_change()
         dict_avion[key].speed_change()
@@ -49,7 +48,7 @@ def gestion_avion(new_size_x = 621, new_size_y = 431):
         dict_avion[key].horizontal_move(scale_x, scale_y)
         dict_avion[key].vertical_move()
         dict_avion[key].distance_aiport(dict_data[dict_avion[key]['to']])
-        dict_avion[key].exit_scope(new_size_x, new_size_y)
+        dict_avion[key].exit_scope(621 * scale_x, 431 * scale_y)
         for key__ in dict_avion.keys():
             if key__ == key:
                 continue
