@@ -58,7 +58,7 @@ class Ui_ATC_paris(object):
         self.label_5 = AircraftMapWidget(self.frame_carte)
         self.label_5.setObjectName(u"label_5")
 
-        self.label_5.setScaledContents(False)
+        self.label_5.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.label_5.setSizePolicy(sizePolicy_expanding)
         self.carte_inner_layout.addWidget(self.label_5)
         self.label_5.setAlignment(Qt.AlignmentFlag.AlignCenter)
@@ -632,7 +632,7 @@ class Ui_ATC_paris(object):
 
     def retranslateUi(self, ATC_paris):
         ATC_paris.setWindowTitle(QCoreApplication.translate("ATC_paris", u"MainWindow", None))
-        self.label_5.setText("")
+        """self.label_5.setText("")"""
         self.label.setText(QCoreApplication.translate("ATC_paris", u"Callsign", None))
         self.label_2.setText(QCoreApplication.translate("ATC_paris", u"AFR 002 Heavy", None))
         self.label_3.setText(QCoreApplication.translate("ATC_paris", u"From", None))

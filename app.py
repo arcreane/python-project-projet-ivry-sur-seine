@@ -3,16 +3,28 @@
 #___________________________________les_imports________________________________________
 import sys
 from PySide6.QtWidgets import QApplication, QMainWindow
-from ATC_accueil import Ui_ATC_accueil  #import de la main window
-#___________________________________________________________________________
+
+from PySide6.QtWidgets import QMainWindow, QApplication, QGraphicsTextItem # Mis à jour
+from PySide6.QtGui import QColor, QFont # Mis à jour
+from PySide6.QtWidgets import QApplication
+from PySide6.QtCore import QTimer, QPointF
+
+#__________________________________les_imports_de_fichiers_________________________________________
 from ATC_paris import Ui_ATC_paris  # import de la window paris
 from ATC_reims import Ui_ATC_reims# import de la window reims
 from ATC_brest import Ui_ATC_brest# import de la window brest
 from ATC_bordeaux import Ui_ATC_bordeaux# import de la window bordeaux
 from ATC_marseille import Ui_ATC_marseille# import de la window marseille
+
+from ATC_accueil import Ui_ATC_accueil  #import de la main window
+from airport import AIRPORTS_DATA #on importe la liste des aeroport depuis le fichier pévu a cet effet
+from airport_dots import AirportDot  #on importe ce qui permet de dessiner les aeroports
+
 #___________________________________________________________________________
-from PySide6.QtWidgets import QApplication
-from PySide6.QtCore import QTimer, QPointF
+
+
+
+
 
 
 #__________________________class_accueil________________________________
@@ -81,17 +93,15 @@ class ATC_parislfff(QMainWindow, Ui_ATC_paris):       #def de la page paris
         }
 
         self.label_5.all_aircraft_details = self.aircraft_details #on assigne le dico au widget map
-
         self.selected_callsign = None
-
         self._load_aircraft_on_map()
+        self._load_airports_on_map()
         self._connect_signals()
-
 
         #on introduit la notion de temps pour faire bouger les avions
         self.simulation_timer = QTimer(self)
         self.simulation_timer.timeout.connect(self.run_simulation_step)
-        self.simulation_timer.start(1000)  # Rafraîchit toutes les 100 ms (delta_time = 0.1s)
+        self.simulation_timer.start(1000)  # Rafraîchit toutes les 1000 ms (delta_time = 1s)
 
 
 
@@ -109,8 +119,12 @@ class ATC_parislfff(QMainWindow, Ui_ATC_paris):       #def de la page paris
     def _load_aircraft_on_map(self):
         """Charge les avions sur le widget carte."""
         for callsign, data in self.aircraft_details.items():
-            # Utilise l'objet label_5 (qui est maintenant AircraftMapWidget)
-            self.label_5.add_aircraft(callsign, data['pos'], data['heading'])
+            self.label_5.add_aircraft(
+                callsign,
+                data['pos'],
+                data['heading'],
+                data['speed']  # Assurez-vous que cette clé existe et est passée
+            )
 
     def _connect_signals(self):
         """Connecte le signal de clic de la carte à la méthode d'affichage des stats."""
@@ -189,6 +203,29 @@ class ATC_parislfff(QMainWindow, Ui_ATC_paris):       #def de la page paris
         self.accueil = ATC_accueil()
         self.accueil.showMaximized()      #permet douvrir la fenetre en pleine ecran
         self.close()       # permet de refermer la fenetre
+
+    def _load_airports_on_map(self):
+        CODES_AUTORISES = ["CDG", "ORY", "LIL"]
+
+        font = QFont("Arial", 13)
+        text_color = QColor(255, 255, 0)
+        # 2. Boucle : Charger uniquement les AÉROPORTS
+        for airport in AIRPORTS_DATA:
+
+            # cORRECTION LOGIQUE : Filtrer uniquement les aéroports pertinents
+            if airport.iata in CODES_AUTORISES:
+                # --- Dessin de l'Aéroport (Point Jaune Interactif) ---
+                airport_dot_item = AirportDot(airport)
+                self.label_5.scene.addItem(airport_dot_item)
+
+                # --- Dessin de l'Étiquette IATA ---
+                label = QGraphicsTextItem(airport.iata)
+                label.setFont(font)
+                label.setDefaultTextColor(text_color)
+
+                # Positionnement (en supposant dot_size=10 pour AirportDot)
+                label.setPos(airport.x + 10 / 2 + 2, airport.y - 10)
+                self.label_5.scene.addItem(label)
 
 class ATC_reimslfee(QMainWindow, Ui_ATC_reims):       #def de la page paris
     def __init__(self):

@@ -1,18 +1,38 @@
 
 #_____________________________________les_imports_________________________________
 
+# Imports PySide6.QtWidgets
+from PySide6.QtWidgets import QGraphicsView, QGraphicsScene, QToolTip, QApplication
+from PySide6.QtWidgets import QGraphicsEllipseItem, QGraphicsTextItem
+from PySide6.QtWidgets import QLabel, QWidget, QToolTip # QLabel et QWidget peuvent être supprimés si non utilisés
 
-from PySide6.QtWidgets import QLabel, QWidget
-from PySide6.QtGui import QPainter, QPixmap, QColor, QTransform, QPen
+# Imports PySide6.QtGui (Contient QPainter, QPixmap, QColor, QPen, QBrush, etc.)
+from PySide6.QtGui import QPainter, QPixmap, QColor, QTransform, QPen, QBrush, QFont,QResizeEvent
+
+# Imports PySide6.QtCore
 from PySide6.QtCore import Qt, QPointF, QRectF, QSize, Signal
-from PySide6.QtWidgets import QToolTip, QApplication
+
 import math
 
 #________________________________________________________________________________
 
 
+class AircraftDotItem(QGraphicsEllipseItem):
+    def __init__(self, callsign, position: QPointF, heading: float, size=10):
+        super().__init__(position.x() - size/2, position.y() - size/2, size, size)
+        self.callsign = callsign
+        self.setRotation(heading) # Démarrage de la rotation
+        self.setBrush(QBrush(QColor(255, 0, 0))) # Rouge
+        self.setPen(QPen(QColor(0, 0, 0), 1))
+        # Important : définit le centre de rotation au centre de l'item
+        self.setTransformOriginPoint(size/2, size/2)
+        self.setAcceptHoverEvents(True)
+        # Stocke les données pour l'interaction
+        self.data = {'position': position, 'heading': heading} # Stockage temporaire des données
 
-class AircraftMapWidget(QLabel):
+
+
+class AircraftMapWidget(QGraphicsView):
 
     aircraft_clicked = Signal(str) #declaration du signal
 
@@ -20,8 +40,9 @@ class AircraftMapWidget(QLabel):
 
     def __init__(self, parent=None):
         super().__init__(parent)
-        self.setScaledContents(True) # la carte elle-même sera mise à l'échelle
-        self.setAlignment(Qt.AlignmentFlag.AlignCenter) #centre la carte
+        self.scene = QGraphicsScene(self)
+        self.setScene(self.scene)
+        self.setRenderHint(QPainter.RenderHint.Antialiasing)
         self.aircraft_data = {}  # stock les avions : {'callsign': {'position': QPointF, 'heading': float}}, liste de liste
         self.setMinimumSize(QSize(1, 1)) # important pour les QLabels dans les layouts
         self.setMouseTracking(True)  #active le suivi de la souris pour leffet "hover"
@@ -33,31 +54,50 @@ class AircraftMapWidget(QLabel):
 
 
     def set_map_image(self, pixmap_path):     #defini limage détude comme etant limage en fond
-        #Définit l'image de fond de la carte
-        self.map_pixmap = QPixmap(pixmap_path)
-        self.setPixmap(self.map_pixmap)
-        self.update() #actualise l'image en fond
 
+        self.scene.clear()        #nous devons d'abord retirer l'ancienne image si elle existe
+        self.map_pixmap =QPixmap(pixmap_path)
+
+        self.scene.setSceneRect(self.map_pixmap.rect())         # definir la taille de la scène à la taille de l'image
+        self.scene.addPixmap(self.map_pixmap)                   #ajouter l'image de fond à la scène
+
+        self.fitInView(self.scene.sceneRect(), Qt.AspectRatioMode.KeepAspectRatio)
+
+    def resizeEvent(self, event: QResizeEvent):
+        """
+        Surcharge la méthode de redimensionnement pour garantir que la carte
+        s'adapte à la taille de la QGraphicsView.
+        """
+        # Appel de la méthode parent
+        super().resizeEvent(event)
+
+        # Vérifie si la carte a été chargée (si self.sceneRect() est défini)
+        if self.map_pixmap and not self.map_pixmap.isNull():
+            # 1. Applique fitInView à chaque fois que le widget est redimensionné
+            # Cela force la scène à s'adapter à la nouvelle taille du QGraphicsView.
+            self.fitInView(self.scene.sceneRect(), Qt.AspectRatioMode.KeepAspectRatio)
 
 
     def add_aircraft(self, callsign, position: QPointF, heading: float):    # conception dun avion et actualisation des infos
-        """Ajoute ou met à jour un avion sur la carte.
-        :param position: QPointF(x, y) - position en pixels sur la carte.
-        :param heading: Angle en degrés (0=Nord, 90=Est).
-        """
-        self.aircraft_data[callsign] = {'position': position, 'heading': heading}
-        self.update() # Déclenche un redessinage pour afficher le nouvel avion
+
+
+        aircraft_item = AircraftDotItem(callsign, position, heading)
+        aircraft_item.setPos(position)  # Positionne l'item à la coordonnée X, Y
+        self.scene.addItem(aircraft_item)
+        self.aircraft_data[callsign] = {'item': aircraft_item, 'heading': heading}
+
 
 
 
     def remove_aircraft(self, callsign):    #pour enlever un avion en fonction de son callsign
         #Supprime un avion de la carte
         if callsign in self.aircraft_data:
+            item = self.aircraft_data[callsign]['item']
+            self.scene.removeItem(item)
             del self.aircraft_data[callsign]
-            self.update()
 
 
-
+    '''
     def paintEvent(self, event):               #methode pour dessiner les icones davion
 
         #surcharge la méthode de dessin pour inclure les avions
@@ -130,8 +170,10 @@ class AircraftMapWidget(QLabel):
 
             painter.end()             #fin du dessin
 
+    '''
 
 
+    '''
     def mouseMoveEvent(self, event):
         #detecte si le curseur de la souris survole un avion
 
@@ -180,9 +222,10 @@ class AircraftMapWidget(QLabel):
 
         super().mouseMoveEvent(event)
 
+    '''
 
 
-
+    '''
     def mousePressEvent(self, event):
         #Détecte le clic et vérifie si un avion a été cliqué
 
@@ -215,6 +258,23 @@ class AircraftMapWidget(QLabel):
                     #  AVION DÉTECTÉ : Émettre le signal avec le callsign
                     self.aircraft_clicked.emit(callsign)
                     break
+    '''
+
+
+    def mousePressEvent(self, event):
+        """Détecte le clic en utilisant la QGraphicsScene."""
+
+        # 1. Obtenir la position du clic dans les coordonnées de la VUE
+        pos_view = event.pos()
+
+        # 2. Demander à la VUE quel item se trouve à cette position
+        item = self.itemAt(pos_view)
+
+        if item and isinstance(item, AircraftDotItem):
+            # 3. Avion détecté : Émettre le signal avec le callsign
+            self.aircraft_clicked.emit(item.callsign)
+
+        super().mousePressEvent(event)
 
 
 
@@ -247,16 +307,23 @@ class AircraftMapWidget(QLabel):
         :param position: QPointF(x, y) - position en pixels sur la carte.
         :param heading: Angle en degrés (0=Nord, 90=Est).
         """
+        aircraft_item = AircraftDotItem(callsign, position, heading)
+        aircraft_item.setPos(position)
+        self.scene.addItem(aircraft_item)
         #stocke la vitesse et met à jour le dictionnaire
-        self.aircraft_data[callsign] = {'position': position, 'heading': heading, 'speed': speed}
+        self.aircraft_data[callsign] = {
+            'item': aircraft_item,
+            'heading': heading,
+            'speed': speed
+        }
         self.update()  # Déclenche un redessinage
 
 
 
-
+    '''
     def move_aircrafts(self, delta_time):
 
-        #Calcule la nouvelle position pour tous les avions et force le redessinage
+        #Déplace les objets QGraphicsItem sur la scène
 
         for callsign, data in self.aircraft_data.items():
             pos = data['position']
@@ -293,11 +360,42 @@ class AircraftMapWidget(QLabel):
         # 5. Demander un redessinage global
         self.update()
 
+    '''
+
+
+    def move_aircrafts(self, delta_time):
+        """Déplace les objets QGraphicsItem sur la scène."""
+
+        for callsign, data in self.aircraft_data.items():
+            item = data['item']  # L'objet graphique à déplacer
+
+            # Récupérer les données de la simulation (vitesse/cap)
+            heading = self.all_aircraft_details[callsign]['heading']
+            speed = self.all_aircraft_details[callsign]['speed']
+
+            # --- CALCUL DES DÉPLACEMENTS (RÉUTILISÉ) ---
+            heading_rad = math.radians(heading)
+            dx = speed * delta_time * math.sin(heading_rad)
+            dy = speed * delta_time * -math.cos(heading_rad)
+
+            # 🟢 DÉPLACEMENT D'OBJET (Simple et efficace)
+            # Item.pos() retourne la position actuelle (QPointF)
+            new_pos = item.pos() + QPointF(dx, dy)
+            item.setPos(new_pos)  # Met à jour la position de l'objet graphique
+
+            # 🟢 MISE À JOUR DES DONNÉES DANS LE DICTIONNAIRE PRINCIPAL
+            if self.all_aircraft_details:
+                self.all_aircraft_details[callsign]['pos'] = new_pos
+
+
+
     def update_aircraft(self, callsign, new_heading):
 
         #met à jour le cap d'un avion existant.
 
         if callsign in self.aircraft_items:
+            item = self.aircraft_data[callsign]['item']
+            item.setRotation(new_heading)
             # mettre à jour le cap dans l'objet de l'avion
             self.aircraft_items[callsign]['heading'] = new_heading
             # demander à Qt de repeindre le widget pour appliquer la rotation
