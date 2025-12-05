@@ -2,7 +2,7 @@
 #_____________________________________les_imports_________________________________
 
 # Imports PySide6.QtWidgets
-from PySide6.QtWidgets import QGraphicsView, QGraphicsScene, QToolTip, QApplication
+from PySide6.QtWidgets import QGraphicsView, QGraphicsScene, QToolTip, QApplication,QGraphicsPolygonItem
 from PySide6.QtWidgets import QGraphicsEllipseItem, QGraphicsTextItem
 from PySide6.QtWidgets import QLabel, QWidget, QToolTip # QLabel et QWidget peuvent être supprimés si non utilisés
 
@@ -18,24 +18,79 @@ import math
 
 
 class AircraftDotItem(QGraphicsEllipseItem):
-    def __init__(self, callsign, position: QPointF, heading: float, size=10):
-        super().__init__(position.x() - size/2, position.y() - size/2, size, size)
+    def __init__(self, callsign, data: dict, size=10):
+
+        position = data['pos']
+        heading = data['heading']
+
+        super().__init__(position.x() - size/2,
+                         position.y() - size/2,
+                         size,size)
+
         self.callsign = callsign
+        self.data = data
+        self.size = size
+
+        # Définition des couleurs pour l'effet de survol
+        self.default_brush = QBrush(QColor(255, 0, 0))  # Rouge par défaut
+        self.hover_brush = QBrush(QColor(255, 128, 0))  # Orange plus clair pour survol
+        self.setBrush(self.default_brush)
+        self.setPen(QPen(QColor(0, 0, 0), 1))
+
+        # Configuration de la rotation (Centre du cercle)
+        self.setTransformOriginPoint(size / 2, size / 2)
+        self.setRotation(data['heading'])
+
+        self.setAcceptHoverEvents(True)
+        self.tooltip_text = self.create_tooltip_text()
+
+
         self.setRotation(heading) # Démarrage de la rotation
         self.setBrush(QBrush(QColor(255, 0, 0))) # Rouge
         self.setPen(QPen(QColor(0, 0, 0), 1))
         # Important : définit le centre de rotation au centre de l'item
         self.setTransformOriginPoint(size/2, size/2)
-        self.setAcceptHoverEvents(True)
         # Stocke les données pour l'interaction
         self.data = {'position': position, 'heading': heading} # Stockage temporaire des données
+
+    def create_tooltip_text(self):
+        #Construit le texte du ToolTip à partir des données de l'avion
+        return (
+            f"Vol : {self.callsign}\n"
+            f"Cap : {self.data.get('heading', '?')}°\n"
+            f"Alt : {self.data.get('altitude', '?')} ft\n"
+            f"Vitesse : {self.data.get('speed', '?')} kts"
+        )
+
+    def hoverEnterEvent(self, event):
+        """Change la couleur et AFFICHE LE TOOLTIP MANUELLEMENT."""
+
+        # Mettre à jour le texte du ToolTip juste avant l'affichage (car les données changent)
+        self.tooltip_text = self.create_tooltip_text()
+
+        self.setBrush(self.hover_brush)
+
+        # Affichage forcé du ToolTip
+        QToolTip.showText(
+            event.screenPos(),
+            self.tooltip_text,
+            self.scene().views()[0]
+        )
+        super().hoverEnterEvent(event)
+
+    def hoverLeaveEvent(self, event):
+        """Remet la couleur par défaut et MASQUE LE TOOLTIP."""
+
+        self.setBrush(self.default_brush)
+        QToolTip.hideText()
+
+        super().hoverLeaveEvent(event)
 
 
 
 class AircraftMapWidget(QGraphicsView):
 
     aircraft_clicked = Signal(str) #declaration du signal
-
 
 
     def __init__(self, parent=None):
@@ -48,9 +103,6 @@ class AircraftMapWidget(QGraphicsView):
         self.setMouseTracking(True)  #active le suivi de la souris pour leffet "hover"
         self.hovered_aircraft = None #par defaut mis a none
         self.all_aircraft_details = None
-
-
-
 
 
     def set_map_image(self, pixmap_path):     #defini limage détude comme etant limage en fond
@@ -76,16 +128,6 @@ class AircraftMapWidget(QGraphicsView):
             # 1. Applique fitInView à chaque fois que le widget est redimensionné
             # Cela force la scène à s'adapter à la nouvelle taille du QGraphicsView.
             self.fitInView(self.scene.sceneRect(), Qt.AspectRatioMode.KeepAspectRatio)
-
-
-    def add_aircraft(self, callsign, position: QPointF, heading: float):    # conception dun avion et actualisation des infos
-
-
-        aircraft_item = AircraftDotItem(callsign, position, heading)
-        aircraft_item.setPos(position)  # Positionne l'item à la coordonnée X, Y
-        self.scene.addItem(aircraft_item)
-        self.aircraft_data[callsign] = {'item': aircraft_item, 'heading': heading}
-
 
 
 
@@ -277,8 +319,6 @@ class AircraftMapWidget(QGraphicsView):
         super().mousePressEvent(event)
 
 
-
-
     def show_aircraft_tooltip(self, callsign, global_pos: QPointF):
         #Construit et affiche la bulle d'aide pour l'avion
 
@@ -300,23 +340,28 @@ class AircraftMapWidget(QGraphicsView):
         QToolTip.showText(global_pos.toPoint(), info_text, self)  #
 
 
-
-
-    def add_aircraft(self, callsign, position: QPointF, heading: float, speed: float = 0):  #ajout de speed
+    def add_aircraft(self, callsign, data: dict):  #ajout de speed
         """Ajoute ou met à jour un avion sur la carte.
         :param position: QPointF(x, y) - position en pixels sur la carte.
         :param heading: Angle en degrés (0=Nord, 90=Est).
         """
-        aircraft_item = AircraftDotItem(callsign, position, heading)
+        position = data['pos']
+        heading = data['heading']
+        speed = data['speed']
+
+        aircraft_item = AircraftDotItem(callsign, data)
         aircraft_item.setPos(position)
+
         self.scene.addItem(aircraft_item)
+
+
+        self.aircraft_data[callsign] = {'item': aircraft_item, 'heading': data['heading']}
         #stocke la vitesse et met à jour le dictionnaire
         self.aircraft_data[callsign] = {
             'item': aircraft_item,
             'heading': heading,
             'speed': speed
         }
-        self.update()  # Déclenche un redessinage
 
 
 
@@ -386,7 +431,6 @@ class AircraftMapWidget(QGraphicsView):
             # 🟢 MISE À JOUR DES DONNÉES DANS LE DICTIONNAIRE PRINCIPAL
             if self.all_aircraft_details:
                 self.all_aircraft_details[callsign]['pos'] = new_pos
-
 
 
     def update_aircraft(self, callsign, new_heading):

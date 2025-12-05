@@ -615,10 +615,8 @@ class Ui_ATC_paris(object):
             map_width = self.label_5.map_pixmap.width()
             map_height = self.label_5.map_pixmap.height()
 
-            # Positionne un avion au centre de la carte avec un cap de 45 degrés
-            self.label_5.add_aircraft("AFR123", QPointF(map_width / 2, map_height / 2), 45)
             # Ajoute un deuxième avion un peu décalé avec un cap différent
-            self.label_5.add_aircraft("BAW456", QPointF(map_width / 3, map_height / 4), 180)
+            #self.label_5.add_aircraft("BAW456", QPointF(map_width / 3, map_height / 4), 180)
 
 
 

@@ -19,6 +19,8 @@ from ATC_marseille import Ui_ATC_marseille# import de la window marseille
 from ATC_accueil import Ui_ATC_accueil  #import de la main window
 from airport import AIRPORTS_DATA #on importe la liste des aeroport depuis le fichier pévu a cet effet
 from airport_dots import AirportDot  #on importe ce qui permet de dessiner les aeroports
+from spawn_point_data import SPAWN_POINTS #on import les points de spawn des avions
+
 
 #___________________________________________________________________________
 
@@ -88,10 +90,10 @@ class ATC_parislfff(QMainWindow, Ui_ATC_paris):       #def de la page paris
         self.btn_sortie.clicked.connect(QApplication.quit)
         self.aircraft_details = {
             "AFR123": {"heading": 45, "altitude": 32000, "speed": 50, "vertical_speed": 0, "pos": QPointF(250, 200)},
-            "BAW456": {"heading": 180, "altitude": 28000, "speed": 50, "vertical_speed": 1000,
-                       "pos": QPointF(500, 400)},
+            "BAW456": {"heading": 180, "altitude": 28000, "speed": 50, "vertical_speed": 1000,"pos": QPointF(500, 400)},
+            "AFR789": {"heading": 60, "altitude": 32000, "speed": 50, "vertical_speed": 0, "pos": QPointF(250, 200)},
+            "BAW054": {"heading": 300, "altitude": 28000, "speed": 50, "vertical_speed": 1000, "pos": QPointF(500, 400)}
         }
-
         self.label_5.all_aircraft_details = self.aircraft_details #on assigne le dico au widget map
         self.selected_callsign = None
         self._load_aircraft_on_map()
@@ -102,6 +104,8 @@ class ATC_parislfff(QMainWindow, Ui_ATC_paris):       #def de la page paris
         self.simulation_timer = QTimer(self)
         self.simulation_timer.timeout.connect(self.run_simulation_step)
         self.simulation_timer.start(1000)  # Rafraîchit toutes les 1000 ms (delta_time = 1s)
+
+        self.aircraft_details = self._create_initial_aircrafts()
 
 
 
@@ -119,12 +123,7 @@ class ATC_parislfff(QMainWindow, Ui_ATC_paris):       #def de la page paris
     def _load_aircraft_on_map(self):
         """Charge les avions sur le widget carte."""
         for callsign, data in self.aircraft_details.items():
-            self.label_5.add_aircraft(
-                callsign,
-                data['pos'],
-                data['heading'],
-                data['speed']  # Assurez-vous que cette clé existe et est passée
-            )
+            self.label_5.add_aircraft(callsign, data)
 
     def _connect_signals(self):
         """Connecte le signal de clic de la carte à la méthode d'affichage des stats."""
@@ -136,7 +135,6 @@ class ATC_parislfff(QMainWindow, Ui_ATC_paris):       #def de la page paris
         # Connectez vos autres boutons ici (Apply, Land, etc.)
         # self.btn_apply.clicked.connect(self.apply_new_command)
 
-    # 2.  MÉTHODE (SLOT) POUR METTRE À JOUR LE PANNEAU
     def display_aircraft_stats(self, callsign):
         """
         Reçoit le callsign de l'avion cliqué et remplit les champs de texte du panneau.
@@ -226,6 +224,30 @@ class ATC_parislfff(QMainWindow, Ui_ATC_paris):       #def de la page paris
                 # Positionnement (en supposant dot_size=10 pour AirportDot)
                 label.setPos(airport.x + 10 / 2 + 2, airport.y - 10)
                 self.label_5.scene.addItem(label)
+
+    def _create_initial_aircrafts(self):
+
+        #Crée un ensemble d'avions initiaux en utilisant les points de spawn.
+
+        initial_aircrafts = {}
+        callsign_counter = 100
+
+        for sp in SPAWN_POINTS:
+            callsign = f"AFR{callsign_counter}"
+
+            # 💡 On assigne les caractéristiques du SpawnPoint
+            initial_aircrafts[callsign] = {
+                "heading": sp.heading,
+                "altitude": 30000,  # Altitude de croisière par défaut
+                "speed": 60,  # Vitesse de croisière
+                "vertical_speed": 0,
+                "pos": sp.pos  # Position QPointF du SpawnPoint
+            }
+            callsign_counter += 1
+
+        return initial_aircrafts
+
+
 
 class ATC_reimslfee(QMainWindow, Ui_ATC_reims):       #def de la page paris
     def __init__(self):
