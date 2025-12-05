@@ -1,9 +1,9 @@
 
 
 
-from PySide6.QtWidgets import QGraphicsEllipseItem, QGraphicsTextItem
+from PySide6.QtWidgets import QGraphicsEllipseItem, QGraphicsTextItem,QToolTip
 from PySide6.QtGui import QColor, QPen, QBrush, QFont
-from PySide6.QtCore import Qt
+from PySide6.QtCore import Qt, QPointF, QPoint
 
 
 class AirportDot(QGraphicsEllipseItem):
@@ -27,16 +27,24 @@ class AirportDot(QGraphicsEllipseItem):
         self.setBrush(self.default_brush)
 
         self.setAcceptHoverEvents(True)
-
         # Définir le ToolTip pour afficher les données au survol
-        self.setToolTip(f"Aéroport : {self.airport_data.name} (Code IATA : {self.airport_data.iata})")
+        self.tooltip_text = f"Aéroport : {self.airport_data.name}\nCode IATA : {self.airport_data.iata}"        # Définir les couleurs pour l'effet visuel (changé pour l'ellipse)
+        self.default_brush = QBrush(QColor(255, 255, 0))  # Jaune
+        self.hover_brush = QBrush(QColor(255, 165, 0))  # Orange
+        self.setBrush(self.default_brush)
+
 
     def hoverEnterEvent(self, event):
-        """Action lorsque le curseur entre (Hover Enter)."""
         self.setBrush(self.hover_brush)
+        QToolTip.showText(
+            event.screenPos(),  # La position du curseur sur l'écran
+            self.tooltip_text,  # Le texte à afficher
+            self.scene().views()[0]  # Le widget parent (la QGraphicsView)
+        )
         super().hoverEnterEvent(event)
 
     def hoverLeaveEvent(self, event):
-        """Action lorsque le curseur quitte (Hover Leave)."""
+
         self.setBrush(self.default_brush)
+        QToolTip.hideText()
         super().hoverLeaveEvent(event)
