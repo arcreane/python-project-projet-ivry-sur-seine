@@ -88,12 +88,15 @@ class ATC_parislfff(QMainWindow, Ui_ATC_paris):       #def de la page paris
         self.setWindowTitle("ATC_parisfLFFF") #titre de la page
         self.btn_accueil.clicked.connect(self.retour_accueil)   #declenchement du bouton et ouvre la page daccueil
         self.btn_sortie.clicked.connect(QApplication.quit)
+        '''
         self.aircraft_details = {
-            "AFR123": {"heading": 45, "altitude": 32000, "speed": 50, "vertical_speed": 0, "pos": QPointF(250, 200)},
-            "BAW456": {"heading": 180, "altitude": 28000, "speed": 50, "vertical_speed": 1000,"pos": QPointF(500, 400)},
-            "AFR789": {"heading": 60, "altitude": 32000, "speed": 50, "vertical_speed": 0, "pos": QPointF(250, 200)},
-            "BAW054": {"heading": 300, "altitude": 28000, "speed": 50, "vertical_speed": 1000, "pos": QPointF(500, 400)}
+            "AFR123": {"heading": 45, "altitude": 32000, "speed": 50, "vertical_speed": 0, "pos": QPointF(800, 200)},
+            "BAW456": {"heading": 180, "altitude": 28000, "speed": 50, "vertical_speed": 1000,"pos": QPointF(200, 400)},
+            "AFR789": {"heading": 60, "altitude": 32000, "speed": 50, "vertical_speed": 0, "pos": QPointF(400,100)},
+            "BAW054": {"heading": 300, "altitude": 28000, "speed": 50, "vertical_speed": 1000, "pos": QPointF(100, 400)}
         }
+        '''
+        self.aircraft_details = self._create_initial_aircrafts()
         self.label_5.all_aircraft_details = self.aircraft_details #on assigne le dico au widget map
         self.selected_callsign = None
         self._load_aircraft_on_map()
@@ -105,7 +108,6 @@ class ATC_parislfff(QMainWindow, Ui_ATC_paris):       #def de la page paris
         self.simulation_timer.timeout.connect(self.run_simulation_step)
         self.simulation_timer.start(1000)  # Rafraîchit toutes les 1000 ms (delta_time = 1s)
 
-        self.aircraft_details = self._create_initial_aircrafts()
 
 
 
@@ -117,6 +119,10 @@ class ATC_parislfff(QMainWindow, Ui_ATC_paris):       #def de la page paris
 
         #le widget carte gère le déplacement de tous les avions
         self.label_5.move_aircrafts(delta_time)
+        # Si le champ de Cap (ou un autre) a le focus, NE PAS écraser la saisie.
+        if self.txt_heading_valeur.hasFocus() or self.txt_vitesse_valeur.hasFocus():
+            # Si l'utilisateur est en train de saisir, on sort sans appeler display_aircraft_stats
+            return
         if self.selected_callsign:
             self.display_aircraft_stats(self.selected_callsign)
 

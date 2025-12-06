@@ -2,7 +2,7 @@
 #_____________________________________les_imports_________________________________
 
 # Imports PySide6.QtWidgets
-from PySide6.QtWidgets import QGraphicsView, QGraphicsScene, QToolTip, QApplication,QGraphicsPolygonItem
+from PySide6.QtWidgets import QGraphicsView, QGraphicsScene,QGraphicsRectItem, QToolTip, QApplication,QGraphicsPolygonItem
 from PySide6.QtWidgets import QGraphicsEllipseItem,QGraphicsLineItem, QGraphicsTextItem
 from PySide6.QtWidgets import QLabel, QWidget, QToolTip # QLabel et QWidget peuvent être supprimés si non utilisés
 
@@ -17,11 +17,11 @@ import math
 #________________________________________________________________________________
 
 # Taille du carré central (à ajuster)
-SQUARE_SIZE = 8
+SQUARE_SIZE = 14
 # Longueur du vecteur de direction (à ajuster)
-VECTOR_LENGTH = 15
+VECTOR_LENGTH = 23
 
-class AircraftItem(QGraphicsEllipseItem):
+class AircraftItem(QGraphicsRectItem):
     def __init__(self, callsign, data: dict,size=SQUARE_SIZE, vector_len=VECTOR_LENGTH):
 
         position = data['pos']
@@ -39,14 +39,14 @@ class AircraftItem(QGraphicsEllipseItem):
         # 2. Dessiner le vecteur de direction (la petite droite)
         # La ligne va de (0, 0) au haut (-Y)
         self.vector = QGraphicsLineItem(0, 0, 0, -vector_len, self)  # 'self' rend la ligne enfant du carré
-        self.vector.setPen(QPen(QColor(0, 255, 0), 2))  # Ligne Verte (standard ATC)
+        self.vector.setPen(QPen(QColor(250, 255, 250), 2))  # Ligne Verte (standard ATC)
 
         # 3. Couleurs et Rotation
-        self.default_brush = QBrush(QColor(255, 0, 0))  # Rouge
+        self.default_brush = QBrush(Qt.GlobalColor.transparent)  # Rouge
         self.hover_brush = QBrush(QColor(255, 128, 0))  # Orange
 
-        self.setBrush(self.default_brush)
-        self.setPen(QPen(QColor(0, 0, 0), 1))
+        self.setBrush(Qt.BrushStyle.NoBrush)
+        self.setPen(QPen(QColor(250, 250, 250), 1))
 
         # définir le centre de rotation au centre du carré (très important !)
         self.setTransformOriginPoint(0, 0)
@@ -60,6 +60,7 @@ class AircraftItem(QGraphicsEllipseItem):
 
         # 4. Assurer que le ToolTip fonctionne sur la bonne référence
         self.setToolTip(self.tooltip_text)
+
         """
         # Définition des couleurs pour l'effet de survol
         self.default_brush = QBrush(QColor(255, 0, 0))  # Rouge par défaut
@@ -458,12 +459,11 @@ class AircraftMapWidget(QGraphicsView):
 
         #met à jour le cap d'un avion existant.
 
-        if callsign in self.aircraft_items:
+        if callsign in self.aircraft_data:
             item = self.aircraft_data[callsign]['item']
             item.setRotation(new_heading)
             # mettre à jour le cap dans l'objet de l'avion
-            self.aircraft_items[callsign]['heading'] = new_heading
-            # demander à Qt de repeindre le widget pour appliquer la rotation
-            self.update()
+            self.aircraft_data[callsign]['heading'] = new_heading
+
         else:
             print(f"Erreur: Avion {callsign} non trouvé pour la mise à jour.")
