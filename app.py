@@ -20,12 +20,10 @@ from ATC_accueil import Ui_ATC_accueil  #import de la main window
 from airport import AIRPORTS_DATA #on importe la liste des aeroport depuis le fichier pévu a cet effet
 from airport_dots import AirportDot  #on importe ce qui permet de dessiner les aeroports
 from spawn_point_data import SPAWN_POINTS #on import les points de spawn des avions
-
-
+from utilities import json_data, json_avion #import des fonctions du fichier utilities
+from gestion_avion import init_avion
+from avion import Avion
 #___________________________________________________________________________
-
-
-
 
 
 
@@ -38,18 +36,29 @@ class ATC_accueil(QMainWindow, Ui_ATC_accueil):          #def de la page accueil
         self.setWindowTitle("ATC Simulator - Accueil") #titre de la page
         #_____________________________paris
         self.ATC_parislfff.clicked.connect(self.ouvrir_paris) #déclenchement du bouton et ouvre paris
+        json_data('paris')
+        json_avion('paris')
         self.fenetre_paris = None
         #_____________________________reims
+
         self.ATC_reimslfee.clicked.connect(self.ouvrir_reims)  # déclenchement du bouton et ouvre reims
+        json_data('reims')
+        json_avion('reims')
         self.fenetre_reims = None
         #_____________________________marseille
         self.ATC_marseillelfmm.clicked.connect(self.ouvrir_marseille)  # déclenchement du bouton et ouvre marseille
+        json_data('marseille')
+        json_avion('marseille')
         self.fenetre_marseille = None
         #_____________________________bordeaux
         self.ATC_bordeauxlfbb.clicked.connect(self.ouvrir_bordeaux)  # déclenchement du bouton et ouvre bordeaux
+        json_data('bordeaux')
+        json_avion('bordeaux')
         self.fenetre_bordeaux = None
         #_____________________________brest
         self.ATC_brestlfrr.clicked.connect(self.ouvrir_brest)  # déclenchement du bouton et ouvre brest
+        json_data('brest')
+        json_avion('brest')
         self.fenetre_brest = None
         #______________________________btn_sorti
         self.btn_sortie.clicked.connect(QApplication.quit)
@@ -88,12 +97,7 @@ class ATC_parislfff(QMainWindow, Ui_ATC_paris):       #def de la page paris
         self.setWindowTitle("ATC_parisfLFFF") #titre de la page
         self.btn_accueil.clicked.connect(self.retour_accueil)   #declenchement du bouton et ouvre la page daccueil
         self.btn_sortie.clicked.connect(QApplication.quit)
-        self.aircraft_details = {
-            "AFR123": {"heading": 45, "altitude": 32000, "speed": 50, "vertical_speed": 0, "pos": QPointF(250, 200)},
-            "BAW456": {"heading": 180, "altitude": 28000, "speed": 50, "vertical_speed": 1000,"pos": QPointF(500, 400)},
-            "AFR789": {"heading": 60, "altitude": 32000, "speed": 50, "vertical_speed": 0, "pos": QPointF(250, 200)},
-            "BAW054": {"heading": 300, "altitude": 28000, "speed": 50, "vertical_speed": 1000, "pos": QPointF(500, 400)}
-        }
+        self.aircraft_details = init_avion({})
         self.label_5.all_aircraft_details = self.aircraft_details #on assigne le dico au widget map
         self.selected_callsign = None
         self._load_aircraft_on_map()
@@ -104,8 +108,6 @@ class ATC_parislfff(QMainWindow, Ui_ATC_paris):       #def de la page paris
         self.simulation_timer = QTimer(self)
         self.simulation_timer.timeout.connect(self.run_simulation_step)
         self.simulation_timer.start(1000)  # Rafraîchit toutes les 1000 ms (delta_time = 1s)
-
-        self.aircraft_details = self._create_initial_aircrafts()
 
 
 
@@ -122,8 +124,9 @@ class ATC_parislfff(QMainWindow, Ui_ATC_paris):       #def de la page paris
 
     def _load_aircraft_on_map(self):
         """Charge les avions sur le widget carte."""
-        for callsign, data in self.aircraft_details.items():
-            self.label_5.add_aircraft(callsign, data)
+        for data in self.aircraft_details.values():
+            print(data.callsign)
+            self.label_5.add_aircraft(data.callsign, data)
 
     def _connect_signals(self):
         """Connecte le signal de clic de la carte à la méthode d'affichage des stats."""
@@ -225,27 +228,6 @@ class ATC_parislfff(QMainWindow, Ui_ATC_paris):       #def de la page paris
                 label.setPos(airport.x + 10 / 2 + 2, airport.y - 10)
                 self.label_5.scene.addItem(label)
 
-    def _create_initial_aircrafts(self):
-
-        #Crée un ensemble d'avions initiaux en utilisant les points de spawn.
-
-        initial_aircrafts = {}
-        callsign_counter = 100
-
-        for sp in SPAWN_POINTS:
-            callsign = f"AFR{callsign_counter}"
-
-            # 💡 On assigne les caractéristiques du SpawnPoint
-            initial_aircrafts[callsign] = {
-                "heading": sp.heading,
-                "altitude": 30000,  # Altitude de croisière par défaut
-                "speed": 60,  # Vitesse de croisière
-                "vertical_speed": 0,
-                "pos": sp.pos  # Position QPointF du SpawnPoint
-            }
-            callsign_counter += 1
-
-        return initial_aircrafts
 
 
 

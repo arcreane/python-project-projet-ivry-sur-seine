@@ -24,8 +24,8 @@ VECTOR_LENGTH = 15
 class AircraftItem(QGraphicsEllipseItem):
     def __init__(self, callsign, data: dict,size=SQUARE_SIZE, vector_len=VECTOR_LENGTH):
 
-        position = data['pos']
-        heading = data['heading']
+        position = data.pos
+        heading = data.heading
 
         # 1. Dessiner le carré central (corps de l'avion)
         # Le rectangle est dessiné autour de l'origine (0,0) pour faciliter la rotation
@@ -52,7 +52,7 @@ class AircraftItem(QGraphicsEllipseItem):
         self.setTransformOriginPoint(0, 0)
 
         # Placer l'icône à la position initiale
-        self.setPos(position)
+        self.setPos(position[0], position[1])
         self.setRotation(heading)
 
         self.setAcceptHoverEvents(True)
@@ -87,9 +87,9 @@ class AircraftItem(QGraphicsEllipseItem):
         #Construit le texte du ToolTip à partir des données de l'avion
         return (
             f"Vol : {self.callsign}\n"
-            f"Cap : {self.data.get('heading', '?')}°\n"
-            f"Alt : {self.data.get('altitude', '?')} ft\n"
-            f"Vitesse : {self.data.get('speed', '?')} kts"
+            f"Cap : {self.data.heading} ° \n"
+            f"Alt : {self.data.alt} ft\n"
+            f"Vitesse : {self.data.speed} kts"
         )
 
     def hoverEnterEvent(self, event):
@@ -371,11 +371,11 @@ class AircraftMapWidget(QGraphicsView):
         :param position: QPointF(x, y) - position en pixels sur la carte.
         :param heading: Angle en degrés (0=Nord, 90=Est).
         """
-        heading = data['heading']
-        speed = data['speed']
+        heading = data.heading
+        speed = data.speed
 
         aircraft_item = AircraftItem(callsign, data)
-        aircraft_item.setPos(data['pos'])
+        aircraft_item.setPos(data.pos[0], data.pos[1])
         self.scene.addItem(aircraft_item)
 
         self.aircraft_data[callsign] = {
