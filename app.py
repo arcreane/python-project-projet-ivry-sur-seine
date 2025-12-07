@@ -19,10 +19,9 @@ from ATC_marseille import Ui_ATC_marseille# import de la window marseille
 from ATC_accueil import Ui_ATC_accueil  #import de la main window
 from airport import AIRPORTS_DATA #on importe la liste des aeroport depuis le fichier pévu a cet effet
 from airport_dots import AirportDot  #on importe ce qui permet de dessiner les aeroports
-from spawn_point_data import SPAWN_POINTS #on import les points de spawn des avions
 from utilities import json_data, json_avion #import des fonctions du fichier utilities
 from gestion_avion import init_avion
-from avion import Avion
+from time import sleep
 #___________________________________________________________________________
 
 
@@ -36,29 +35,19 @@ class ATC_accueil(QMainWindow, Ui_ATC_accueil):          #def de la page accueil
         self.setWindowTitle("ATC Simulator - Accueil") #titre de la page
         #_____________________________paris
         self.ATC_parislfff.clicked.connect(self.ouvrir_paris) #déclenchement du bouton et ouvre paris
-        json_data('paris')
-        json_avion('paris')
         self.fenetre_paris = None
         #_____________________________reims
 
         self.ATC_reimslfee.clicked.connect(self.ouvrir_reims)  # déclenchement du bouton et ouvre reims
-        json_data('reims')
-        json_avion('reims')
         self.fenetre_reims = None
         #_____________________________marseille
         self.ATC_marseillelfmm.clicked.connect(self.ouvrir_marseille)  # déclenchement du bouton et ouvre marseille
-        json_data('marseille')
-        json_avion('marseille')
         self.fenetre_marseille = None
         #_____________________________bordeaux
         self.ATC_bordeauxlfbb.clicked.connect(self.ouvrir_bordeaux)  # déclenchement du bouton et ouvre bordeaux
-        json_data('bordeaux')
-        json_avion('bordeaux')
         self.fenetre_bordeaux = None
         #_____________________________brest
         self.ATC_brestlfrr.clicked.connect(self.ouvrir_brest)  # déclenchement du bouton et ouvre brest
-        json_data('brest')
-        json_avion('brest')
         self.fenetre_brest = None
         #______________________________btn_sorti
         self.btn_sortie.clicked.connect(QApplication.quit)
@@ -66,26 +55,36 @@ class ATC_accueil(QMainWindow, Ui_ATC_accueil):          #def de la page accueil
     def ouvrir_paris(self):           #fonction qui ouvre paris
         self.fenetre_paris = ATC_parislfff()
         self.fenetre_paris.showMaximized() #permet douvrir la fenetre en pleine ecran
+        json_data('paris')
+        json_avion('paris')
         self.close()
 
     def ouvrir_reims(self):           #fonction qui ouvre reims
         self.fenetre_reims = ATC_reimslfee()
         self.fenetre_reims.showMaximized() #permet douvrir la fenetre en pleine ecran
+        json_data('reims')
+        json_avion('reims')
         self.close()
 
     def ouvrir_marseille(self):           #fonction qui ouvre marseille
         self.fenetre_marseille = ATC_marseillelfmm()
         self.fenetre_marseille.showMaximized() #permet douvrir la fenetre en pleine ecran
+        json_data('marseille')
+        json_avion('marseille')
         self.close()
 
     def ouvrir_bordeaux(self):           #fonction qui ouvre bordeaux
         self.fenetre_bordeaux = ATC_bordeauxlfbb()
         self.fenetre_bordeaux.showMaximized() #permet douvrir la fenetre en pleine ecran
+        json_data('bordeaux')
+        json_avion('bordeaux')
         self.close()
 
     def ouvrir_brest(self):           #fonction qui ouvre brest
         self.fenetre_brest = ATC_brestlfrr()
         self.fenetre_brest.showMaximized() #permet douvrir la fenetre en pleine ecran
+        json_data('brest')
+        json_avion('brest')
         self.close()
 
 #_____________________BOUTONS____________________________________
@@ -97,7 +96,7 @@ class ATC_parislfff(QMainWindow, Ui_ATC_paris):       #def de la page paris
         self.setWindowTitle("ATC_parisfLFFF") #titre de la page
         self.btn_accueil.clicked.connect(self.retour_accueil)   #declenchement du bouton et ouvre la page daccueil
         self.btn_sortie.clicked.connect(QApplication.quit)
-        self.aircraft_details = init_avion({})
+        self.aircraft_details = init_avion()
         self.label_5.all_aircraft_details = self.aircraft_details #on assigne le dico au widget map
         self.selected_callsign = None
         self._load_aircraft_on_map()
@@ -114,18 +113,15 @@ class ATC_parislfff(QMainWindow, Ui_ATC_paris):       #def de la page paris
 
 
     def run_simulation_step(self):
-        #déclenche la mise à jour des positions de tous les avions
-        delta_time = 0.1  # 100 ms / 1000 ms = 0.1 seconde
-
         #le widget carte gère le déplacement de tous les avions
-        self.label_5.move_aircrafts(delta_time)
+        self.label_5.move_aircrafts()
         if self.selected_callsign:
             self.display_aircraft_stats(self.selected_callsign)
+        sleep(1)
 
     def _load_aircraft_on_map(self):
         """Charge les avions sur le widget carte."""
         for data in self.aircraft_details.values():
-            print(data.callsign)
             self.label_5.add_aircraft(data.callsign, data)
 
     def _connect_signals(self):

@@ -4,11 +4,13 @@ from utilities import distance_avion, import_json_avion, import_json_data
 
 dict_data = {}
 L = []
+dict_avion = {}
 
 # creation du dico contenant les objets avion
-def init_avion(dict_avion):
+def init_avion():
     global L
     global dict_data
+    global dict_avion
     dict_data = import_json_data()
     while len(dict_avion.keys()) <= 5:
             n = randint(0, 19)
@@ -19,10 +21,12 @@ def init_avion(dict_avion):
             for data in dict_data:
                 if data['name'] ==  dict_cara['pos']:
                     pos = [data['pos_x'], data['pos_y']]
+                if data['name'] == dict_cara['to']:
+                    to = [data['pos_x'], data['pos_y'], data['rwy_hdg']]
             dict_avion[n] = Avion(dict_cara['callsign'],
                                   dict_cara['phonetic'],
                                   dict_cara['from_'],
-                                  dict_cara['to'],
+                                  to,
                                   dict_cara['type_'],
                                   dict_cara['immat'],
                                   dict_cara['turb'],
@@ -36,20 +40,22 @@ def init_avion(dict_avion):
                                   int(dict_cara['vs']),
                                   float(dict_cara['conso']),
                                   int(dict_cara['alt']),
-                                  int(dict_cara['ldg_speed']))
+                                  int(dict_cara['ldg_speed']),
+                                  dict_cara['to'])
     return dict_avion
 
 # gestion des mise à jours des paramètres avions et de la carte en fonction de l'échelle
-def gestion_avion(dict_avion ,scale_x, scale_y):
+def gestion_avion():
     global dict_data
+    global dict_avion
     for key in dict_avion.keys():
         dict_avion[key].heading_change()
         dict_avion[key].speed_change()
         dict_avion[key].vs_change()
-        dict_avion[key].horizontal_move(scale_x, scale_y)
+        dict_avion[key].horizontal_move()
         dict_avion[key].vertical_move()
-        dict_avion[key].distance_airport(dict_data[dict_avion[key]['to']])
-        dict_avion[key].exit_scope(621 * scale_x, 431 * scale_y)
+        dict_avion[key].distance_airport()
+        dict_avion[key].exit_scope(621, 451)
         for key__ in dict_avion.keys():
             if key__ == key:
                 continue
@@ -64,11 +70,7 @@ def gestion_avion(dict_avion ,scale_x, scale_y):
                     dict_avion.pop(key, None)
                     dict_avion.pop(key__, None)
         if dict_avion[key].consigne['landing'] == True:
-            dict_avion[key].landing(dict_data[dict_avion[key]['to']])
+            dict_avion[key].landing()
             dict_avion.pop(key, None)
-
-    for key,value in dict_data.items():
-        dict_data[key][0] = value[0] * scale_x
-        dict_data[key][1] = value[1] * scale_y
 
     return dict_avion

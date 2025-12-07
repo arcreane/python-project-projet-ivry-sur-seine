@@ -5,7 +5,7 @@ class Avion:
 
     nb_avion = 0
 
-    def __init__(self, callsign, phonetic, from_, to, type_, immat, turb, pax, final_level, sqwk, fuel, pos, heading, speed, vs, conso, alt, ld_speed):
+    def __init__(self, callsign, phonetic, from_, to, type_, immat, turb, pax, final_level, sqwk, fuel, pos, heading, speed, vs, conso, alt, ld_speed, aprt):
         self.callsign = callsign
         self.phonetic = phonetic
         self.from_ = from_
@@ -26,11 +26,12 @@ class Avion:
         self.landing_speed = ld_speed
         self.consigne = {'alt' : None, 'heading' : None, 'speed' : None, 'vs' : None, 'landing' : False}
         self.etat = {'can_land' : False, 'TCAS' : False}
+        self.aprt_code = aprt
         Avion.nb_avion += 1
 
-    def horizontal_move(self, scale_x, scale_y):
-        vx = round((self.speed * sin(radians(self.heading)) / 3600) * 100 * scale_x)
-        vy = round((self.speed * cos(radians(self.heading)) / 3600) * 100 * scale_y)
+    def horizontal_move(self):
+        vx = round((self.speed * sin(radians(self.heading)) / 3600) * 100)
+        vy = round((self.speed * cos(radians(self.heading)) / 3600) * 100)
         self.pos[0] += vx
         self.pos[1] += vy
 
@@ -104,7 +105,8 @@ class Avion:
                 else:
                     self.vs = self.consigne['vs']
 
-    def distance_airport(self, airport_infos):
+    def distance_airport(self):
+        airport_infos = self.to
         distance = sqrt((self.pos[0] - airport_infos[0]) ** 2 + (self.pos[1] - airport_infos[1]) ** 2)
         if distance < 50:
             self.etat['can_land'] = True
@@ -112,10 +114,11 @@ class Avion:
     def exit_scope(self, lim_x, lim_y):
         distance_x = abs(lim_x - self.pos[0])
         distance_y = abs(lim_y - self.pos[1])
-        if (distance_x < 25 or distance_y < 25) or (distance_x < 25 and distance_y < 25):
+        if distance_x < 25 or distance_y < 25 or self.pos[0] < 25 or self.pos[1] < 25:
             self.consigne['heading'] = (self.heading + 180) % 360
 
-    def landing(self, airport_infos):
+    def landing(self):
+        airport_infos = self.to
         distance_airport = sqrt((self.pos[0] - airport_infos[0]) ** 2 + (self.pos[1] - airport_infos[1]) ** 2)
         distance_x = abs(self.pos[0] - airport_infos[0])
         hdg = acos(distance_x / distance_airport)
@@ -171,41 +174,3 @@ class Avion:
         Avion.nb_avion -= 1
 
 
-
-if __name__ == '__main__':
-    Test = Avion('Afr002 Heavy',
-                 'air frans',
-                 'LFPG',
-                 'KJFK',
-                 'B777',
-                 'F-GSPZ',
-                 'Heavy',
-                 312,
-                 360,
-                 1000,
-                 53.2,
-                 [0.0, 0.0],
-                 000,
-                 450,
-                 0,
-                 7.5,
-                 32000,
-                 )
-
-    def test():
-        Test.consigne = {'alt' : 31850, 'heading' : 3, 'speed' : 455, 'vs' : 150}
-        Test.heading_change()
-        Test.speed_change()
-        Test.vs_change()
-        Test.horizontal_move()
-        Test.vertical_move()
-        print(f'Heading: {Test.heading}\n')
-        print(f'Speed: {Test.speed}\n')
-        print(f'VS: {Test.vs}\n')
-        print(f'Pos: {Test.pos}\n')
-        print(f'Alt: {Test.alt}')
-        print(f'Nb avion : {Avion.nb_avion}')
-        Test.__del__()
-        print(f'Nb avion : {Avion.nb_avion}')
-
-    test()

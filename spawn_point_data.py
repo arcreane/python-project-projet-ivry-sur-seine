@@ -2,6 +2,7 @@
 from PySide6.QtCore import QPointF
 
 
+
 class SpawnPoint:
     #Représente un point d'entrée pour les avions sur la carte
 

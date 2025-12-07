@@ -12,7 +12,7 @@ from PySide6.QtGui import QPainter, QPixmap, QColor, QTransform, QPen, QBrush, Q
 # Imports PySide6.QtCore
 from PySide6.QtCore import Qt, QPointF, QRectF, QSize, Signal
 
-import math
+from gestion_avion import gestion_avion
 
 #________________________________________________________________________________
 
@@ -429,41 +429,16 @@ class AircraftMapWidget(QGraphicsView):
     '''
 
 
-    def move_aircrafts(self, delta_time):
-        """Déplace les objets QGraphicsItem sur la scène."""
-
-        for callsign, data in self.aircraft_data.items():
-            item = data['item']  # L'objet graphique à déplacer
-
-            # Récupérer les données de la simulation (vitesse/cap)
-            heading = self.all_aircraft_details[callsign]['heading']
-            speed = self.all_aircraft_details[callsign]['speed']
-
-            # --- CALCUL DES DÉPLACEMENTS (RÉUTILISÉ) ---
-            heading_rad = math.radians(heading)
-            dx = speed * delta_time * math.sin(heading_rad)
-            dy = speed * delta_time * -math.cos(heading_rad)
-
-            # 🟢 DÉPLACEMENT D'OBJET (Simple et efficace)
-            # Item.pos() retourne la position actuelle (QPointF)
-            new_pos = item.pos() + QPointF(dx, dy)
-            item.setPos(new_pos)  # Met à jour la position de l'objet graphique
-
-            # 🟢 MISE À JOUR DES DONNÉES DANS LE DICTIONNAIRE PRINCIPAL
-            if self.all_aircraft_details:
-                self.all_aircraft_details[callsign]['pos'] = new_pos
+    def move_aircrafts(self):
+       self.aircraft_data = gestion_avion()
 
 
-    def update_aircraft(self, callsign, new_heading):
+    def update_aircraft(self):
 
         #met à jour le cap d'un avion existant.
 
-        if callsign in self.aircraft_items:
+        for callsign in self.aircraft_items:
             item = self.aircraft_data[callsign]['item']
-            item.setRotation(new_heading)
-            # mettre à jour le cap dans l'objet de l'avion
-            self.aircraft_items[callsign]['heading'] = new_heading
+            item.setRotation(self.aircraft_data[callsign].heading)
             # demander à Qt de repeindre le widget pour appliquer la rotation
             self.update()
-        else:
-            print(f"Erreur: Avion {callsign} non trouvé pour la mise à jour.")

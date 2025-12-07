@@ -2,8 +2,8 @@ from math import sqrt
 import json
 
 def distance_avion(plane_1, plane_2):
-    delta_altitude = abs(plane_1.altitude - plane_2.altitude)
-    distance = sqrt((plane_1['pos'][0]-plane_2['pos'][0])**2 + (plane_1['pos'][1]-plane_2['pos'][1])**2)
+    delta_altitude = abs(plane_1.alt - plane_2.alt)
+    distance = sqrt((plane_1.pos[0]-plane_2.pos[0])**2 + (plane_1.pos[1]-plane_2.pos[1])**2)
     return distance, delta_altitude
 
 
