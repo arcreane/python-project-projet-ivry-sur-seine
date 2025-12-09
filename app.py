@@ -8,7 +8,7 @@ from PySide6.QtWidgets import QMainWindow, QApplication, QGraphicsTextItem # Mis
 from PySide6.QtGui import QColor, QFont # Mis à jour
 from PySide6.QtWidgets import QApplication
 from PySide6.QtCore import QTimer, QPointF
-
+import math
 #__________________________________les_imports_de_fichiers_________________________________________
 from ATC_paris import Ui_ATC_paris  # import de la window paris
 from ATC_reims import Ui_ATC_reims# import de la window reims
@@ -24,7 +24,9 @@ from spawn_point_data import SPAWN_POINTS #on import les points de spawn des avi
 
 #___________________________________________________________________________
 
-
+LANDING_DISTANCE_THRESHOLD = 80
+LANDING_THRESHOLD_PIXELS = 80
+REMOVAL_THRESHOLD_PIXELS = 10 # Seuil de retrait (doit être atteint)
 
 
 
@@ -111,14 +113,23 @@ class ATC_parislfff(QMainWindow, Ui_ATC_paris):       #def de la page paris
 
 
 
-
-
     def run_simulation_step(self):
         #déclenche la mise à jour des positions de tous les avions
         delta_time = 0.1  # 100 ms / 1000 ms = 0.1 seconde
 
         #le widget carte gère le déplacement de tous les avions
         self.label_5.move_aircrafts(delta_time)
+
+        is_input_active = (
+                self.txt_heading_valeur.hasFocus() or
+                self.txt_altitude_valeur.hasFocus() or
+                self.txt_vitesse_valeur.hasFocus() or
+                self.txt_vitesse_verticale_valeur.hasFocus()
+        )
+
+        if is_input_active:
+            # Si l'utilisateur est en train de saisir dans un champ, on ne met pas à jour l'affichage
+            return
         # Si le champ de Cap (ou un autre) a le focus, NE PAS écraser la saisie.
         if self.txt_heading_valeur.hasFocus() or self.txt_vitesse_valeur.hasFocus():
             # Si l'utilisateur est en train de saisir, on sort sans appeler display_aircraft_stats
@@ -138,8 +149,164 @@ class ATC_parislfff(QMainWindow, Ui_ATC_paris):       #def de la page paris
         self.label_5.aircraft_clicked.connect(self.display_aircraft_stats)
         self.btn_apply.clicked.connect(self.apply_new_command)
 
+        self.btn_land.clicked.connect(self.initiate_landing_sequence)
         # Connectez vos autres boutons ici (Apply, Land, etc.)
         # self.btn_apply.clicked.connect(self.apply_new_command)
+    '''
+    def initiate_landing_sequence(self):
+
+        #Lance la séquence d'atterrissage pour l'avion sélectionné trouve l'aéroport le plus proche et dirige l'avion vers lui.
+        callsign = self.selected_callsign
+
+        if not callsign or callsign not in self.aircraft_details:
+            self.statusBar().showMessage("Veuillez sélectionner un avion d'abord.", 3000)
+            return
+
+        aircraft_pos = self.aircraft_details[callsign]['pos']
+        nearest_airport = None
+        min_dist_sq = LANDING_THRESHOLD_PIXELS ** 2
+        # 1. Trouver l'aéroport le plus proche
+        # Utilisation de la liste des aéroports autorisés pour cette zone
+
+        for airport in AIRPORTS_DATA:
+            # ⚠️ NOTE: Si vous ne voulez pas atterrir sur TOUS les aéroports_data,
+            # vous devrez filtrer ici (ex: si airport.iata in CODES_AUTORISES).
+
+            dx = aircraft_pos.x() - airport.x
+            dy = aircraft_pos.y() - airport.y
+            dist_sq = dx ** 2 + dy ** 2
+
+            if dist_sq < min_dist_sq:
+                min_dist_sq = dist_sq
+                nearest_airport = airport
+
+        if airport_in_range:
+            # L'avion est dans la zone : lancer la séquence d'atterrissage
+            target_pos_qpointf = QPointF(airport_in_range.x, airport_in_range.y)
+
+            # 2. Continuer la séquence de suppression (Land)
+            new_heading = self.calculate_heading_to_target(aircraft_pos, target_pos_qpointf)
+            self.aircraft_details[callsign]['heading'] = new_heading
+            self.aircraft_details[callsign]['speed'] = 20
+            self.aircraft_details[callsign]['vertical_speed'] = 0
+
+            self.label_5.update_aircraft(callsign, new_heading)
+            self.label_5.set_landing_target(callsign, target_pos_qpointf, LANDING_THRESHOLD_PIXELS)
+            self.display_aircraft_stats(callsign)
+
+            self.statusBar().showMessage(f"LAND: {callsign} atterrit à {airport_in_range.iata}", 5000)
+
+        else:
+            # 🟢 L'avion n'est pas encore dans la zone d'approche définie (80 pixels)
+            self.statusBar().showMessage("L'avion n'est pas en zone d'approche finale autorisée.", 3000)
+
+        if nearest_airport:
+
+            target_pos_qpointf = QPointF(nearest_airport.x, nearest_airport.y)   #Créer un QPointF pour la position cible à partir de x et y.
+
+            self.label_5.set_landing_target(callsign, target_pos_qpointf, 80)
+
+            # 2. Calculer le nouveau cap vers l'aéroport
+            new_heading = self.calculate_heading_to_target(aircraft_pos, target_pos_qpointf)
+
+            # 3. Mettre à jour les données (cap et vitesse réduite)
+            self.aircraft_details[callsign]['heading'] = new_heading
+            self.aircraft_details[callsign]['speed'] = 20  # Vitesse réduite pour l'approche
+            self.aircraft_details[callsign]['vertical_speed'] = 0
+
+            # 4. Mettre à jour l'affichage de l'avion sur la carte
+            self.label_5.update_aircraft(callsign, new_heading)
+            self.label_5.set_landing_target(callsign, nearest_airport.pos,LANDING_DISTANCE_THRESHOLD)  #  NOUVELLE MÉTHODE
+
+            # 5. Mettre à jour les stats du panneau de droite (pour refléter le nouveau cap et vitesse)
+            self.display_aircraft_stats(callsign)
+            self.statusBar().showMessage(f"Guidage {callsign} vers {nearest_airport.iata} (Cap {new_heading:.0f}°)",
+                                         5000)
+
+        else:
+            self.statusBar().showMessage("Aucun aéroport valide trouvé pour l'approche.", 3000)'''
+
+    def initiate_landing_sequence(self):
+        """
+        Lance la séquence d'atterrissage pour l'avion sélectionné.
+        L'avion est dirigé vers l'aéroport le plus proche, SEULEMENT s'il est
+        déjà à l'intérieur du seuil de proximité (LANDING_THRESHOLD_PIXELS).
+        """
+        callsign = self.selected_callsign
+
+        if not callsign or callsign not in self.aircraft_details:
+            self.statusBar().showMessage("Veuillez sélectionner un avion d'abord.", 3000)
+            return
+
+        aircraft_pos = self.aircraft_details[callsign]['pos']
+
+        # 🟢 VÉRIFIEZ QUE CODES_AUTORISES ET AIRPORTS_DATA sont accessibles ici
+        # Si CODES_AUTORISES n'est pas global, définissez-le :
+        # CODES_AUTORISES = ["CDG", "ORY", "LIL"]
+
+        target_airport = None
+        min_dist_sq = LANDING_THRESHOLD_PIXELS ** 2
+
+        # 1. Recherche de l'aéroport le plus proche DANS la zone de seuil
+
+        # NOTE: Pour la démo, nous utilisons tous les aéroports, mais vous pouvez filtrer
+        for airport in AIRPORTS_DATA:
+            # Optional: if airport.iata not in CODES_AUTORISES: continue
+
+            dx = aircraft_pos.x() - airport.x
+            dy = aircraft_pos.y() - airport.y
+            dist_sq = dx ** 2 + dy ** 2
+
+            # Nous cherchons le plus proche, MAIS qui doit être DANS le seuil
+            if dist_sq < min_dist_sq:
+                min_dist_sq = dist_sq
+                target_airport = airport  # L'aéroport le plus proche DANS la zone
+
+        # ----------------------------------------------------
+        # 2. Exécution de la commande
+        # ----------------------------------------------------
+        if target_airport:
+            # L'avion est dans la zone : lancer la séquence d'atterrissage
+
+            # création du QPointF cible
+            target_pos_qpointf = QPointF(target_airport.x, target_airport.y)
+
+            # calculer le nouveau cap vers l'aéroport
+            new_heading = self.calculate_heading_to_target(aircraft_pos, target_pos_qpointf)
+
+            # mise à jour des données (Cap et Vitesse réduite)
+            self.aircraft_details[callsign]['heading'] = new_heading
+            self.aircraft_details[callsign]['speed'] = 20
+            self.aircraft_details[callsign]['vertical_speed'] = 0  # Pas de descente si atterrissage distance seule
+
+            # mettre à jour l'affichage de l'avion sur la carte et afficher le cercle
+            self.label_5.update_aircraft(callsign, new_heading)
+            self.label_5.set_landing_target(callsign, target_pos_qpointf, LANDING_THRESHOLD_PIXELS)
+            self.display_aircraft_stats(callsign)  # Mettre à jour le panneau de droite
+
+            self.statusBar().showMessage(f"LAND: {callsign} guidé vers {target_airport.iata}", 5000)
+
+        else:
+            # L'avion n'est pas dans le cercle de seuil d'un aéroport autorisé
+            self.statusBar().showMessage(
+                f"L'avion n'est pas en zone d'approche finale autorisée ({LANDING_THRESHOLD_PIXELS}px).", 3000)
+
+
+    def calculate_heading_to_target(self, current_pos: QPointF, target_pos: QPointF) -> float:
+        """Calcule le cap (en degrés, 0=Nord) pour aller de la position actuelle à la cible."""
+
+        # Différences en pixels
+        dx = target_pos.x() - current_pos.x()
+        dy = target_pos.y() - current_pos.y()
+
+        # Calcul de l'angle en radians (-180 à 180)
+        angle_rad = math.atan2(dx, -dy)  # -dy car l'axe Y des pixels est inversé (positif vers le bas)
+
+        # Conversion en degrés (0 à 360)
+        heading_deg = math.degrees(angle_rad)
+
+        # Normalisation du cap (0 à 360)
+        return (heading_deg + 360) % 360
 
     def display_aircraft_stats(self, callsign):
         """
@@ -230,6 +397,19 @@ class ATC_parislfff(QMainWindow, Ui_ATC_paris):       #def de la page paris
                 # Positionnement (en supposant dot_size=10 pour AirportDot)
                 label.setPos(airport.x + 10 / 2 + 2, airport.y - 10)
                 self.label_5.scene.addItem(label)
+        for airport in AIRPORTS_DATA:
+            if airport.iata in CODES_AUTORISES:
+                # --- 1. Dessin de l'Aéroport et de l'Étiquette (Votre code existant) ---
+                airport_dot_item = AirportDot(airport)
+                self.label_5.scene.addItem(airport_dot_item)
+
+                # ... (code de positionnement et d'ajout du label) ...
+
+                # --- 2. NOUVEAU : AFFICHAGE PERMANENT DU CERCLE ---
+                target_pos = QPointF(airport.x, airport.y)
+
+                # Nous appelons une nouvelle méthode sur le widget carte pour dessiner le cercle
+                self.label_5.display_airport_geofence(airport.iata, target_pos, LANDING_THRESHOLD_PIXELS)
 
     def _create_initial_aircrafts(self):
 

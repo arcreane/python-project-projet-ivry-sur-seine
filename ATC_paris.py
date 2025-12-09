@@ -21,7 +21,7 @@ from PySide6.QtWidgets import (QApplication, QFrame, QHBoxLayout,
                                QWidget, QGridLayout)
 
 from spawn_plane import AircraftMapWidget
-
+#___________________________________________________________________________________________________________
 
 
 class Ui_ATC_paris(object):
