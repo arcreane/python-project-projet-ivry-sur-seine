@@ -24,11 +24,7 @@ class Airport:
         self.x = x_pixel
         self.y = y_pixel
 
-# --- Liste des aéroports ---
-# ATTENTION : Les coordonnées X_PIXEL et Y_PIXEL sont des exemples.
-# Vous devez remplacer ces chiffres par les coordonnées que vous mesurez
-# directement sur votre propre image de la France / région ATC.
-
+#________________________________________________liste des aeroports
 AIRPORTS_DATA = [
     # ___________________________________________Région Parisienne
     Airport(name="Charles de Gaulle", iata_code="CDG", x_pixel=847, y_pixel=495),

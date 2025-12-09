@@ -270,11 +270,12 @@ class AircraftMapWidget(QGraphicsView):
             if callsign in self.landing_targets:
                 target = self.landing_targets[callsign]['target_pos']
 
+                threshold = self.landing_targets[callsign]['threshold']
                 #calcul de la distance au carré
                 dist_sq = (new_pos.x() - target.x()) ** 2 + (new_pos.y() - target.y()) ** 2
 
                 #la condition est uniquement que la distance soit inférieure au seuil (cercle)
-                if dist_sq < REMOVAL_THRESHOLD_PIXELS ** 2:
+                if dist_sq < threshold ** 2:
                     landed_callsigns.append(callsign)
 
                 #déplacement et Mise à jour des données (pour le prochain cycle)
