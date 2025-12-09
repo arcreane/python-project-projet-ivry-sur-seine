@@ -66,7 +66,7 @@ class Ui_ATC_paris(object):
         self.main_grid_layout.addWidget(self.frame_carte, 0, 0, 1, 1)
 
         self.label_5.set_map_image(u"image/MAP_paris.png")
-
+        """ 
         self.frame_strip = QFrame(self.centralwidget)
         self.frame_strip.setObjectName(u"frame_strip")
 
@@ -85,7 +85,7 @@ class Ui_ATC_paris(object):
         self.verticalLayout_9 = QVBoxLayout(self.frame)
         self.verticalLayout_9.setObjectName(u"verticalLayout_9")
         self.label = QLabel(self.frame)
-        self.main_grid_layout.addWidget(self.frame_strip, 1, 0, 1, 1)
+        '''self.main_grid_layout.addWidget(self.frame_strip, 1, 0, 1, 1)'''
         self.label.setObjectName(u"label")
         self.label.setAlignment(Qt.AlignmentFlag.AlignCenter)
 
@@ -339,9 +339,9 @@ class Ui_ATC_paris(object):
         self.label_22.setWordWrap(True)
 
         self.verticalLayout.addWidget(self.label_22)
-
+        
         self.horizontalLayout_2.addWidget(self.frame_8)
-
+        """
         self.frame_11 = QFrame(self.centralwidget)
         self.frame_11.setObjectName(u"frame_11")
         sizePolicy_panel = QSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
@@ -581,7 +581,7 @@ class Ui_ATC_paris(object):
         self.btn_accueil.setIconSize(QSize(32, 32))
 
         self.horizontalLayout.addWidget(self.btn_accueil)
-
+        """
         self.btn_parametres = QPushButton(self.frame_boutons)
         self.btn_parametres.setObjectName(u"btn_parametres")
         icon1 = QIcon()
@@ -589,7 +589,7 @@ class Ui_ATC_paris(object):
         self.btn_parametres.setIcon(icon1)
         self.btn_parametres.setIconSize(QSize(32, 32))
 
-        self.horizontalLayout.addWidget(self.btn_parametres)
+        self.horizontalLayout.addWidget(self.btn_parametres)"""
 
         self.btn_sortie = QPushButton(self.frame_boutons)
         self.btn_sortie.setObjectName(u"btn_sortie")
@@ -631,6 +631,7 @@ class Ui_ATC_paris(object):
     def retranslateUi(self, ATC_paris):
         ATC_paris.setWindowTitle(QCoreApplication.translate("ATC_paris", u"MainWindow", None))
         """self.label_5.setText("")"""
+        '''
         self.label.setText(QCoreApplication.translate("ATC_paris", u"Callsign", None))
         self.label_2.setText(QCoreApplication.translate("ATC_paris", u"AFR 002 Heavy", None))
         self.label_3.setText(QCoreApplication.translate("ATC_paris", u"From", None))
@@ -649,6 +650,7 @@ class Ui_ATC_paris(object):
         self.label_20.setText(QCoreApplication.translate("ATC_paris", u"360", None))
         self.label_21.setText(QCoreApplication.translate("ATC_paris", u"Sqwk", None))
         self.label_22.setText(QCoreApplication.translate("ATC_paris", u"1000", None))
+        '''
         self.txt_titre.setText(QCoreApplication.translate("ATC_paris", u"Paris LFFF", None))
         self.txt_heading.setText(QCoreApplication.translate("ATC_paris", u"Heading :", None))
         self.img_cercle.setText("")
@@ -666,7 +668,7 @@ class Ui_ATC_paris(object):
         self.unit_heading.setText(QCoreApplication.translate("ATC_paris", u"\u00b0", None))
         self.btn_apply.setText(QCoreApplication.translate("ATC_paris", u"Apply", None))
         self.btn_accueil.setText("")
-        self.btn_parametres.setText("")
+        '''self.btn_parametres.setText("")'''
         self.btn_sortie.setText("")
     # retranslateUi
 

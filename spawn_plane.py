@@ -316,7 +316,7 @@ class AircraftMapWidget(QGraphicsView):
                                       2 * radius, 2 * radius)
 
         #configuration du style du cercle (Jaune creux)
-        circle.setPen(QPen(QColor(255, 255, 0), 2))
+        circle.setPen(QPen(QColor(255, 255, 0), 1))
         circle.setBrush(Qt.BrushStyle.NoBrush)
 
         self.scene.addItem(circle)

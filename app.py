@@ -26,10 +26,7 @@ from spawn_point_data import SPAWN_POINTS #on import les points de spawn des avi
 
 LANDING_DISTANCE_THRESHOLD = 80
 LANDING_THRESHOLD_PIXELS = 80
-REMOVAL_THRESHOLD_PIXELS = 10 # Seuil de retrait (doit être atteint)
-
-
-
+REMOVAL_THRESHOLD_PIXELS = 10 # Seuil de retrait (doit être atteint
 
 #__________________________class_accueil________________________________
 
