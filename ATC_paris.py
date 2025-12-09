@@ -33,7 +33,7 @@ class Ui_ATC_paris(object):
         ATC_paris.setMinimumSize(QSize(900, 620))
 
 
-        self.centralwidget = QWidget(ATC_paris)  # Ligne de création
+        self.centralwidget = QWidget(ATC_paris)  #ligne de création
         self.centralwidget.setObjectName(u"centralwidget")
 
         self.main_grid_layout = QGridLayout(self.centralwidget)
