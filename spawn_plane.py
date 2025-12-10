@@ -12,7 +12,8 @@ from PySide6.QtGui import QPainter, QPixmap, QColor, QTransform, QPen, QBrush, Q
 # Imports PySide6.QtCore
 from PySide6.QtCore import Qt, QPointF, QRectF, QSize, Signal
 
-import math
+from gestion_avion import gestion_avion
+from time import sleep
 
 #________________________________________________________________________________
 
@@ -27,8 +28,8 @@ class AircraftItem(QGraphicsRectItem):
 
     def __init__(self, callsign, data: dict,size=SQUARE_SIZE, vector_len=VECTOR_LENGTH):
 
-        position = data['pos']
-        heading = data['heading']
+        position = data.pos
+        heading = data.heading
 
         #dessiner le carré central (corps de l'avion)
         #le rectangle est dessiné autour de l'origine (0,0) pour faciliter la rotation
@@ -54,7 +55,7 @@ class AircraftItem(QGraphicsRectItem):
         self.setTransformOriginPoint(0, 0)
 
         #placer l'icône à la position initiale
-        self.setPos(position)
+        self.setPos(position[0], position[1])
         self.setRotation(heading)
         self.setAcceptHoverEvents(True)
         self.tooltip_text = self.create_tooltip_text()
@@ -94,9 +95,9 @@ class AircraftItem(QGraphicsRectItem):
         #Construit le texte du ToolTip à partir des données de l'avion
         return (
             f"Vol : {self.callsign}\n"
-            f"Cap : {self.data.get('heading', '?')}°\n"
-            f"Alt : {self.data.get('altitude', '?')} ft\n"
-            f"Vitesse : {self.data.get('speed', '?')} kts"
+            f"Cap : {self.data.heading}°\n"
+            f"Alt : {self.data.alt} ft\n"
+            f"Vitesse : {self.data.speed} kts"
         )
 
     def hoverEnterEvent(self, event):
@@ -141,7 +142,7 @@ class AircraftMapWidget(QGraphicsView):
         self.all_aircraft_details = None
         self.landing_targets = {}  # {'callsign': {'target_pos': QPointF, 'threshold': 80, 'circle_item': QGraphicsEllipseItem}}
         self.airport_geofences = {}
-
+        self.aircraft_items = {}
 
     def set_map_image(self, pixmap_path):     #defini limage détude comme etant limage en fond
 
@@ -199,6 +200,7 @@ class AircraftMapWidget(QGraphicsView):
             f"Cap : {data['heading']:.0f}°<br>"
             f"Pos X : {data['position'].x():.1f}<br>"
             f"Pos Y : {data['position'].y():.1f}"
+            f"To : {data.aprt_code:.f}<br>"
         )
 
         #affiche la bulle d'aide à la position globale du curseur
@@ -207,18 +209,12 @@ class AircraftMapWidget(QGraphicsView):
     def add_aircraft(self, callsign, data: dict):
         #Ajoute ou met à jour un avion sur la carte.
 
-        heading = data['heading']
-        speed = data['speed']
-
         aircraft_item = AircraftItem(callsign, data)
-        aircraft_item.setPos(data['pos'])
+        aircraft_item.setPos(data.pos[0], data.pos[1])
         self.scene.addItem(aircraft_item)
 
-        self.aircraft_data[callsign] = {
-            'item': aircraft_item,
-            'heading': heading,
-            'speed': speed
-        }#stocke la vitesse et met à jour le dictionnaire
+        self.aircraft_data[callsign] = data
+        self.aircraft_items[callsign] = aircraft_item
 
     def set_landing_target(self, callsign, target_pos: QPointF, threshold: int):
 
@@ -246,56 +242,20 @@ class AircraftMapWidget(QGraphicsView):
             'circle_item': circle
         }
 
-    def move_aircrafts(self, delta_time):
+    def move_aircrafts(self):
         #déplace les objets QGraphicsItem sur la scène
 
-        landed_callsigns = []
+        self.aircraft_data = gestion_avion()
+        for data in self.aircraft_data.values():
+            callsign = data.callsign
+            item = self.aircraft_items[callsign]
+            item.setRotation(data.heading)
+            item.setPos(data.pos[0], data.pos[1])
+            print(data.callsign, data.pos)
+        sleep(1)
 
-        for callsign, data in self.aircraft_data.items():
-            item = data['item']  #lobjet graphique à déplacer
-            landed_callsigns = []  #pour stocker les avions à supprimer
-            #récupérer les données de la simulation (vitesse/cap)
-            heading = self.all_aircraft_details[callsign]['heading']
-            speed = self.all_aircraft_details[callsign]['speed']
 
-            #calcul des deplacements
-            heading_rad = math.radians(heading)
-            dx = speed * delta_time * math.sin(heading_rad)
-            dy = speed * delta_time * -math.cos(heading_rad)
-
-            # deplacement dobjet
-            new_pos = item.pos() + QPointF(dx, dy)
-            item.setPos(new_pos)  #met à jour la position de l'objet graphique
-
-            if callsign in self.landing_targets:
-                target = self.landing_targets[callsign]['target_pos']
-
-                threshold = self.landing_targets[callsign]['threshold']
-                #calcul de la distance au carré
-                dist_sq = (new_pos.x() - target.x()) ** 2 + (new_pos.y() - target.y()) ** 2
-
-                #la condition est uniquement que la distance soit inférieure au seuil (cercle)
-                if dist_sq < threshold ** 2:
-                    landed_callsigns.append(callsign)
-
-                #déplacement et Mise à jour des données (pour le prochain cycle)
-            item.setPos(new_pos)
-            if self.all_aircraft_details:
-                self.all_aircraft_details[callsign]['pos'] = new_pos
-
-        for callsign in landed_callsigns:
-            #retirer le cercle de la scène
-            if callsign in self.landing_targets:
-                self.scene.removeItem(self.landing_targets[callsign]['circle_item'])
-                del self.landing_targets[callsign]
-
-            #retirer l'avion de la carte (item) et de aircraft_data
-            self.remove_aircraft(callsign)
-            #mise ajour des donnees dans le dictionnaire principale
-            if self.all_aircraft_details:
-                self.all_aircraft_details[callsign]['pos'] = new_pos
-
-    def update_aircraft(self, callsign, new_heading):
+    def update_aircraft(self, callsign):
 
         #met à jour le cap d'un avion existant.
 

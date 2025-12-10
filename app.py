@@ -20,6 +20,8 @@ from ATC_accueil import Ui_ATC_accueil  #import de la main window
 from airport import AIRPORTS_DATA #on importe la liste des aeroport depuis le fichier pévu a cet effet
 from airport_dots import AirportDot  #on importe ce qui permet de dessiner les aeroports
 from spawn_point_data import SPAWN_POINTS #on import les points de spawn des avions
+from utilities import json_data, json_avion
+from gestion_avion import init_avion, gestion_avion
 
 
 #___________________________________________________________________________
@@ -56,26 +58,36 @@ class ATC_accueil(QMainWindow, Ui_ATC_accueil):          #def de la page accueil
     def ouvrir_paris(self):           #fonction qui ouvre paris
         self.fenetre_paris = ATC_parislfff()
         self.fenetre_paris.showMaximized() #permet douvrir la fenetre en pleine ecran
+        json_data('paris')
+        json_avion('paris')
         self.close()
 
     def ouvrir_reims(self):           #fonction qui ouvre reims
         self.fenetre_reims = ATC_reimslfee()
         self.fenetre_reims.showMaximized() #permet douvrir la fenetre en pleine ecran
+        json_data('reims')
+        json_avion('reims')
         self.close()
 
     def ouvrir_marseille(self):           #fonction qui ouvre marseille
         self.fenetre_marseille = ATC_marseillelfmm()
         self.fenetre_marseille.showMaximized() #permet douvrir la fenetre en pleine ecran
+        json_data('merseille')
+        json_avion('marseille')
         self.close()
 
     def ouvrir_bordeaux(self):           #fonction qui ouvre bordeaux
         self.fenetre_bordeaux = ATC_bordeauxlfbb()
         self.fenetre_bordeaux.showMaximized() #permet douvrir la fenetre en pleine ecran
+        json_data('bordeaux')
+        json_avion('bordeaux')
         self.close()
 
     def ouvrir_brest(self):           #fonction qui ouvre brest
         self.fenetre_brest = ATC_brestlfrr()
         self.fenetre_brest.showMaximized() #permet douvrir la fenetre en pleine ecran
+        json_data('brest')
+        json_avion('brest')
         self.close()
 
 #_____________________BOUTONS____________________________________
@@ -110,10 +122,9 @@ class ATC_parislfff(QMainWindow, Ui_ATC_paris):       #def de la page paris
 
     def run_simulation_step(self):
         #déclenche la mise à jour des positions de tous les avions
-        delta_time = 0.1  # 100 ms / 1000 ms = 0.1 seconde
 
         #le widget carte gère le déplacement de tous les avions
-        self.label_5.move_aircrafts(delta_time)
+        self.label_5.move_aircrafts()
 
         is_input_active = (
                 self.txt_heading_valeur.hasFocus() or
@@ -134,8 +145,8 @@ class ATC_parislfff(QMainWindow, Ui_ATC_paris):       #def de la page paris
 
     def _load_aircraft_on_map(self):
         #charge les avions sur le widget carte
-        for callsign, data in self.aircraft_details.items():
-            self.label_5.add_aircraft(callsign, data)
+        for data in self.aircraft_details.values():
+            self.label_5.add_aircraft(data.callsign, data)
 
     def _connect_signals(self):
         #connecte le signal de clic de la carte à la méthode d'affichage des stats
@@ -317,21 +328,7 @@ class ATC_parislfff(QMainWindow, Ui_ATC_paris):       #def de la page paris
 
         #Crée un ensemble d'avions initiaux en utilisant les points de spawn.
 
-        initial_aircrafts = {}
-        callsign_counter = 100
-
-        for sp in SPAWN_POINTS:
-            callsign = f"AFR{callsign_counter}"
-
-            #on assigne les caractéristiques du SpawnPoint
-            initial_aircrafts[callsign] = {
-                "heading": sp.heading,
-                "altitude": 30000,  #altitude de croisière par défaut
-                "speed": 60,  #vitesse de croisière
-                "vertical_speed": 0,
-                "pos": sp.pos  # position QPointF du SpawnPoint
-            }
-            callsign_counter += 1
+        initial_aircrafts = init_avion()
 
         return initial_aircrafts
 
