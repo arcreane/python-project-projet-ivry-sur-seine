@@ -305,7 +305,7 @@ class ATC_parislfff(QMainWindow, Ui_ATC_paris):       #def de la page paris
                 target_pos = QPointF(airport.x, airport.y)
 
                 #appel une nouvelle méthode sur le widget carte pour dessiner le cercle
-                self.label_5.display_airport_geofence(airport.iata, target_pos, self.LANDING_THRESHOLD_PIXELS)
+                self.label_5.display_airport_geofence(airport.iata, target_pos, self.LANDING_THRESHOLD_PIXELS,self.REMOVAL_THRESHOLD_PIXELS)
 
     def _create_initial_aircrafts(self):
 
@@ -556,7 +556,7 @@ class ATC_reimslfee(QMainWindow, Ui_ATC_reims):       #def de la page paris
                 target_pos = QPointF(airport.x, airport.y)
 
                 #appel une nouvelle méthode sur le widget carte pour dessiner le cercle
-                self.label_5.display_airport_geofence(airport.iata, target_pos, self.LANDING_THRESHOLD_PIXELS)
+                self.label_5.display_airport_geofence(airport.iata, target_pos, self.LANDING_THRESHOLD_PIXELS,self.REMOVAL_THRESHOLD_PIXELS)
 
     def _create_initial_aircrafts(self):
 
@@ -1056,7 +1056,7 @@ class ATC_bordeauxlfbb(QMainWindow, Ui_ATC_bordeaux):  #def de la page paris
                 target_pos = QPointF(airport.x, airport.y)
 
                 #appel une nouvelle méthode sur le widget carte pour dessiner le cercle
-                self.label_5.display_airport_geofence(airport.iata, target_pos, self.LANDING_THRESHOLD_PIXELS)
+                self.label_5.display_airport_geofence(airport.iata, target_pos, self.LANDING_THRESHOLD_PIXELS,self.REMOVAL_THRESHOLD_PIXELS)
 
     def _create_initial_aircrafts(self):
 
@@ -1306,7 +1306,7 @@ class ATC_marseillelfmm(QMainWindow, Ui_ATC_marseille):  #def de la page paris
                 target_pos = QPointF(airport.x, airport.y)
 
                 #appel une nouvelle méthode sur le widget carte pour dessiner le cercle
-                self.label_5.display_airport_geofence(airport.iata, target_pos, self.LANDING_THRESHOLD_PIXELS)
+                self.label_5.display_airport_geofence(airport.iata, target_pos, self.LANDING_THRESHOLD_PIXELS,self.REMOVAL_THRESHOLD_PIXELS)
 
     def _create_initial_aircrafts(self):
 

@@ -253,7 +253,6 @@ class AircraftMapWidget(QGraphicsView):
 
         for callsign, data in self.aircraft_data.items():
             item = data['item']  #lobjet graphique à déplacer
-            #landed_callsigns = []  #pour stocker les avions à supprimer
             #récupérer les données de la simulation (vitesse/cap)
             heading = self.all_aircraft_details[callsign]['heading']
             speed = self.all_aircraft_details[callsign]['speed']
@@ -311,7 +310,7 @@ class AircraftMapWidget(QGraphicsView):
         else:
             print(f"Erreur: Avion {callsign} non trouvé pour la mise à jour.")
 
-    def display_airport_geofence(self, iata_code: str, target_pos: QPointF, threshold: int):
+    def display_airport_geofence(self, iata_code: str, target_pos: QPointF, threshold: int,removal_threshold: int):
         #Affiche un cercle de proximité permanent autour d'un aéroport
 
         radius = threshold
