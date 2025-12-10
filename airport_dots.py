@@ -7,10 +7,10 @@ from PySide6.QtCore import Qt, QPointF, QPoint
 
 
 class AirportDot(QGraphicsEllipseItem):
-    """Représente le point d'aéroport sur la carte avec un effet de survol (hover)."""
+    #Représente le point d'aéroport sur la carte avec un effet de survol (hover)
 
     def __init__(self, airport_obj, dot_size=10):
-        # Initialiser le cercle (point)
+        #initialiser le cercle (point)
         super().__init__(
             airport_obj.x - dot_size / 2,
             airport_obj.y - dot_size / 2,
@@ -20,26 +20,26 @@ class AirportDot(QGraphicsEllipseItem):
         self.airport_data = airport_obj
         self.dot_size = dot_size
 
-        # Apparence (Jaune)
+        #apparence en jaune
         self.setPen(QPen(QColor(0, 0, 0), 1))
-        self.default_brush = QBrush(QColor(255, 255, 0))  # Jaune
-        self.hover_brush = QBrush(QColor(255, 165, 0))  # Orange
+        self.default_brush = QBrush(QColor(255, 255, 0))  #jaune
+        self.hover_brush = QBrush(QColor(255, 165, 0))  #orange
         self.setBrush(self.default_brush)
 
         self.setAcceptHoverEvents(True)
-        # Définir le ToolTip pour afficher les données au survol
-        self.tooltip_text = f"Aéroport : {self.airport_data.name}\nCode IATA : {self.airport_data.iata}"        # Définir les couleurs pour l'effet visuel (changé pour l'ellipse)
-        self.default_brush = QBrush(QColor(255, 255, 0))  # Jaune
-        self.hover_brush = QBrush(QColor(255, 165, 0))  # Orange
+        #definir le ToolTip pour afficher les données au survol
+        self.tooltip_text = f"Aéroport : {self.airport_data.name}\nCode IATA : {self.airport_data.iata}"#definir les couleurs pour l'effet visuel (changé pour l'ellipse)
+        self.default_brush = QBrush(QColor(255, 255, 0))  #jaune
+        self.hover_brush = QBrush(QColor(255, 165, 0))  #orange
         self.setBrush(self.default_brush)
 
 
     def hoverEnterEvent(self, event):
         self.setBrush(self.hover_brush)
         QToolTip.showText(
-            event.screenPos(),  # La position du curseur sur l'écran
-            self.tooltip_text,  # Le texte à afficher
-            self.scene().views()[0]  # Le widget parent (la QGraphicsView)
+            event.screenPos(),  #la position du curseur sur l'écran
+            self.tooltip_text,  #le texte à afficher
+            self.scene().views()[0]  #le widget parent (la QGraphicsView)
         )
         super().hoverEnterEvent(event)
 
