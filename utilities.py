@@ -10,7 +10,7 @@ def distance_avion(plane_1, plane_2):
 def import_json_data(FIR, num_ligne):
     filename = f'data{FIR}.json'
     f = open(filename, 'r')
-    dicts = json.load(f)
+    dict = json.load(f)
     return dict
 
 def import_json_avion(FIR, num_ligne):
