@@ -1,0 +1,56 @@
+[
+ {
+   "name": "LFRB",
+   "pos_x": 0,
+   "pos_y": 0,
+   "rwy_hdg": 250
+ },
+ {
+   "name": "LFRS",
+   "pos_x": 0,
+   "pos_y": 0,
+   "rwy_hdg": 30
+ },
+ {
+   "name": "LFRN",
+   "pos_x": 0,
+   "pos_y": 0,
+   "rwy_hdg": 100
+ },
+ {
+   "name": "ALPHA",
+   "pos_x": 0,
+   "pos_y": 0,
+   "rwy_hdg": null
+ },
+ {
+   "name": "BRAVO",
+   "pos_x": 0,
+   "pos_y": 0,
+   "rwy_hdg": null
+ },
+ {
+   "name": "CHARLIE",
+   "pos_x": 0,
+   "pos_y": 0,
+   "rwy_hdg": null
+ },
+ {
+   "name": "DELTA",
+   "pos_x": 0,
+   "pos_y": 0,
+   "rwy_hdg": null
+ },
+ {
+   "name": "ECHO",
+   "pos_x": 0,
+   "pos_y": 0,
+   "rwy_hdg": null
+ },
+ {
+   "name": "FOXTROT",
+   "pos_x": 0,
+   "pos_y": 0,
+   "rwy_hdg": null
+ }
+]
