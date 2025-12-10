@@ -235,7 +235,7 @@ class AircraftMapWidget(QGraphicsView):
                                       target_pos.y() - radius,
                                       2 * radius, 2 * radius)
 
-        circle.setPen(QPen(QColor(255, 255, 0), 2))#couleur du cercle
+        circle.setPen(QPen(QColor(0, 255, 0), 2))#couleur du cercle
         circle.setBrush(Qt.BrushStyle.NoBrush)
         self.scene.addItem(circle)
 
