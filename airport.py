@@ -2,12 +2,6 @@
 
 
 
-
-
-
-
-
-
 class Airport:
     #Représente un aéroport fixe sur la carte ATC
 
@@ -33,23 +27,23 @@ AIRPORTS_DATA = [
     # ____________________________________________Région Nord
     Airport(name="Lille-Lesquin", iata_code="LIL", x_pixel=894, y_pixel=115),
     #___________________________________________________________Est
-    Airport(name="Strasbourg", iata_code="SXB", x_pixel=680, y_pixel=280),
-    Airport(name="Bâle-Mulhouse", iata_code="BSL", x_pixel=700, y_pixel=350),  # Mulhouse est souvent référé par BSL/MLH
-    Airport(name="Dole-Jura", iata_code="DLE", x_pixel=600, y_pixel=400),
+    Airport(name="Strasbourg", iata_code="SXB", x_pixel=583, y_pixel=228),
+    Airport(name="Bâle-Mulhouse", iata_code="BSL", x_pixel=576, y_pixel=436),  # Mulhouse est souvent référé par BSL/MLH
+    Airport(name="Dole-Jura", iata_code="DLE", x_pixel=381, y_pixel=532),
 
     # ___________________________________________________Ouest / Bretagne
-    Airport(name="Brest Bretagne", iata_code="BES", x_pixel=50, y_pixel=250),
-    Airport(name="Rennes Bretagne", iata_code="RNS", x_pixel=200, y_pixel=300),
+    Airport(name="Brest Bretagne", iata_code="BES", x_pixel=72, y_pixel=256),
+    Airport(name="Rennes Bretagne", iata_code="RNS", x_pixel=368, y_pixel=322),
 
     # _______________________________________________________Sud-Ouest
-    Airport(name="Bordeaux-Mérignac", iata_code="BOD", x_pixel=200, y_pixel=600),
-    Airport(name="Toulouse-Blagnac", iata_code="TLS", x_pixel=300, y_pixel=750),
+    Airport(name="Bordeaux-Mérignac", iata_code="BOD", x_pixel=242, y_pixel=123),
+    Airport(name="Toulouse-Blagnac", iata_code="TLS", x_pixel=368, y_pixel=245),
 
     # _________________________________________________________Sud-Est
-    Airport(name="Montpellier-Méditerranée", iata_code="MPL", x_pixel=500, y_pixel=700),
-    Airport(name="Marseille-Provence", iata_code="MRS", x_pixel=550, y_pixel=750),
-    Airport(name="Nice Côte d'Azur", iata_code="NCE", x_pixel=700, y_pixel=700),
+    Airport(name="Montpellier-Méditerranée", iata_code="MPL", x_pixel=192, y_pixel=299),
+    Airport(name="Marseille-Provence", iata_code="MRS", x_pixel=295, y_pixel=315),
+    Airport(name="Nice Côte d'Azur", iata_code="NCE", x_pixel=379, y_pixel=286),
 
     # __________________________________________________________Région Rhône-Alpes
-    Airport(name="Lyon Saint-Exupéry", iata_code="LYS", x_pixel=600, y_pixel=500)
+    Airport(name="Lyon Saint-Exupéry", iata_code="LYS", x_pixel=255, y_pixel=115)
 ]

@@ -319,23 +319,9 @@ class Ui_ATC_accueil(object):
         self.horizontalLayout.setObjectName(u"horizontalLayout")
         self.horizontalLayout.setSizeConstraint(QLayout.SizeConstraint.SetFixedSize)
         self.horizontalLayout.setContentsMargins(-1, -1, -1, 0)
-        self.btn_aide = QPushButton(self.frame_else)
-        self.btn_aide.setObjectName(u"btn_aide")
-        icon = QIcon()
-        icon.addFile(u"image/livre-ouvert.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
-        self.btn_aide.setIcon(icon)
-        self.btn_aide.setIconSize(QSize(40, 40))
 
-        self.horizontalLayout.addWidget(self.btn_aide)
 
-        self.btn_parametre = QPushButton(self.frame_else)
-        self.btn_parametre.setObjectName(u"btn_parametre")
-        icon1 = QIcon()
-        icon1.addFile(u"image/parametres.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
-        self.btn_parametre.setIcon(icon1)
-        self.btn_parametre.setIconSize(QSize(40, 40))
 
-        self.horizontalLayout.addWidget(self.btn_parametre)
 
         self.btn_sortie = QPushButton(self.frame_else)
         self.btn_sortie.setObjectName(u"btn_sortie")
@@ -373,8 +359,6 @@ class Ui_ATC_accueil(object):
         self.ATC_bordeauxlfbb.setText(QCoreApplication.translate("ATC_accueil", u"Bordeaux LFBB", None))
         self.txt_titre.setText(QCoreApplication.translate("ATC_accueil", u"ATC SIMULATOR", None))
         self.txt_intro.setText(QCoreApplication.translate("ATC_accueil", u"Bienvenue dans ATC Simulator. Ce logiciel imite un software typique de la DGAC (Dir\u00e9ction G\u00e9n\u00e9ral de l'Aviation Civile) ou bien des tours de contr\u00f4les d'a\u00e9roports. Pour commencer, s\u00e9lectionnez une zone de la France.", None))
-        self.btn_aide.setText("")
-        self.btn_parametre.setText("")
         self.btn_sortie.setText("")
     # retranslateUi
 

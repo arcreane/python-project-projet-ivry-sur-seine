@@ -39,8 +39,7 @@ class AircraftItem(QGraphicsRectItem):
         self.data = data
         self.size = size
 
-        #dessiner le vecteur de direction (la petite droite)
-        #la ligne va de (0, 0) au haut (-Y)
+
         self.vector = QGraphicsLineItem(0, 0, 0, -vector_len, self)  # self rend la ligne enfant du carré
         self.vector.setPen(QPen(QColor(250, 255, 250), 2))  #ligne Verte (standard ATC)
 
@@ -61,9 +60,9 @@ class AircraftItem(QGraphicsRectItem):
 
         #assurer que le ToolTip fonctionne sur la bonne référence
         self.setToolTip(self.tooltip_text)
+        self.landing_targets = {}
 
-
-    def set_landing_target(self, callsign, target_pos: QPointF, threshold: int):
+    def set_landing_target(self, callsign, target_pos: QPointF, threshold: int, removal_threshold: int):
 
         #définit la destination d'atterrissage et affiche le cercle de proximité (geofence).
 
@@ -78,7 +77,7 @@ class AircraftItem(QGraphicsRectItem):
                                       2 * radius, 2 * radius)
 
         #couleur du cercle
-        circle.setPen(QPen(QColor(255, 255, 0), 2))  #jaune
+        circle.setPen(QPen(QColor(0, 0, 250), 2))  #vert
         circle.setBrush(Qt.BrushStyle.NoBrush)  #centre creux
 
         self.scene.addItem(circle)
@@ -87,6 +86,7 @@ class AircraftItem(QGraphicsRectItem):
         self.landing_targets[callsign] = {
             'target_pos': target_pos,
             'threshold': threshold,
+            'removal_threshold': removal_threshold,
             'circle_item': circle
         }
 
@@ -220,7 +220,7 @@ class AircraftMapWidget(QGraphicsView):
             'speed': speed
         }#stocke la vitesse et met à jour le dictionnaire
 
-    def set_landing_target(self, callsign, target_pos: QPointF, threshold: int):
+    def set_landing_target(self, callsign, target_pos: QPointF, threshold: int, removal_threshold: int):
 
         #définit la destination d'atterrissage et affiche le cercle de proximité (geofence).
 
@@ -253,7 +253,7 @@ class AircraftMapWidget(QGraphicsView):
 
         for callsign, data in self.aircraft_data.items():
             item = data['item']  #lobjet graphique à déplacer
-            landed_callsigns = []  #pour stocker les avions à supprimer
+            #landed_callsigns = []  #pour stocker les avions à supprimer
             #récupérer les données de la simulation (vitesse/cap)
             heading = self.all_aircraft_details[callsign]['heading']
             speed = self.all_aircraft_details[callsign]['speed']
@@ -270,7 +270,10 @@ class AircraftMapWidget(QGraphicsView):
             if callsign in self.landing_targets:
                 target = self.landing_targets[callsign]['target_pos']
 
-                threshold = self.landing_targets[callsign]['threshold']
+                threshold = self.landing_targets[callsign].get(
+                    'removal_threshold',
+                    5
+                )
                 #calcul de la distance au carré
                 dist_sq = (new_pos.x() - target.x()) ** 2 + (new_pos.y() - target.y()) ** 2
 
