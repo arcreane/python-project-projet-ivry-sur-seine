@@ -108,11 +108,13 @@ class Avion:
         distance = sqrt((self.pos[0] - airport_infos[0]) ** 2 + (self.pos[1] - airport_infos[1]) ** 2)
         if distance < 50:
             self.etat['can_land'] = True
+        else:
+            self.etat['can_land'] = False
 
     def exit_scope(self, lim_x, lim_y):
         distance_x = abs(lim_x - self.pos[0])
         distance_y = abs(lim_y - self.pos[1])
-        if (distance_x < 25 or distance_y < 25) or (distance_x < 25 and distance_y < 25):
+        if distance_x < 25 or distance_y < 25 or self.pos[0] < 25 or self.pos[1] < 25:
             self.consigne['heading'] = (self.heading + 180) % 360
 
     def landing(self, airport_infos):
@@ -150,6 +152,8 @@ class Avion:
             self.heading_change()
             sleep(1)
         self.consigne['heading'] = airport_infos[2]
+        self.consigne['vs'] = 500
+        self.consigne['altitude'] = 0
         for i in range(60):
             self.horizontal_move()
             self.vertical_move()
