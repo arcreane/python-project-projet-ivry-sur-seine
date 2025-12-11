@@ -175,25 +175,15 @@ class ATC_parislfff(QMainWindow, Ui_ATC_paris):       #def de la page paris
 
     def display_aircraft_stats(self, callsign):
 
-        #Reçoit le callsign de l'avion cliqué et remplit les champs de texte du panneau.
+        #Reçoit le callsign de l'avion cliqué
 
         if callsign not in self.aircraft_details:
             return
 
         self.selected_callsign = callsign
-        data = self.aircraft_details[callsign]
 
         #mise à jour du titre
         self.txt_titre.setText(f"Contrôle - {callsign}")
-
-        #mise à jour du CAP/HEADING (Requis)
-        #self.txt_heading_valeur est un QTextEdit
-        self.txt_heading_valeur.setText(str(data.heading))
-
-        #mise à jour des autres champs pour la complétude
-        self.txt_altitude_valeur.setText(str(data.alt))
-        self.txt_vitesse_valeur.setText(str(data.speed))
-        self.txt_vitesse_verticale_valeur.setText(str(data.vs))
 
     def apply_new_command(self):
 
@@ -204,10 +194,10 @@ class ATC_parislfff(QMainWindow, Ui_ATC_paris):       #def de la page paris
             return
 
         try:
-            new_heading = int(self.txt_heading_valeur.toPlainText())
-            new_altitude = int(self.txt_altitude_valeur.toPlainText())
-            new_speed = int(self.txt_vitesse_valeur.toPlainText())
-            new_vertical_speed = int(self.txt_vitesse_verticale_valeur.toPlainText())
+            new_heading = int(self.txt_heading_valeur.text())
+            new_altitude = int(self.txt_altitude_valeur.text())
+            new_speed = int(self.txt_vitesse_valeur.text())
+            new_vertical_speed = int(self.txt_vitesse_verticale_valeur.text())
 
             consigne = {
                 "heading": new_heading,

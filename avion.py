@@ -105,11 +105,11 @@ class Avion:
         if distance < 50:
             self.etat['can_land'] = True
 
-    def exit_scope(self, lim_x, lim_y):
-        distance_x = abs(lim_x - self.pos[0])
-        distance_y = abs(lim_y - self.pos[1])
-        if distance_x < 25 or distance_y < 25 or self.pos[0] < 25 or self.pos[1] < 25:
-            self.consigne['heading'] = (self.heading + 180) % 360
+    def exit_scope(self):
+        if self.pos[0] <= 0 or self.pos[0] >= 1600:
+            self.consigne['heading'] = (- self.heading) % 360  # rebond horizontal
+        if self.pos[1] <= 0 or self.pos[1] >= 750:
+            self.consigne['heading'] = (180 - self.heading) % 360  # rebond vertical
 
     def landing(self):
         airport_infos = self.to
