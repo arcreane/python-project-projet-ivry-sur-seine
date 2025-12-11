@@ -256,19 +256,6 @@ class AircraftMapWidget(QGraphicsView):
         sleep(1)
 
 
-    def update_aircraft(self, callsign):
-
-        #met à jour le cap d'un avion existant.
-
-        if callsign in self.aircraft_data:
-            item = self.aircraft_data[callsign]['item']
-            item.setRotation(new_heading)
-            #mettre à jour le cap dans l'objet de l'avion
-            self.aircraft_data[callsign]['heading'] = new_heading
-
-        else:
-            print(f"Erreur: Avion {callsign} non trouvé pour la mise à jour.")
-
     def display_airport_geofence(self, iata_code: str, target_pos: QPointF, threshold: int):
         #Affiche un cercle de proximité permanent autour d'un aéroport
 

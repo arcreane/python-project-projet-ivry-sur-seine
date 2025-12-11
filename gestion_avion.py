@@ -56,7 +56,6 @@ def gestion_avion():
         dict_avion[key].horizontal_move()
         dict_avion[key].vertical_move()
         dict_avion[key].distance_airport()
-        dict_avion[key].exit_scope(621, 451)
         for key__ in dict_avion.keys():
             if key__ == key:
                 continue

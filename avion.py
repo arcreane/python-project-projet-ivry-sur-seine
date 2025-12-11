@@ -24,7 +24,7 @@ class Avion:
         self.conso = conso
         self.alt = alt
         self.landing_speed = ld_speed
-        self.consigne = {'alt' : None, 'heading' : None, 'speed' : None, 'vs' : None, 'landing' : False}
+        self.consigne = {'alt' : alt, 'heading' : heading % 360, 'speed' : speed, 'vs' : vs, 'landing' : False}
         self.etat = {'can_land' : False, 'TCAS' : False}
         self.aprt_code = aprt
         self.random_nb = random_nb
@@ -54,8 +54,6 @@ class Avion:
 
     def heading_change(self):
         target = self.consigne['heading']
-        if target is None:
-            return
 
         # Normalisation : angle le plus court entre -180 et +180
         delta = (target - self.heading + 540) % 360 - 180
