@@ -3,7 +3,7 @@
 
 # Imports PySide6.QtWidgets
 from PySide6.QtWidgets import QGraphicsView, QGraphicsScene,QGraphicsRectItem, QToolTip, QApplication,QGraphicsPolygonItem
-from PySide6.QtWidgets import QGraphicsEllipseItem,QGraphicsLineItem, QGraphicsTextItem
+from PySide6.QtWidgets import QGraphicsEllipseItem,QGraphicsLineItem, QGraphicsItem
 from PySide6.QtWidgets import QLabel, QWidget, QToolTip # QLabel et QWidget peuvent être supprimés si non utilisés
 
 # Imports PySide6.QtGui (Contient QPainter, QPixmap, QColor, QPen, QBrush, etc.)
@@ -57,7 +57,9 @@ class AircraftItem(QGraphicsRectItem):
         #placer l'icône à la position initiale
         self.setPos(position[0], position[1])
         self.setRotation(heading)
+        self.setFlag(QGraphicsItem.ItemIsSelectable, True)
         self.setAcceptHoverEvents(True)
+        self.setAcceptedMouseButtons(Qt.LeftButton)
         self.tooltip_text = self.create_tooltip_text()
 
         #assurer que le ToolTip fonctionne sur la bonne référence
@@ -251,7 +253,6 @@ class AircraftMapWidget(QGraphicsView):
             item = self.aircraft_items[callsign]
             item.setRotation(data.heading)
             item.setPos(data.pos[0], data.pos[1])
-            print(data.callsign, data.pos)
         sleep(1)
 
 

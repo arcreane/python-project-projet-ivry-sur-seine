@@ -30,10 +30,10 @@ class Avion:
         Avion.nb_avion += 1
 
     def horizontal_move(self):
-        vx = round((self.speed * sin(radians(self.heading)) / 3600) * 100)
-        vy = round((self.speed * cos(radians(self.heading)) / 3600) * 100)
+        vx = (self.speed * sin(radians(self.heading)) / 3600) * 100
+        vy = (self.speed * cos(radians(self.heading)) / 3600) * 100
         self.pos[0] += vx
-        self.pos[1] += vy
+        self.pos[1] -= vy
 
 
     def vertical_move(self):
@@ -132,7 +132,7 @@ class Avion:
         elif self.pos[0] > airport_infos[0] and self.pos[1] > airport_infos[1]:
             heading = 90 + hdg_deg
         self.consigne['heading'] = heading
-        self.consigne['altitude'] = 1500
+        self.consigne['alt'] = 1500
         self.consigne['vs'] = 1500
         self.consigne['speed'] = self.landing_speed
         while self.heading != heading:
@@ -169,6 +169,9 @@ class Avion:
             sleep(1)
             i += 1
         self.__del__()
+
+    def consigne_change(self, dict):
+        self.consigne = dict
 
     def __del__(self):
         Avion.nb_avion -= 1

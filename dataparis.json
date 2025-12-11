@@ -25,19 +25,19 @@
  },
  {
    "name": "BRAVO",
-   "pos_x": 600,
+   "pos_x": 750,
    "pos_y": 700,
    "rwy_hdg": null
  },
  {
    "name": "CHARLIE",
-   "pos_x": 1600,
+   "pos_x": 1250,
    "pos_y": 700,
    "rwy_hdg": null
  },
  {
    "name": "DELTA",
-   "pos_x": 1650,
+   "pos_x": 1400,
    "pos_y": 450,
    "rwy_hdg": null
  },

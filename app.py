@@ -19,7 +19,6 @@ from ATC_marseille import Ui_ATC_marseille# import de la window marseille
 from ATC_accueil import Ui_ATC_accueil  #import de la main window
 from airport import AIRPORTS_DATA #on importe la liste des aeroport depuis le fichier pévu a cet effet
 from airport_dots import AirportDot  #on importe ce qui permet de dessiner les aeroports
-from spawn_point_data import SPAWN_POINTS #on import les points de spawn des avions
 from utilities import json_data, json_avion
 from gestion_avion import init_avion, gestion_avion
 
@@ -99,14 +98,6 @@ class ATC_parislfff(QMainWindow, Ui_ATC_paris):       #def de la page paris
         self.setWindowTitle("ATC_parisfLFFF") #titre de la page
         self.btn_accueil.clicked.connect(self.retour_accueil)   #declenchement du bouton et ouvre la page daccueil
         self.btn_sortie.clicked.connect(QApplication.quit)
-        '''
-        self.aircraft_details = {
-            "AFR123": {"heading": 45, "altitude": 32000, "speed": 50, "vertical_speed": 0, "pos": QPointF(800, 200)},
-            "BAW456": {"heading": 180, "altitude": 28000, "speed": 50, "vertical_speed": 1000,"pos": QPointF(200, 400)},
-            "AFR789": {"heading": 60, "altitude": 32000, "speed": 50, "vertical_speed": 0, "pos": QPointF(400,100)},
-            "BAW054": {"heading": 300, "altitude": 28000, "speed": 50, "vertical_speed": 1000, "pos": QPointF(100, 400)}
-        }
-        '''
         self.aircraft_details = self._create_initial_aircrafts()
         self.label_5.all_aircraft_details = self.aircraft_details #on assigne le dico au widget map
         self.selected_callsign = None
@@ -122,7 +113,6 @@ class ATC_parislfff(QMainWindow, Ui_ATC_paris):       #def de la page paris
 
     def run_simulation_step(self):
         #déclenche la mise à jour des positions de tous les avions
-
         #le widget carte gère le déplacement de tous les avions
         self.label_5.move_aircrafts()
 
@@ -255,7 +245,15 @@ class ATC_parislfff(QMainWindow, Ui_ATC_paris):       #def de la page paris
         """
         #vérifier si un avion est sélectionné
         callsign = self.selected_callsign
-        if not callsign or callsign not in self.aircraft_details:
+        print(callsign)
+        callsigns = []
+        key_callsign = ''
+        for key, data in self.aircraft_details.items():
+            callsigns.append(data.callsign)
+            if data.callsign == callsign:
+                key_callsign = key
+
+        if not callsign or callsign not in callsigns:
             print("Erreur: Aucun avion sélectionné ou callsign inconnu.")
             return
 
@@ -267,14 +265,25 @@ class ATC_parislfff(QMainWindow, Ui_ATC_paris):       #def de la page paris
             new_vertical_speed = int(self.txt_vitesse_verticale_valeur.toPlainText())
 
             #mettre à jour les données de l'avion dans le dictionnaire
-            aircraft_data = self.aircraft_details[callsign]
-            aircraft_data["heading"] = new_heading
-            aircraft_data["altitude"] = new_altitude
-            aircraft_data["speed"] = new_speed
-            aircraft_data["vertical_speed"] = new_vertical_speed
+            consigne = {'alt' : None, 'heading' : None, 'speed' : None, 'vs' : None, 'landing' : False}
+            if new_heading != None:
+                consigne["heading"] = new_heading
+            else:
+                consigne["heading"] = None
+            if new_altitude != None:
+                consigne["alt"] = new_altitude
+            else:
+                consigne["alt"] = None
+            if new_speed != None:
+                consigne["speed"] = new_speed
+            else:
+                consigne["speed"] = None
+            if new_vertical_speed != None:
+                consigne["vs"] = new_vertical_speed
+            else:
+                consigne["vs"] = None
 
-            #demander au widget de carte de mettre à jour l'affichage de l'avion
-            self.label_5.update_aircraft(callsign, new_heading)
+            self.aircraft_details[key_callsign].consigne_change(consigne)
 
             #message de confirmation  (en bas a gauche de lecran)
             self.statusBar().showMessage(f"Commande appliquée à {callsign}: Cap {new_heading}°")
