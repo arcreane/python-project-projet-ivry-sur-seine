@@ -142,7 +142,6 @@ class AircraftMapWidget(QGraphicsView):
         self.landing_targets = {}  # {'callsign': {'target_pos': QPointF, 'threshold': 80, 'circle_item': QGraphicsEllipseItem}}
         self.airport_geofences = {}
 
-
     def set_map_image(self, pixmap_path):     #defini limage détude comme etant limage en fond
 
         self.scene.clear()        #nous devons d'abord retirer l'ancienne image si elle existe

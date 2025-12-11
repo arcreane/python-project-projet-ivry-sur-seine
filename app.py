@@ -2,10 +2,9 @@
 
 #___________________________________les_imports________________________________________
 import sys
-from PySide6.QtWidgets import QApplication, QMainWindow
 
-from PySide6.QtWidgets import QMainWindow, QApplication, QGraphicsTextItem # Mis à jour
-from PySide6.QtGui import QColor, QFont # Mis à jour
+from PySide6.QtWidgets import QMainWindow, QApplication, QGraphicsTextItem
+from PySide6.QtGui import QColor, QFont
 from PySide6.QtWidgets import QApplication
 from PySide6.QtCore import QTimer, QPointF
 import math
@@ -24,7 +23,6 @@ from spawn_point_data import SPAWN_POINTS #on import les points de spawn des avi
 
 #___________________________________________________________________________
 
-REMOVAL_THRESHOLD_PIXELS = 10 # Seuil de retrait (doit être atteint)
 
 #__________________________class_accueil________________________________
 
@@ -1337,3 +1335,7 @@ if __name__ == "__main__":   # lance par defaut la fenetre accueil
     window = ATC_accueil()
     window.showMaximized()
     sys.exit(app.exec())
+
+
+
+#tot_ligne = 5534 lignes

@@ -6,13 +6,7 @@ class Airport:
     #Représente un aéroport fixe sur la carte ATC
 
     def __init__(self, name, iata_code, x_pixel, y_pixel):
-        """
-        Initialise un aéroport.
-        :param name: Nom complet de l'aéroport (str).
-        :param iata_code: Code IATA (e.g., 'CDG') (str).
-        :param x_pixel: Coordonnée X sur l'image de la carte (int).
-        :param y_pixel: Coordonnée Y sur l'image de la carte (int).
-        """
+
         self.name = name
         self.iata = iata_code
         self.x = x_pixel
