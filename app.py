@@ -153,52 +153,9 @@ class ATC_parislfff(QMainWindow, Ui_ATC_paris):       #def de la page paris
             self.statusBar().showMessage("Veuillez sélectionner un avion d'abord.", 3000)
             return
 
-        aircraft_pos = self.aircraft_details[callsign]['pos']
-
-        target_airport = None
-        min_dist_sq = LANDING_THRESHOLD_PIXELS ** 2
-
-        #recherche de l'aéroport le plus proche DANS la zone de seuil
-
-        for airport in AIRPORTS_DATA:
-
-            dx = aircraft_pos.x() - airport.x
-            dy = aircraft_pos.y() - airport.y
-            dist_sq = dx ** 2 + dy ** 2
-
-            #nous cherchons le plus proche, MAIS qui doit être DANS le seuil
-            if dist_sq < min_dist_sq:
-                min_dist_sq = dist_sq
-                target_airport = airport  #l'aéroport le plus proche DANS la zone
-
-        # ----------------------------------------------------
-        # 2. Exécution de la commande
-        # ----------------------------------------------------
-        if target_airport:
-            #l'avion est dans la zone : lancer la séquence d'atterrissage
-
-            #création du QPointF cible
-            target_pos_qpointf = QPointF(target_airport.x, target_airport.y)
-
-            #calculer le nouveau cap vers l'aéroport
-            new_heading = self.calculate_heading_to_target(aircraft_pos, target_pos_qpointf)
-
-            #mise à jour des données (Cap et Vitesse réduite)
-            self.aircraft_details[callsign]['heading'] = new_heading
-            self.aircraft_details[callsign]['speed'] = 20
-            self.aircraft_details[callsign]['vertical_speed'] = 0  #pas de descente si atterrissage distance seule
-
-            #mettre à jour l'affichage de l'avion sur la carte et afficher le cercle
-            self.label_5.update_aircraft(callsign, new_heading)
-            self.label_5.set_landing_target(callsign, target_pos_qpointf, LANDING_THRESHOLD_PIXELS)
-            self.display_aircraft_stats(callsign)  #mettre à jour le panneau de droite
-
-            self.statusBar().showMessage(f"LAND: {callsign} guidé vers {target_airport.iata}", 5000)
-
-        else:
-            #l'avion n'est pas dans le cercle de seuil d'un aéroport autorisé
-            self.statusBar().showMessage(
-                f"L'avion n'est pas en zone d'approche finale autorisée ({LANDING_THRESHOLD_PIXELS}px).", 3000)
+        if self.aircraft_details[callsign].etat['can_land'] == True:
+            self.aircraft_details[callsign].consigne['landing'] = True
+            print(f"{callsign} is landing")
 
     def calculate_heading_to_target(self, current_pos: QPointF, target_pos: QPointF) -> float:
         #Calcule le cap (en degrés, 0=Nord) pour aller de la position actuelle à la cible
@@ -231,66 +188,44 @@ class ATC_parislfff(QMainWindow, Ui_ATC_paris):       #def de la page paris
 
         #mise à jour du CAP/HEADING (Requis)
         #self.txt_heading_valeur est un QTextEdit
-        self.txt_heading_valeur.setText(str(data["heading"]))
+        self.txt_heading_valeur.setText(str(data.heading))
 
         #mise à jour des autres champs pour la complétude
-        self.txt_altitude_valeur.setText(str(data["altitude"]))
-        self.txt_vitesse_valeur.setText(str(data["speed"]))
-        self.txt_vitesse_verticale_valeur.setText(str(data["vertical_speed"]))
+        self.txt_altitude_valeur.setText(str(data.alt))
+        self.txt_vitesse_valeur.setText(str(data.speed))
+        self.txt_vitesse_verticale_valeur.setText(str(data.vs))
 
     def apply_new_command(self):
-        """
-        Lit les valeurs des champs de texte de la colonne de droite,
-        met à jour les données de l'avion sélectionné et met à jour l'affichage de l'avion.
-        """
-        #vérifier si un avion est sélectionné
-        callsign = self.selected_callsign
-        print(callsign)
-        callsigns = []
-        key_callsign = ''
-        for key, data in self.aircraft_details.items():
-            callsigns.append(data.callsign)
-            if data.callsign == callsign:
-                key_callsign = key
 
-        if not callsign or callsign not in callsigns:
-            print("Erreur: Aucun avion sélectionné ou callsign inconnu.")
+        callsign = self.selected_callsign
+
+        if not callsign or callsign not in self.aircraft_details:
+            print("Erreur: Aucun avion sélectionné.")
             return
 
         try:
-            #lire les nouvelles valeurs des champs QTextEdit
             new_heading = int(self.txt_heading_valeur.toPlainText())
             new_altitude = int(self.txt_altitude_valeur.toPlainText())
             new_speed = int(self.txt_vitesse_valeur.toPlainText())
             new_vertical_speed = int(self.txt_vitesse_verticale_valeur.toPlainText())
 
-            #mettre à jour les données de l'avion dans le dictionnaire
-            consigne = {'alt' : None, 'heading' : None, 'speed' : None, 'vs' : None, 'landing' : False}
-            if new_heading != None:
-                consigne["heading"] = new_heading
-            else:
-                consigne["heading"] = None
-            if new_altitude != None:
-                consigne["alt"] = new_altitude
-            else:
-                consigne["alt"] = None
-            if new_speed != None:
-                consigne["speed"] = new_speed
-            else:
-                consigne["speed"] = None
-            if new_vertical_speed != None:
-                consigne["vs"] = new_vertical_speed
-            else:
-                consigne["vs"] = None
+            consigne = {
+                "heading": new_heading,
+                "alt": new_altitude,
+                "speed": new_speed,
+                "vs": new_vertical_speed,
+                "landing": False
+            }
 
-            self.aircraft_details[key_callsign].consigne_change(consigne)
+            # On applique la consigne à l'objet avion
+            self.aircraft_details[callsign].consigne_change(consigne)
 
-            #message de confirmation  (en bas a gauche de lecran)
-            self.statusBar().showMessage(f"Commande appliquée à {callsign}: Cap {new_heading}°")
+            self.statusBar().showMessage(
+                f"Commande appliquée à {callsign}: Cap {new_heading}°"
+            )
 
         except ValueError:
-            # Gérer le cas où l'utilisateur entre du texte non numérique
-            print("Erreur de saisie: Veuillez entrer des nombres entiers valides dans tous les champs.")
+            print("Erreur: saisie invalide.")
 
     def retour_accueil(self):  #fonction btn_accueil
         from app import ATC_accueil
@@ -507,39 +442,36 @@ class ATC_brestlfrr(QMainWindow, Ui_ATC_brest):       #def de la page paris
         self.txt_vitesse_verticale_valeur.setText(str(data["vertical_speed"]))
 
     def apply_new_command(self):
-        """
-        Lit les valeurs des champs de texte de la colonne de droite,
-        met à jour les données de l'avion sélectionné et met à jour l'affichage de l'avion.
-        """
-        #vérifier si un avion est sélectionné
+
         callsign = self.selected_callsign
+
         if not callsign or callsign not in self.aircraft_details:
-            print("Erreur: Aucun avion sélectionné ou callsign inconnu.")
+            print("Erreur: Aucun avion sélectionné.")
             return
 
         try:
-            #lire les nouvelles valeurs des champs QTextEdit
             new_heading = int(self.txt_heading_valeur.toPlainText())
             new_altitude = int(self.txt_altitude_valeur.toPlainText())
             new_speed = int(self.txt_vitesse_valeur.toPlainText())
             new_vertical_speed = int(self.txt_vitesse_verticale_valeur.toPlainText())
 
-            #mettre à jour les données de l'avion dans le dictionnaire
-            aircraft_data = self.aircraft_details[callsign]
-            aircraft_data["heading"] = new_heading
-            aircraft_data["altitude"] = new_altitude
-            aircraft_data["speed"] = new_speed
-            aircraft_data["vertical_speed"] = new_vertical_speed
+            consigne = {
+                "heading": new_heading,
+                "alt": new_altitude,
+                "speed": new_speed,
+                "vs": new_vertical_speed,
+                "landing": False
+            }
 
-            #demander au widget de carte de mettre à jour l'affichage de l'avion
-            self.label_5.update_aircraft(callsign, new_heading)
+            # On applique la consigne à l'objet avion
+            self.aircraft_details[callsign].consigne_change(consigne)
 
-            #message de confirmation  (en bas a gauche de lecran)
-            self.statusBar().showMessage(f"Commande appliquée à {callsign}: Cap {new_heading}°")
+            self.statusBar().showMessage(
+                f"Commande appliquée à {callsign}: Cap {new_heading}°"
+            )
 
         except ValueError:
-            # Gérer le cas où l'utilisateur entre du texte non numérique
-            print("Erreur de saisie: Veuillez entrer des nombres entiers valides dans tous les champs.")
+            print("Erreur: saisie invalide.")
 
     def retour_accueil(self):  #fonction btn_accueil
         from app import ATC_accueil

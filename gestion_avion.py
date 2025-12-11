@@ -23,7 +23,7 @@ def init_avion():
                     pos = [data['pos_x'], data['pos_y']]
                 if data['name'] == dict_cara['to']:
                     to = [data['pos_x'], data['pos_y'], data['rwy_hdg']]
-            dict_avion[n] = Avion(dict_cara['callsign'],
+            dict_avion[dict_cara['callsign']] = Avion(dict_cara['callsign'],
                                   dict_cara['phonetic'],
                                   dict_cara['from_'],
                                   to,
@@ -41,7 +41,8 @@ def init_avion():
                                   float(dict_cara['conso']),
                                   int(dict_cara['alt']),
                                   int(dict_cara['ldg_speed']),
-                                  dict_cara['to'])
+                                  dict_cara['to'],
+                                  n)
     return dict_avion
 
 # gestion des mise à jours des paramètres avions et de la carte en fonction de l'échelle

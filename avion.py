@@ -5,7 +5,7 @@ class Avion:
 
     nb_avion = 0
 
-    def __init__(self, callsign, phonetic, from_, to, type_, immat, turb, pax, final_level, sqwk, fuel, pos, heading, speed, vs, conso, alt, ld_speed, aprt):
+    def __init__(self, callsign, phonetic, from_, to, type_, immat, turb, pax, final_level, sqwk, fuel, pos, heading, speed, vs, conso, alt, ld_speed, aprt, random_nb):
         self.callsign = callsign
         self.phonetic = phonetic
         self.from_ = from_
@@ -27,6 +27,7 @@ class Avion:
         self.consigne = {'alt' : None, 'heading' : None, 'speed' : None, 'vs' : None, 'landing' : False}
         self.etat = {'can_land' : False, 'TCAS' : False}
         self.aprt_code = aprt
+        self.random_nb = random_nb
         Avion.nb_avion += 1
 
     def horizontal_move(self):
