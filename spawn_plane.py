@@ -175,18 +175,18 @@ class AircraftMapWidget(QGraphicsView):
             del self.aircraft_data[callsign]
 
     def mousePressEvent(self, event):
-        #Détecte le clic en utilisant la QGraphicsScene
+            # Détecte le clic en utilisant la QGraphicsScene
 
-        pos_view = event.pos()        #obtenir la position du clic dans les coordonnées de la VUE
-
-
-        item = self.itemAt(pos_view)        #demander à la VUE quel item se trouve à cette position
-
-
-        if item and isinstance(item, AircraftItem):
-            self.aircraft_clicked.emit(item.callsign)            # avion détecté : emettre le signal avec le callsign
+        pos_view = event.pos()  # obtenir la position du clic dans les coordonnées de la VUE
+        callsign = ''
+        for item in self.aircraft_data.values():
+            if pos_view.x() == item.pos[0] and pos_view.y() == item.pos[1]:
+                callsign = item.callsign
+                break
 
 
+        self.aircraft_clicked.emit(callsign)  # avion détecté : emettre le signal avec le callsign
+        print(callsign)
         super().mousePressEvent(event)
 
     def show_aircraft_tooltip(self, callsign, global_pos: QPointF):
