@@ -53,27 +53,22 @@ class Avion:
                     self.alt = self.consigne['alt']
 
     def heading_change(self):
-        if self.consigne['heading'] is not None:
-            delta_angle = self.consigne['heading'] - self.heading
-            angle_speed = 3
-            if 0 < delta_angle <= 180:
-                if abs(delta_angle) > 3:
-                    self.heading += angle_speed
-                    self.heading %= 360
-                else:
-                    self.heading = self.consigne['heading']
-            elif 360 > delta_angle > 180:
-                if abs(delta_angle) > 3:
-                    self.heading -= angle_speed
-                    self.heading %= 360
-                else:
-                    self.heading = self.consigne['heading']
-            elif delta_angle < 0:
-                if abs(delta_angle) > 3:
-                    self.heading += angle_speed
-                    self.heading %= 360
-                else:
-                    self.heading = self.consigne['heading']
+        target = self.consigne['heading']
+        if target is None:
+            return
+
+        # Normalisation : angle le plus court entre -180 et +180
+        delta = (target - self.heading + 540) % 360 - 180
+
+        angle_speed = 3  # taux de virage (° par cycle)
+
+        if abs(delta) <= angle_speed:
+            # On arrive pile au cap demandé
+            self.heading = target % 360
+        else:
+            # Tourne à gauche ou à droite selon le plus court
+            self.heading = (self.heading + angle_speed * (1 if delta > 0 else -1)) % 360
+
 
     def speed_change(self):
         if self.alt <= 10000 and (self.consigne['speed'] is None or self.consigne['speed'] > 250):
