@@ -1,4 +1,4 @@
-from math import sqrt
+from math import sqrt, atan2, degrees
 import json
 
 def distance_avion(plane_1, plane_2):
@@ -10,7 +10,10 @@ def distance_avion(plane_1, plane_2):
 def import_json_data():
     filename = 'data.json'
     f = open(filename, 'r')
-    dict = json.load(f)
+    list = json.load(f)
+    dict = {}
+    for dico in list:
+        dict[dico['name']] = dico
     f.close()
     return dict
 
@@ -40,3 +43,4 @@ def json_avion(FIR):
     json.dump(dict, f2)
     f.close()
     f2.close()
+

@@ -1,6 +1,7 @@
 from avion import Avion
 from random import randint
 from utilities import distance_avion, import_json_avion, import_json_data
+from math import sqrt, degrees, atan2
 
 dict_data = {}
 L = []
@@ -18,7 +19,7 @@ def init_avion():
                 n = randint(0, 19)
             L.append(n)
             dict_cara = import_json_avion(n)
-            for data in dict_data:
+            for data in dict_data.values():
                 if data['name'] ==  dict_cara['pos']:
                     pos = [data['pos_x'], data['pos_y']]
                 if data['name'] == dict_cara['to']:
@@ -50,12 +51,6 @@ def gestion_avion():
     global dict_data
     global dict_avion
     for key in dict_avion.keys():
-        dict_avion[key].heading_change()
-        dict_avion[key].speed_change()
-        dict_avion[key].vs_change()
-        dict_avion[key].horizontal_move()
-        dict_avion[key].vertical_move()
-        dict_avion[key].distance_airport()
         for key__ in dict_avion.keys():
             if key__ == key:
                 continue
@@ -67,10 +62,58 @@ def gestion_avion():
                 elif distance == 0 and delta_altitude == 0:
                     dict_avion[key].__del__()
                     dict_avion[key__].__del__()
-                    dict_avion.pop(key, None)
-                    dict_avion.pop(key__, None)
+                    del(dict_avion[dict_avion[key].callsign])
+                    del(dict_avion[dict_avion[key__].callsign])
         if dict_avion[key].consigne['landing'] == True:
-            dict_avion[key].landing()
-            dict_avion.pop(key, None)
-
+            landing(dict_avion[key])
+        dict_avion[key].heading_change()
+        dict_avion[key].speed_change()
+        dict_avion[key].vs_change()
+        dict_avion[key].horizontal_move()
+        dict_avion[key].vertical_move()
+        dict_avion[key].distance_airport()
     return dict_avion
+
+def landing(dict):
+    airport_infos = dict.to
+    distance = sqrt((dict.pos[0] - airport_infos[0]) ** 2 + (dict.pos[1] - airport_infos[1]) ** 2)
+    dx = dict.pos[0] - airport_infos[0]
+    dy = dict.pos[1] - airport_infos[1]
+    angle = degrees(atan2(dy, dx))
+    heading = round((270 + angle) % 360)
+    print(dict.alt)
+    if dict.alt > 1500 and distance > 2 and (abs((heading - dict.heading + 180) % 360 - 180) > 2):
+        dict.speed = 0
+        dict.consigne_change({'alt' : 1500, 'heading' : heading, 'speed' : 0, 'vs' : None, 'landing' : True})
+    elif dict.alt > 1500 and distance > 2 and (abs((heading - dict.heading + 180) % 360 - 180) <= 2):
+        dict.speed = dict.landing_speed
+        dict.consigne_change({'alt': 1500, 'heading': heading, 'speed': dict.landing_speed, 'vs': None, 'landing': True})
+    elif dict.alt > 1500 and distance <= 2:
+        dict.consigne_change({'alt': 1500, 'heading': dict.heading + 5, 'speed': dict.landing_speed, 'vs': None, 'landing': True})
+    elif dict.alt <= 1520 and dict.alt > 1480 and distance > 2:
+        dict.alt = 1500
+        dict.consigne_change({'alt': 1500, 'heading': heading, 'speed': dict.landing_speed, 'vs': None, 'landing': True})
+    elif dict.alt <= 1520 and dict.alt > 1480 and distance <= 2 and dict.heading != airport_infos[2] + 180:
+        dict.speed = 0
+        dict.consigne_change({'alt': 1000, 'heading': airport_infos[2] + 180, 'speed': 0, 'vs': None, 'landing': True})
+    elif dict.alt > 1000 and dict.alt < 1500:
+        dict.speed = dict.landing_speed
+        dict.consigne_change({'alt': 1000, 'heading': airport_infos[2] + 180, 'speed': dict.landing_speed, 'vs': None, 'landing': True})
+    elif dict.alt <= 1020 and dict.alt > 980:
+        dict.alt = 1000
+        dict.speed = 0
+        dict.consigne_change({'alt': 500, 'heading': dict.heading + 5, 'speed': dict.landing_speed, 'vs': None, 'landing': True})
+    elif dict.alt < 1000 and dict.alt > 500:
+        dict.speed = 0
+        dict.consigne_change({'alt': 500, 'heading': dict.heading + 5, 'speed': dict.landing_speed, 'vs': None, 'landing': True})
+    elif dict.alt <= 520 and dict.alt > 480 and dict.heading != airport_infos[2]:
+        dict.alt = 500
+        dict.speed = 0
+        dict.consigne_change({'alt': 500, 'heading': airport_infos[2], 'speed': dict.landing_speed, 'vs': None, 'landing': True})
+    elif dict.alt <= 500 and dict.heading == airport_infos[2]:
+        dict.speed = dict.landing_speed
+        dict.consigne_change({'alt': 0, 'heading': airport_infos[2], 'speed': dict.landing_speed, 'vs': None, 'landing': True})
+    elif dict.alt == 0:
+        dict.__del__()
+        global dict_avion
+        del(dict_avion[dict.callsign])

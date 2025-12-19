@@ -19,8 +19,8 @@ from ATC_marseille import Ui_ATC_marseille# import de la window marseille
 from ATC_accueil import Ui_ATC_accueil  #import de la main window
 from airport import AIRPORTS_DATA #on importe la liste des aeroport depuis le fichier pévu a cet effet
 from airport_dots import AirportDot  #on importe ce qui permet de dessiner les aeroports
-from utilities import json_data, json_avion
-from gestion_avion import init_avion, gestion_avion
+from utilities import json_data, json_avion, import_json_data
+from gestion_avion import init_avion, gestion_avion, landing
 
 
 #___________________________________________________________________________
@@ -89,182 +89,150 @@ class ATC_accueil(QMainWindow, Ui_ATC_accueil):          #def de la page accueil
         json_avion('brest')
         self.close()
 
-#_____________________BOUTONS____________________________________
-
-class ATC_parislfff(QMainWindow, Ui_ATC_paris):       #def de la page paris
+class ATC_parislfff(QMainWindow, Ui_ATC_paris):
     def __init__(self):
         super().__init__()
         self.setupUi(self)
-        self.setWindowTitle("ATC_parisfLFFF") #titre de la page
-        self.btn_accueil.clicked.connect(self.retour_accueil)   #declenchement du bouton et ouvre la page daccueil
-        self.btn_sortie.clicked.connect(QApplication.quit)
-        self.aircraft_details = self._create_initial_aircrafts()
-        self.label_5.all_aircraft_details = self.aircraft_details #on assigne le dico au widget map
+
+        # --- avions (OBJETS persistants)
+        self.aircrafts = init_avion()
+        self.label_5.all_aircraft_details = self.aircrafts
+
         self.selected_callsign = None
-        self._load_aircraft_on_map()
+
+        # --- affichage initial
+        for cs, avion in self.aircrafts.items():
+            self.label_5.add_aircraft(cs, avion)
+
+        # --- affichage des aéroports
         self._load_airports_on_map()
-        self._connect_signals()
 
-        #on introduit la notion de temps pour faire bouger les avions
-        self.simulation_timer = QTimer(self)
-        self.simulation_timer.timeout.connect(self.run_simulation_step)
-        self.simulation_timer.start(1000)  # Rafraîchit toutes les 1000 ms (delta_time = 1s)
+        # --- signaux
+        self.label_5.aircraft_clicked.connect(self.display_aircraft)
+        self.btn_apply.clicked.connect(self.apply_command)
+        self.btn_accueil.clicked.connect(self.back_home)
+        self.btn_sortie.clicked.connect(QApplication.quit)
+        self.btn_land.clicked.connect(self.apply_landing)
+
+        # --- timer simulation (1 tick = 1 update)
+        self.timer = QTimer(self)
+        self.timer.timeout.connect(self.simulation_step)
+        self.timer.start(1000)  # 1 seconde
 
 
-    def run_simulation_step(self):
-        #déclenche la mise à jour des positions de tous les avions
-        #le widget carte gère le déplacement de tous les avions
+    # ============================
+    #  SIMULATION
+    # ============================
+
+    def simulation_step(self):
+        # met à jour la logique avion
+        gestion_avion()
+
+        # met à jour l'affichage
         self.label_5.move_aircrafts()
 
-        is_input_active = (
-                self.txt_heading_valeur.hasFocus() or
-                self.txt_altitude_valeur.hasFocus() or
-                self.txt_vitesse_valeur.hasFocus() or
-                self.txt_vitesse_verticale_valeur.hasFocus()
-        )
-
-        if is_input_active:
-            #si l'utilisateur est en train de saisir dans un champ, on ne met pas à jour l'affichage
-            return
-        #si le champ de Cap (ou un autre) a le focus, NE PAS écraser la saisie.
-        if self.txt_heading_valeur.hasFocus() or self.txt_vitesse_valeur.hasFocus():
-            #si l'utilisateur est en train de saisir, on sort sans appeler display_aircraft_stats
-            return
+        # met à jour panneau si avion sélectionné
         if self.selected_callsign:
-            self.display_aircraft_stats(self.selected_callsign)
+            self.display_aircraft(self.selected_callsign, refresh_only=True)
 
-    def _load_aircraft_on_map(self):
-        #charge les avions sur le widget carte
-        for data in self.aircraft_details.values():
-            self.label_5.add_aircraft(data.callsign, data)
 
-    def _connect_signals(self):
-        #connecte le signal de clic de la carte à la méthode d'affichage des stats
+    # ============================
+    #  UI / COMMANDES
+    # ============================
 
-        self.label_5.aircraft_clicked.connect(self.display_aircraft_stats)
-        self.btn_apply.clicked.connect(self.apply_new_command)
-        self.btn_land.clicked.connect(self.initiate_landing_sequence)
-
-    def initiate_landing_sequence(self):
-        #lance la sequence datterissage uniquement si lavion est dans le cercle
-        callsign = self.selected_callsign
-
-        if not callsign or callsign not in self.aircraft_details:
-            self.statusBar().showMessage("Veuillez sélectionner un avion d'abord.", 3000)
-            return
-
-        if self.aircraft_details[callsign].etat['can_land'] == True:
-            self.aircraft_details[callsign].consigne['landing'] = True
-            print(f"{callsign} is landing")
-
-    def calculate_heading_to_target(self, current_pos: QPointF, target_pos: QPointF) -> float:
-        #Calcule le cap (en degrés, 0=Nord) pour aller de la position actuelle à la cible
-
-        #différences en pixels
-        dx = target_pos.x() - current_pos.x()
-        dy = target_pos.y() - current_pos.y()
-
-        #calcul de l'angle en radians (-180 à 180)
-        angle_rad = math.atan2(dx, -dy)  # -dy car l'axe Y des pixels est inversé (positif vers le bas)
-
-        #conversion en degrés (0 à 360)
-        heading_deg = math.degrees(angle_rad)
-
-        #normalisation du cap (0 à 360)
-        return (heading_deg + 360) % 360
-
-    def display_aircraft_stats(self, callsign):
-
-        #Reçoit le callsign de l'avion cliqué
-
-        if callsign not in self.aircraft_details:
+    def display_aircraft(self, callsign, refresh_only=False):
+        if callsign not in self.aircrafts:
             return
 
         self.selected_callsign = callsign
+        avion = self.aircrafts[callsign]
 
-        #mise à jour du titre
-        self.txt_titre.setText(f"Contrôle - {callsign}")
+        self.txt_titre.setText(f"Contrôle – {callsign}")
 
-    def apply_new_command(self):
+        if not refresh_only:
+            self.txt_heading_valeur.setText(str(int(avion.heading)))
+            self.txt_altitude_valeur.setText(str(int(avion.alt)))
+            self.txt_vitesse_valeur.setText(str(int(avion.speed)))
+            self.txt_vitesse_verticale_valeur.setText(str(int(avion.vs)))
 
-        callsign = self.selected_callsign
 
-        if not callsign or callsign not in self.aircraft_details:
-            print("Erreur: Aucun avion sélectionné.")
+    def apply_command(self):
+        if not self.selected_callsign:
             return
 
+        avion = self.aircrafts[self.selected_callsign]
+
         try:
-            new_heading = int(self.txt_heading_valeur.text())
-            new_altitude = int(self.txt_altitude_valeur.text())
-            new_speed = int(self.txt_vitesse_valeur.text())
-            new_vertical_speed = int(self.txt_vitesse_verticale_valeur.text())
-
-            consigne = {
-                "heading": new_heading,
-                "alt": new_altitude,
-                "speed": new_speed,
-                "vs": new_vertical_speed,
-                "landing": False
-            }
-
-            # On applique la consigne à l'objet avion
-            self.aircraft_details[callsign].consigne_change(consigne)
-
+            avion.consigne_change({
+                'heading': int(self.txt_heading_valeur.toPlainText()),
+                'alt': int(self.txt_altitude_valeur.toPlainText()),
+                'speed': int(self.txt_vitesse_valeur.toPlainText()),
+                'vs': int(self.txt_vitesse_verticale_valeur.toPlainText())
+            })
             self.statusBar().showMessage(
-                f"Commande appliquée à {callsign}: Cap {new_heading}°"
+                f"Commande appliquée à {avion.callsign}", 3000
             )
 
         except ValueError:
-            print("Erreur: saisie invalide.")
+            self.statusBar().showMessage("Saisie invalide", 3000)
 
-    def retour_accueil(self):  #fonction btn_accueil
-        from app import ATC_accueil
-        self.accueil = ATC_accueil()
-        self.accueil.showMaximized()      #permet douvrir la fenetre en pleine ecran
-        self.close()       # permet de refermer la fenetre
+    def apply_landing(self):
+        if not self.selected_callsign:
+            self.statusBar().showMessage(
+                "Aucun avion sélectionné", 3000
+            )
+            return
+
+        avion = self.aircrafts[self.selected_callsign]
+
+        # Vérification optionnelle : autorisation d'atterrir
+        if not avion.etat.get("can_land", False):
+            self.statusBar().showMessage(
+                f"{avion.callsign} n'est pas en zone d'approche", 3000
+            )
+            return
+
+        # Mise à jour de la consigne d'atterrissage
+        avion.consigne_change({
+            'landing': True
+        })
+
+        self.statusBar().showMessage(
+            f"Atterrissage autorisé pour {avion.callsign}", 4000
+        )
 
     def _load_airports_on_map(self):
-        CODES_AUTORISES = ["CDG", "ORY", "LIL"]
+        data = import_json_data() # Paris
+        CODES = ['LFPG', 'LFPO', 'LFQQ']
 
         font = QFont("Arial", 13)
         text_color = QColor(255, 255, 0)
-        #boucle : charger uniquement les AÉROPORTS
-        for airport in AIRPORTS_DATA:
 
-            if airport.iata in CODES_AUTORISES:
-                #dessin aeroport (point jaune)
-                airport_dot_item = AirportDot(airport)
-                self.label_5.scene.addItem(airport_dot_item)
+        for airport in CODES:
 
-                #dessin de letiquette iata
-                label = QGraphicsTextItem(airport.iata)
-                label.setFont(font)
-                label.setDefaultTextColor(text_color)
+            # Point aéroport
+            airport_dot_item = AirportDot(data[airport])
+            self.label_5.scene.addItem(airport_dot_item)
 
-                #positionnement
-                label.setPos(airport.x + 10 / 2 + 2, airport.y - 10)
-                self.label_5.scene.addItem(label)
+            # Label IATA
+            label = QGraphicsTextItem(airport)
+            label.setFont(font)
+            label.setDefaultTextColor(text_color)
+            label.setPos(data[airport]['pos_x'] + 7, data[airport]['pos_y'] - 15)
+            self.label_5.scene.addItem(label)
 
-        for airport in AIRPORTS_DATA:
-            if airport.iata in CODES_AUTORISES:
-                #dessin aeroport et etiquette
-                airport_dot_item = AirportDot(airport)
-                self.label_5.scene.addItem(airport_dot_item)
+            # Cercle de zone d'atterrissage
+            target_pos = QPointF(data[airport]['pos_x'], data[airport]['pos_y'])
+            self.label_5.display_airport_geofence(
+                airport,
+                target_pos,
+                LANDING_THRESHOLD_PIXELS
+            )
 
-
-                #affichage permanent du cercle
-                target_pos = QPointF(airport.x, airport.y)
-
-                #appel une nouvelle méthode sur le widget carte pour dessiner le cercle
-                self.label_5.display_airport_geofence(airport.iata, target_pos, LANDING_THRESHOLD_PIXELS)
-
-    def _create_initial_aircrafts(self):
-
-        #Crée un ensemble d'avions initiaux en utilisant les points de spawn.
-
-        initial_aircrafts = init_avion()
-
-        return initial_aircrafts
+    def back_home(self):
+        self.home = ATC_accueil()
+        self.home.showMaximized()
+        self.close()
 
 
 class ATC_reimslfee(QMainWindow, Ui_ATC_reims):       #def de la page paris
