@@ -125,9 +125,6 @@ class ATC_parislfff(QMainWindow, Ui_ATC_paris):
     # ============================
 
     def simulation_step(self):
-        # met à jour la logique avion
-        gestion_avion()
-
         # met à jour l'affichage
         self.label_5.move_aircrafts()
 

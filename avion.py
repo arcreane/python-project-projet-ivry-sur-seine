@@ -37,8 +37,23 @@ class Avion:
         self.pos[1] -= vy
 
     def vertical_move(self):
-        if self.consigne['alt'] is None:
-            return
+        if self.consigne['alt'] is not None:
+                self.vs = self.consigne['vs']
+        if self.vs is None or self.vs == 0:
+            vs = 1500 / 60
+        else:
+            vs = self.vs / 60
+        delta_alt = self.alt - self.consigne['alt']
+        if delta_alt < 0:
+            if abs(delta_alt) > abs(vs):
+                self.alt += round(abs(vs))
+            else:
+                self.alt = round(self.consigne['alt'])
+        if delta_alt > 0:
+            if abs(delta_alt) > abs(vs):
+                self.alt -= round(abs(vs))
+            else:
+                self.alt = round(self.consigne['alt'])
 
         # vitesse verticale en ft/s
         if self.consigne['vs'] is None:
