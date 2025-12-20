@@ -82,6 +82,7 @@ def landing(dict):
     angle = degrees(atan2(dy, dx))
     heading = round((270 + angle) % 360)
     print(dict.alt)
+    print(dict.consigne['alt'])
     if dict.alt > 1500 and distance > 2 and (abs((heading - dict.heading + 180) % 360 - 180) > 2):
         dict.speed = 0
         dict.consigne_change({'alt' : 1500, 'heading' : heading, 'speed' : 0, 'vs' : None, 'landing' : True})
@@ -89,11 +90,14 @@ def landing(dict):
         dict.speed = dict.landing_speed
         dict.consigne_change({'alt': 1500, 'heading': heading, 'speed': dict.landing_speed, 'vs': None, 'landing': True})
     elif dict.alt > 1500 and distance <= 2:
+        dict.speed = 0
+        dict.pos = [airport_infos[0], airport_infos[1]]
         dict.consigne_change({'alt': 1500, 'heading': dict.heading + 5, 'speed': dict.landing_speed, 'vs': None, 'landing': True})
     elif dict.alt <= 1520 and dict.alt > 1480 and distance > 2:
         dict.alt = 1500
         dict.consigne_change({'alt': 1500, 'heading': heading, 'speed': dict.landing_speed, 'vs': None, 'landing': True})
     elif dict.alt <= 1520 and dict.alt > 1480 and distance <= 2 and dict.heading != airport_infos[2] + 180:
+        dict.pos = [airport_infos[0], airport_infos[1]]
         dict.speed = 0
         dict.consigne_change({'alt': 1000, 'heading': airport_infos[2] + 180, 'speed': 0, 'vs': None, 'landing': True})
     elif dict.alt > 1000 and dict.alt < 1500:
