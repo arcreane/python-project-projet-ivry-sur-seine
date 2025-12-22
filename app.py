@@ -372,7 +372,7 @@ class ATC_reimslfee(QMainWindow, Ui_ATC_reims):       #def de la page paris
 
     def _load_airports_on_map(self):
         data = import_json_data() # Paris
-        CODES = ['LFPG', 'LFPO', 'LFQQ']
+        CODES = ['LFSB', 'LFST', 'LFGJ']
 
         font = QFont("Arial", 13)
         text_color = QColor(255, 255, 0)
