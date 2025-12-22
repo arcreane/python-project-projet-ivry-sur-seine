@@ -174,6 +174,7 @@ class AircraftMapWidget(QGraphicsView):
             item = self.aircraft_items[callsign]
             self.scene.removeItem(item)
             del self.aircraft_items[callsign]
+            del self.aircraft_data[callsign]
 
     def mousePressEvent(self, event):
         pos_view = event.pos()
@@ -246,16 +247,19 @@ class AircraftMapWidget(QGraphicsView):
 
     def move_aircrafts(self):
         #déplace les objets QGraphicsItem sur la scène
-
         self.aircraft_data = gestion_avion()
+        remove = []
         for data in self.aircraft_data.values():
             callsign = data.callsign
+            if callsign not in self.aircraft_items.keys():
+                self.add_aircraft(callsign, self.aircraft_data[callsign])
             if data.etat['land ?'] == True:
-                self.remove_aircraft(callsign)
-                continue
+                remove.append(callsign)
             item = self.aircraft_items[callsign]
             item.setRotation(data.heading)
             item.setPos(data.pos[0], data.pos[1])
+        for callsign in remove:
+            self.remove_aircraft(callsign)
         self.aircraft_data = check_avion()
         sleep(1)
 

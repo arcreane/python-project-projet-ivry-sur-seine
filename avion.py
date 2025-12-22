@@ -111,10 +111,11 @@ class Avion:
     def exit_scope(self):
         if self.pos[0] <= 0 or self.pos[0] >= 1600:
             self.heading = (- self.heading) % 360  # rebond horizontal
-            print(f'{self.callsign} exit')
+            self.consigne['heading'] = self.heading
         if self.pos[1] <= 0 or self.pos[1] >= 750:
             self.heading = (180 - self.heading) % 360  # rebond vertical
-            print(f'{self.callsign} exit')
+            self.consigne['heading'] = self.heading
+
 
     def consigne_change(self, new):
         for k, v in new.items():

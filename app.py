@@ -1,5 +1,3 @@
-
-
 #___________________________________les_imports________________________________________
 import sys
 from PySide6.QtWidgets import QApplication, QMainWindow
@@ -20,7 +18,7 @@ from ATC_accueil import Ui_ATC_accueil  #import de la main window
 from airport import AIRPORTS_DATA #on importe la liste des aeroport depuis le fichier pévu a cet effet
 from airport_dots import AirportDot  #on importe ce qui permet de dessiner les aeroports
 from utilities import json_data, json_avion, import_json_data
-from gestion_avion import init_avion, gestion_avion, landing
+from gestion_avion import init_avion, clear_dict_avion
 
 
 #___________________________________________________________________________
@@ -54,39 +52,39 @@ class ATC_accueil(QMainWindow, Ui_ATC_accueil):          #def de la page accueil
         #______________________________btn_sorti
         self.btn_sortie.clicked.connect(QApplication.quit)
 
-    def ouvrir_paris(self):           #fonction qui ouvre paris
-        self.fenetre_paris = ATC_parislfff()
-        self.fenetre_paris.showMaximized() #permet douvrir la fenetre en pleine ecran
+    def ouvrir_paris(self): #fonction qui ouvre paris
         json_data('paris')
         json_avion('paris')
+        self.fenetre_paris = ATC_parislfff()
+        self.fenetre_paris.showMaximized() #permet douvrir la fenetre en pleine ecran
         self.close()
 
     def ouvrir_reims(self):           #fonction qui ouvre reims
-        self.fenetre_reims = ATC_reimslfee()
-        self.fenetre_reims.showMaximized() #permet douvrir la fenetre en pleine ecran
         json_data('reims')
         json_avion('reims')
+        self.fenetre_reims = ATC_reimslfee()
+        self.fenetre_reims.showMaximized() #permet douvrir la fenetre en pleine ecran
         self.close()
 
     def ouvrir_marseille(self):           #fonction qui ouvre marseille
-        self.fenetre_marseille = ATC_marseillelfmm()
-        self.fenetre_marseille.showMaximized() #permet douvrir la fenetre en pleine ecran
         json_data('merseille')
         json_avion('marseille')
+        self.fenetre_marseille = ATC_marseillelfmm()
+        self.fenetre_marseille.showMaximized() #permet douvrir la fenetre en pleine ecran
         self.close()
 
     def ouvrir_bordeaux(self):           #fonction qui ouvre bordeaux
-        self.fenetre_bordeaux = ATC_bordeauxlfbb()
-        self.fenetre_bordeaux.showMaximized() #permet douvrir la fenetre en pleine ecran
         json_data('bordeaux')
         json_avion('bordeaux')
+        self.fenetre_bordeaux = ATC_bordeauxlfbb()
+        self.fenetre_bordeaux.showMaximized() #permet douvrir la fenetre en pleine ecran
         self.close()
 
     def ouvrir_brest(self):           #fonction qui ouvre brest
-        self.fenetre_brest = ATC_brestlfrr()
-        self.fenetre_brest.showMaximized() #permet douvrir la fenetre en pleine ecran
         json_data('brest')
         json_avion('brest')
+        self.fenetre_brest = ATC_brestlfrr()
+        self.fenetre_brest.showMaximized() #permet douvrir la fenetre en pleine ecran
         self.close()
 
 class ATC_parislfff(QMainWindow, Ui_ATC_paris):
@@ -147,10 +145,10 @@ class ATC_parislfff(QMainWindow, Ui_ATC_paris):
         self.txt_titre.setText(f"Contrôle – {callsign}")
 
         if not refresh_only:
-            self.txt_heading_valeur.setText(str(int(avion.heading)))
-            self.txt_altitude_valeur.setText(str(int(avion.alt)))
-            self.txt_vitesse_valeur.setText(str(int(avion.speed)))
-            self.txt_vitesse_verticale_valeur.setText(str(int(avion.vs)))
+            self.txt_heading_valeur.setText(str(int(avion.consigne['heading'])))
+            self.txt_altitude_valeur.setText(str(int(avion.consigne['alt'])))
+            self.txt_vitesse_valeur.setText(str(int(avion.consigne['speed'])))
+            self.txt_vitesse_verticale_valeur.setText(str(int(avion.consigne['vs'])))
 
 
     def apply_command(self):
@@ -242,6 +240,7 @@ class ATC_parislfff(QMainWindow, Ui_ATC_paris):
             )
 
     def back_home(self):
+        clear_dict_avion()
         self.home = ATC_accueil()
         self.home.showMaximized()
         self.close()
