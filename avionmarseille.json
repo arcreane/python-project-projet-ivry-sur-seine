@@ -142,7 +142,7 @@
  {
    "callsign": "FIN8KT",
    "phonetic": "FINNAIR",
-   "from_": "\tEFHK",
+   "from_": "EFHK",
    "to": "LFMN",
    "type_": "E190",
    "immat": "OH-LKM",
@@ -182,7 +182,7 @@
  {
    "callsign": "LGL8257",
    "phonetic": "LUXAIR",
-   "from_": "\tELLX",
+   "from_": "ELLX",
    "to": "LFMN",
    "type_": "DH8D",
    "immat": "LX-LQJ",
@@ -222,7 +222,7 @@
  {
    "callsign": "SWR1GF",
    "phonetic": "EDELWEISS",
-   "from_": "\tLSZH",
+   "from_": "LSZH",
    "to": "LFMN",
    "type_": "A320",
    "immat": "HB-IHY",

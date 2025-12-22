@@ -1,5 +1,5 @@
 from math import sin, cos, radians, sqrt, acos, pi
-from time import sleep
+from utilities import import_json_data
 
 class Avion:
 
@@ -109,10 +109,15 @@ class Avion:
             self.etat['can_land'] = True
 
     def exit_scope(self):
-        if self.pos[0] <= 0 or self.pos[0] >= 1600:
+        pts = import_json_data()
+        max_x = max(pts['ALPHA']['pos_x'], pts['BRAVO']['pos_x'], pts['CHARLIE']['pos_x'], pts['DELTA']['pos_x'], pts['ECHO']['pos_x'], pts['FOXTROT']['pos_x']) + 10
+        min_x = min(pts['ALPHA']['pos_x'], pts['BRAVO']['pos_x'], pts['CHARLIE']['pos_x'], pts['DELTA']['pos_x'], pts['ECHO']['pos_x'], pts['FOXTROT']['pos_x']) - 10
+        max_y = max(pts['ALPHA']['pos_y'], pts['BRAVO']['pos_y'], pts['CHARLIE']['pos_y'], pts['DELTA']['pos_y'], pts['ECHO']['pos_y'], pts['FOXTROT']['pos_y']) + 10
+        min_y = min(pts['ALPHA']['pos_y'], pts['BRAVO']['pos_y'], pts['CHARLIE']['pos_y'], pts['DELTA']['pos_y'], pts['ECHO']['pos_y'], pts['FOXTROT']['pos_y']) - 10
+        if self.pos[0] <= min_x or self.pos[0] >= max_x:
             self.heading = (- self.heading) % 360  # rebond horizontal
             self.consigne['heading'] = self.heading
-        if self.pos[1] <= 0 or self.pos[1] >= 750:
+        if self.pos[1] <= min_y or self.pos[1] >= max_y:
             self.heading = (180 - self.heading) % 360  # rebond vertical
             self.consigne['heading'] = self.heading
 

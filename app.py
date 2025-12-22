@@ -15,7 +15,6 @@ from ATC_bordeaux import Ui_ATC_bordeaux# import de la window bordeaux
 from ATC_marseille import Ui_ATC_marseille# import de la window marseille
 
 from ATC_accueil import Ui_ATC_accueil  #import de la main window
-from airport import AIRPORTS_DATA #on importe la liste des aeroport depuis le fichier pévu a cet effet
 from airport_dots import AirportDot  #on importe ce qui permet de dessiner les aeroports
 from utilities import json_data, json_avion, import_json_data
 from gestion_avion import init_avion, clear_dict_avion
@@ -26,7 +25,6 @@ from gestion_avion import init_avion, clear_dict_avion
 LANDING_DISTANCE_THRESHOLD = 80
 LANDING_THRESHOLD_PIXELS = 80
 REMOVAL_THRESHOLD_PIXELS = 10 # Seuil de retrait (doit être atteint
-
 #__________________________class_accueil________________________________
 
 class ATC_accueil(QMainWindow, Ui_ATC_accueil):          #def de la page accueil
@@ -67,7 +65,7 @@ class ATC_accueil(QMainWindow, Ui_ATC_accueil):          #def de la page accueil
         self.close()
 
     def ouvrir_marseille(self):           #fonction qui ouvre marseille
-        json_data('merseille')
+        json_data('marseille')
         json_avion('marseille')
         self.fenetre_marseille = ATC_marseillelfmm()
         self.fenetre_marseille.showMaximized() #permet douvrir la fenetre en pleine ecran
@@ -530,7 +528,7 @@ class ATC_brestlfrr(QMainWindow, Ui_ATC_brest):       #def de la page paris
 
     def _load_airports_on_map(self):
         data = import_json_data() # Paris
-        CODES = ['LFPG', 'LFPO', 'LFQQ']
+        CODES = ['LFRB', 'LFRS', 'LFRN']
 
         font = QFont("Arial", 13)
         text_color = QColor(255, 255, 0)
@@ -846,7 +844,7 @@ class ATC_marseillelfmm(QMainWindow, Ui_ATC_marseille):       #def de la page pa
 
     def _load_airports_on_map(self):
         data = import_json_data() # Paris
-        CODES = ['LFPG', 'LFPO', 'LFQQ']
+        CODES = ['LFML', 'LFMN', 'LFLL']
 
         font = QFont("Arial", 13)
         text_color = QColor(255, 255, 0)

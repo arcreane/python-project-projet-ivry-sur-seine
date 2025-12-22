@@ -282,7 +282,7 @@
  {
    "callsign": "DLH52E",
    "phonetic": "LUFTHANSA",
-   "from_": "\tEDDF",
+   "from_": "EDDF",
    "to": "LFRS",
    "type_": "CRJ9",
    "immat": "D-ACNB",
@@ -302,7 +302,7 @@
  {
    "callsign": "VLG29HW",
    "phonetic": "VUELING",
-   "from_": "\tLEBL",
+   "from_": "LEBL",
    "to": "LFRS",
    "type_": "A320",
    "immat": "EC-NUP",
@@ -362,7 +362,7 @@
  {
    "callsign": "LBT704",
    "phonetic": "NOUVELAIR",
-   "from_": "\tDTTJ",
+   "from_": "DTTJ",
    "to": "LFRS",
    "type_": "A320",
    "immat": "TS-INT",

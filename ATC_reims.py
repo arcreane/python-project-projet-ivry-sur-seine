@@ -64,7 +64,7 @@ class Ui_ATC_reims(object):
         self.label_5.setContentsMargins(0, 0, 0, 0)
         self.main_grid_layout.addWidget(self.frame_carte, 0, 0, 1, 1)
 
-        self.label_5.set_map_image(u"image/MAP_france_2.png")
+        self.label_5.set_map_image(u"image/MAP_reims.png")
         """ 
         self.frame_strip = QFrame(self.centralwidget)
         self.frame_strip.setObjectName(u"frame_strip")
@@ -646,7 +646,7 @@ class Ui_ATC_reims(object):
         self.label_21.setText(QCoreApplication.translate("ATC_reims", u"Sqwk", None))
         self.label_22.setText(QCoreApplication.translate("ATC_reims", u"1000", None))
         '''
-        self.txt_titre.setText(QCoreApplication.translate("ATC_reims", u"Paris LFFF", None))
+        self.txt_titre.setText(QCoreApplication.translate("ATC_reims", u"Reims LFEE", None))
         self.txt_heading.setText(QCoreApplication.translate("ATC_reims", u"Heading :", None))
         self.img_cercle.setText("")
         self.txt_nord.setText(QCoreApplication.translate("ATC_reims", u"0", None))
