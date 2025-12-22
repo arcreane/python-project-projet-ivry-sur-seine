@@ -12,7 +12,7 @@ from PySide6.QtGui import QPainter, QPixmap, QColor, QTransform, QPen, QBrush, Q
 # Imports PySide6.QtCore
 from PySide6.QtCore import Qt, QPointF, QRectF, QSize, Signal
 
-from gestion_avion import gestion_avion
+from gestion_avion import gestion_avion, check_avion
 from time import sleep
 
 #________________________________________________________________________________
@@ -170,10 +170,10 @@ class AircraftMapWidget(QGraphicsView):
 
     def remove_aircraft(self, callsign):    #pour enlever un avion en fonction de son callsign
         #Supprime un avion de la carte
-        if callsign in self.aircraft_data:
-            item = self.aircraft_data[callsign]['item']
+        if callsign in self.aircraft_items:
+            item = self.aircraft_items[callsign]
             self.scene.removeItem(item)
-            del self.aircraft_data[callsign]
+            del self.aircraft_items[callsign]
 
     def mousePressEvent(self, event):
         pos_view = event.pos()
@@ -250,9 +250,13 @@ class AircraftMapWidget(QGraphicsView):
         self.aircraft_data = gestion_avion()
         for data in self.aircraft_data.values():
             callsign = data.callsign
+            if data.etat['land ?'] == True:
+                self.remove_aircraft(callsign)
+                continue
             item = self.aircraft_items[callsign]
             item.setRotation(data.heading)
             item.setPos(data.pos[0], data.pos[1])
+        self.aircraft_data = check_avion()
         sleep(1)
 
 

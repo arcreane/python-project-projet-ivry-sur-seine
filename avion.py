@@ -25,7 +25,7 @@ class Avion:
         self.alt = alt
         self.landing_speed = ld_speed
         self.consigne = {'alt' : alt, 'heading' : heading % 360, 'speed' : speed, 'vs' : vs, 'landing' : False}
-        self.etat = {'can_land' : False, 'TCAS' : False}
+        self.etat = {'can_land' : False, 'TCAS' : False, 'land ?' : False}
         self.aprt_code = aprt
         self.random_nb = random_nb
         Avion.nb_avion += 1
@@ -37,6 +37,7 @@ class Avion:
         self.pos[1] -= vy
 
     def vertical_move(self):
+        alt = self.alt
         if self.consigne['alt'] is not None:
                 self.vs = self.consigne['vs']
         if self.vs is None or self.vs == 0:
@@ -46,44 +47,27 @@ class Avion:
         delta_alt = self.alt - self.consigne['alt']
         if delta_alt < 0:
             if abs(delta_alt) > abs(vs):
-                self.alt += round(abs(vs))
+                alt += round(abs(vs))
             else:
-                self.alt = round(self.consigne['alt'])
+                alt = round(self.consigne['alt'])
         if delta_alt > 0:
             if abs(delta_alt) > abs(vs):
-                self.alt -= round(abs(vs))
+                alt -= round(abs(vs))
             else:
-                self.alt = round(self.consigne['alt'])
+                alt = round(self.consigne['alt'])
+        self.alt = round(alt)
 
-        # vitesse verticale en ft/s
-        if self.consigne['vs'] is None:
-            vs = 500 / 60
-        else:
-            vs = abs(self.consigne['vs']) / 60
-
-        delta_alt = self.consigne['alt'] - self.alt
-
-        if abs(delta_alt) <= vs:
-            self.alt = self.consigne['alt']
-        elif delta_alt > 0:
-            self.alt += vs
-        else:
-            self.alt -= vs
 
 
     def heading_change(self):
         target = self.consigne['heading']
-
-        # Normalisation : angle le plus court entre -180 et +180
         delta = (target - self.heading + 540) % 360 - 180
 
-        angle_speed = 3  # taux de virage (° par cycle)
+        angle_speed = 3
 
         if abs(delta) <= angle_speed:
-            # On arrive pile au cap demandé
             self.heading = target % 360
         else:
-            # Tourne à gauche ou à droite selon le plus court
             self.heading = (self.heading + angle_speed * (1 if delta > 0 else -1)) % 360
 
 
@@ -126,9 +110,11 @@ class Avion:
 
     def exit_scope(self):
         if self.pos[0] <= 0 or self.pos[0] >= 1600:
-            self.consigne['heading'] = (- self.heading) % 360  # rebond horizontal
+            self.heading = (- self.heading) % 360  # rebond horizontal
+            print(f'{self.callsign} exit')
         if self.pos[1] <= 0 or self.pos[1] >= 750:
-            self.consigne['heading'] = (180 - self.heading) % 360  # rebond vertical
+            self.heading = (180 - self.heading) % 360  # rebond vertical
+            print(f'{self.callsign} exit')
 
     def consigne_change(self, new):
         for k, v in new.items():

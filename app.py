@@ -158,13 +158,28 @@ class ATC_parislfff(QMainWindow, Ui_ATC_paris):
             return
 
         avion = self.aircrafts[self.selected_callsign]
+        hdg = int(self.txt_heading_valeur.toPlainText())
+        alt = int(self.txt_altitude_valeur.toPlainText())
+        speed = int(self.txt_vitesse_valeur.toPlainText())
+        vs = int(self.txt_vitesse_verticale_valeur.toPlainText())
+
+        if alt > 42000:
+            alt = 42000
+        if alt < 3500:
+            alt = 3500
+        if abs(vs) > 6000:
+            vs = 6000
+        if speed < avion.landing_speed:
+            speed = avion.landing_speed
+        if speed > 400:
+            speed = 400
 
         try:
             avion.consigne_change({
-                'heading': int(self.txt_heading_valeur.toPlainText()),
-                'alt': int(self.txt_altitude_valeur.toPlainText()),
-                'speed': int(self.txt_vitesse_valeur.toPlainText()),
-                'vs': int(self.txt_vitesse_verticale_valeur.toPlainText())
+                'heading': hdg,
+                'alt': alt,
+                'speed': speed,
+                'vs': vs
             })
             self.statusBar().showMessage(
                 f"Commande appliquée à {avion.callsign}", 3000
