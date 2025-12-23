@@ -246,23 +246,40 @@ class AircraftMapWidget(QGraphicsView):
         }
 
     def move_aircrafts(self):
-        #déplace les objets QGraphicsItem sur la scène
         self.aircraft_data = gestion_avion()
         remove = []
+
         for data in self.aircraft_data.values():
             callsign = data.callsign
-            if callsign not in self.aircraft_items.keys():
-                self.add_aircraft(callsign, self.aircraft_data[callsign])
-            if data.etat['land ?'] == True:
-                remove.append(callsign)
+
+            if callsign not in self.aircraft_items:
+                self.add_aircraft(callsign, data)
+
             item = self.aircraft_items[callsign]
+
+            # --- GESTION DES COULEURS ---
+            if data.etat['TCAS']:
+                pen_color = QColor(255, 0, 0)  # Rouge
+            elif data.consigne['landing']:
+                pen_color = QColor(0, 255, 0)  # Vert
+            else:
+                pen_color = QColor(250, 250, 250)  # Blanc (normal)
+
+            item.setPen(QPen(pen_color, 1))
+            item.vector.setPen(QPen(pen_color, 2))  # couleur du vecteur aussi
+
+            # --- POSITION / ROTATION ---
             item.setRotation(data.heading)
             item.setPos(data.pos[0], data.pos[1])
+
+            if data.etat['land ?']:
+                remove.append(callsign)
+
         for callsign in remove:
             self.remove_aircraft(callsign)
+
         self.aircraft_data = check_avion()
         sleep(1)
-
 
     def display_airport_geofence(self, iata_code: str, target_pos: QPointF, threshold: int):
         #Affiche un cercle de proximité permanent autour d'un aéroport
