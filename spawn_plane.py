@@ -13,7 +13,6 @@ from PySide6.QtGui import QPainter, QPixmap, QColor, QTransform, QPen, QBrush, Q
 from PySide6.QtCore import Qt, QPointF, QRectF, QSize, Signal
 
 from gestion_avion import gestion_avion, check_avion
-from time import sleep
 
 #________________________________________________________________________________
 
@@ -279,7 +278,6 @@ class AircraftMapWidget(QGraphicsView):
             self.remove_aircraft(callsign)
 
         self.aircraft_data = check_avion()
-        sleep(1)
 
     def display_airport_geofence(self, iata_code: str, target_pos: QPointF, threshold: int):
         #Affiche un cercle de proximité permanent autour d'un aéroport
