@@ -1,56 +1,56 @@
 [
  {
    "name": "LFBD",
-   "pos_x": 0,
-   "pos_y": 0,
+   "pos_x": 155,
+   "pos_y": 125,
    "rwy_hdg": 230
  },
  {
    "name": "LFBO",
-   "pos_x": 0,
-   "pos_y": 0,
+   "pos_x": 250,
+   "pos_y": 200,
    "rwy_hdg": 320
  },
  {
    "name": "LFBZ",
-   "pos_x": 0,
-   "pos_y": 0,
+   "pos_x": 100,
+   "pos_y": 250,
    "rwy_hdg": 90
  },
  {
    "name": "ALPHA",
-   "pos_x": 0,
-   "pos_y": 0,
+   "pos_x": 200,
+   "pos_y": 20,
    "rwy_hdg": null
  },
  {
    "name": "BRAVO",
-   "pos_x": 0,
-   "pos_y": 0,
+   "pos_x": 350,
+   "pos_y": 50,
    "rwy_hdg": null
  },
  {
    "name": "CHARLIE",
-   "pos_x": 0,
-   "pos_y": 0,
+   "pos_x": 20,
+   "pos_y": 250,
    "rwy_hdg": null
  },
  {
    "name": "DELTA",
-   "pos_x": 0,
-   "pos_y": 0,
+   "pos_x": 100,
+   "pos_y": 350,
    "rwy_hdg": null
  },
  {
    "name": "ECHO",
-   "pos_x": 0,
-   "pos_y": 0,
+   "pos_x": 350,
+   "pos_y": 175,
    "rwy_hdg": null
  },
  {
    "name": "FOXTROT",
-   "pos_x": 0,
-   "pos_y": 0,
+   "pos_x": 20,
+   "pos_y": 150,
    "rwy_hdg": null
  }
 ]

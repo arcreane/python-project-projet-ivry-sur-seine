@@ -686,7 +686,7 @@ class ATC_bordeauxlfbb(QMainWindow, Ui_ATC_bordeaux):       #def de la page pari
 
     def _load_airports_on_map(self):
         data = import_json_data() # Paris
-        CODES = ['LFPG', 'LFPO', 'LFQQ']
+        CODES = ['LFBD', 'LFBO', 'LFBZ']
 
         font = QFont("Arial", 13)
         text_color = QColor(255, 255, 0)

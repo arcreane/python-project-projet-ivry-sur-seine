@@ -61,13 +61,15 @@ def gestion_avion():
                 if distance < 50 and delta_altitude <= 1000:
                     dict_avion[key].etat['TCAS'] = True
                     dict_avion[key__].etat['TCAS'] = True
-                elif distance == 0 and delta_altitude == 0:
+                elif distance <= 10 and delta_altitude <= 100:
                     L.remove(dict_avion[key].random_nb)
                     L.remove(dict_avion[key__].random_nb)
                     del(dict_avion[key])
                     del(dict_avion[key__])
         if dict_avion[key].consigne['landing'] == True:
             landing(dict_avion[key])
+        else:
+            dict_avion[key].exit_scope()
         try:
             dict_avion[key].heading_change()
             dict_avion[key].speed_change()
@@ -75,7 +77,6 @@ def gestion_avion():
             dict_avion[key].horizontal_move()
             dict_avion[key].vertical_move()
             dict_avion[key].distance_airport()
-            dict_avion[key].exit_scope()
         except KeyError:
             continue
     return dict_avion

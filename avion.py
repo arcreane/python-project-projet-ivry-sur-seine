@@ -110,10 +110,10 @@ class Avion:
 
     def exit_scope(self):
         pts = import_json_data()
-        max_x = max(pts['ALPHA']['pos_x'], pts['BRAVO']['pos_x'], pts['CHARLIE']['pos_x'], pts['DELTA']['pos_x'], pts['ECHO']['pos_x'], pts['FOXTROT']['pos_x']) + 10
-        min_x = min(pts['ALPHA']['pos_x'], pts['BRAVO']['pos_x'], pts['CHARLIE']['pos_x'], pts['DELTA']['pos_x'], pts['ECHO']['pos_x'], pts['FOXTROT']['pos_x']) - 10
-        max_y = max(pts['ALPHA']['pos_y'], pts['BRAVO']['pos_y'], pts['CHARLIE']['pos_y'], pts['DELTA']['pos_y'], pts['ECHO']['pos_y'], pts['FOXTROT']['pos_y']) + 10
-        min_y = min(pts['ALPHA']['pos_y'], pts['BRAVO']['pos_y'], pts['CHARLIE']['pos_y'], pts['DELTA']['pos_y'], pts['ECHO']['pos_y'], pts['FOXTROT']['pos_y']) - 10
+        max_x = max(pts['ALPHA']['pos_x'], pts['BRAVO']['pos_x'], pts['CHARLIE']['pos_x'], pts['DELTA']['pos_x'], pts['ECHO']['pos_x'], pts['FOXTROT']['pos_x']) + 5
+        min_x = min(pts['ALPHA']['pos_x'], pts['BRAVO']['pos_x'], pts['CHARLIE']['pos_x'], pts['DELTA']['pos_x'], pts['ECHO']['pos_x'], pts['FOXTROT']['pos_x']) - 5
+        max_y = max(pts['ALPHA']['pos_y'], pts['BRAVO']['pos_y'], pts['CHARLIE']['pos_y'], pts['DELTA']['pos_y'], pts['ECHO']['pos_y'], pts['FOXTROT']['pos_y']) + 5
+        min_y = min(pts['ALPHA']['pos_y'], pts['BRAVO']['pos_y'], pts['CHARLIE']['pos_y'], pts['DELTA']['pos_y'], pts['ECHO']['pos_y'], pts['FOXTROT']['pos_y']) - 5
         if self.pos[0] <= min_x or self.pos[0] >= max_x:
             self.heading = (- self.heading) % 360  # rebond horizontal
             self.consigne['heading'] = self.heading
