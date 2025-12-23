@@ -145,15 +145,19 @@ class AircraftMapWidget(QGraphicsView):
         self.landing_targets = {}  # {'callsign': {'target_pos': QPointF, 'threshold': 80, 'circle_item': QGraphicsEllipseItem}}
         self.airport_geofences = {}
         self.aircraft_items = {}
+        self.map_item = None
 
-    def set_map_image(self, pixmap_path):     #defini limage détude comme etant limage en fond
+    def set_map_image(self, pixmap_path):
 
-        self.scene.clear()        #nous devons d'abord retirer l'ancienne image si elle existe
-        self.map_pixmap =QPixmap(pixmap_path)
+        self.map_pixmap = QPixmap(pixmap_path)
 
-        self.scene.setSceneRect(self.map_pixmap.rect())         # definir la taille de la scène à la taille de l'image
-        self.scene.addPixmap(self.map_pixmap)                   #ajouter l'image de fond à la scène
+        if self.map_item:
+            self.scene.removeItem(self.map_item)
 
+        self.map_item = self.scene.addPixmap(self.map_pixmap)
+        self.map_item.setZValue(-1000)  # toujours derrière les avions
+
+        self.scene.setSceneRect(self.map_pixmap.rect())
         self.fitInView(self.scene.sceneRect(), Qt.AspectRatioMode.KeepAspectRatio)
 
     def resizeEvent(self, event: QResizeEvent):

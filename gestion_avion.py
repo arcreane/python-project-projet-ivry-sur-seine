@@ -58,10 +58,10 @@ def gestion_avion():
                 continue
             else:
                 distance, delta_altitude = distance_avion(dict_avion[key], dict_avion[key__])
-                if distance < 25 and delta_altitude <= 500:
+                if distance < 50 and delta_altitude <= 500:
                     dict_avion[key].etat['TCAS'] = True
                     dict_avion[key__].etat['TCAS'] = True
-                elif distance <= 5 and delta_altitude <= 50:
+                elif distance <= 10 and delta_altitude <= 100:
                     L.remove(dict_avion[key].random_nb)
                     L.remove(dict_avion[key__].random_nb)
                     del(dict_avion[key])
