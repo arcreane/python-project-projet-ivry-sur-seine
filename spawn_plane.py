@@ -275,6 +275,9 @@ class AircraftMapWidget(QGraphicsView):
             item.setPen(QPen(pen_color, 1))
             item.vector.setPen(QPen(pen_color, 2))  # couleur du vecteur aussi
 
+            item = self.aircraft_items[callsign]
+            item.data = data
+
             # --- POSITION / ROTATION ---
             item.setRotation(data.heading)
             item.setPos(data.pos[0], data.pos[1])

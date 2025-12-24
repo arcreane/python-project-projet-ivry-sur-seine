@@ -1,12 +1,10 @@
 #___________________________________les_imports________________________________________
 import sys
-from PySide6.QtWidgets import QApplication, QMainWindow
 
-from PySide6.QtWidgets import QMainWindow, QApplication, QGraphicsTextItem # Mis à jour
+from PySide6.QtWidgets import QMainWindow, QGraphicsTextItem # Mis à jour
 from PySide6.QtGui import QColor, QFont # Mis à jour
 from PySide6.QtWidgets import QApplication
 from PySide6.QtCore import QTimer, QPointF
-import math
 #__________________________________les_imports_de_fichiers_________________________________________
 from ATC import Ui_ATC
 
@@ -238,6 +236,7 @@ class ATC(QMainWindow, Ui_ATC):       #def de la page paris
 
     def _load_airports_on_map(self):
         data = import_json_data() # Paris
+        CODES = []
         if self.FIR == 'paris':
             CODES = ['LFPG', 'LFPO', 'LFQQ']
         elif self.FIR == 'reims':
