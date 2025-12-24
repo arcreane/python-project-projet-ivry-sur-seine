@@ -1,5 +1,8 @@
 from math import sqrt, atan2, degrees
 import json
+from types import new_class
+
+FIR = ''
 
 def distance_avion(plane_1, plane_2):
     delta_altitude = abs(plane_1.alt - plane_2.alt)
@@ -44,3 +47,10 @@ def json_avion(FIR):
     f.close()
     f2.close()
 
+def change_FIR(FIR_new):
+    global FIR
+    FIR = FIR_new
+
+def get_FIR():
+    global FIR
+    return FIR

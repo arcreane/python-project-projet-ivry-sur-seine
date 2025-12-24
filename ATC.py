@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'ATC_reims.ui'
+## Form generated from reading UI file 'ATC.ui'
 ##
 ## Created by: Qt User Interface Compiler version 6.9.3
 ##
@@ -21,19 +21,22 @@ from PySide6.QtWidgets import (QApplication, QFrame, QHBoxLayout,
                                QWidget, QGridLayout)
 
 from spawn_plane import AircraftMapWidget
+from utilities import get_FIR
+
 #___________________________________________________________________________________________________________
 
 
-class Ui_ATC_reims(object):
-    def setupUi(self, ATC_reims):
-        if not ATC_reims.objectName():
-            ATC_reims.setObjectName(u"ATC_reims")
+class Ui_ATC(object):
+    def setupUi(self, ATC):
+        if not ATC.objectName():
+            ATC.setObjectName(u"ATC")
 
-        ATC_reims.resize(900, 648)
-        ATC_reims.setMinimumSize(QSize(900, 620))
+        ATC.resize(900, 648)
+        ATC.setMinimumSize(QSize(900, 620))
 
+        self.zone = get_FIR()
 
-        self.centralwidget = QWidget(ATC_reims)  #ligne de création
+        self.centralwidget = QWidget(ATC)  #ligne de création
         self.centralwidget.setObjectName(u"centralwidget")
 
         self.main_grid_layout = QGridLayout(self.centralwidget)
@@ -65,7 +68,7 @@ class Ui_ATC_reims(object):
         self.label_5.setContentsMargins(0, 0, 0, 0)
         self.main_grid_layout.addWidget(self.frame_carte, 0, 0, 1, 1)
 
-        self.label_5.set_map_image(u"image/MAP_reims.png")
+        self.label_5.set_map_image(f"image/MAP_{self.zone}.png")
 
         self.frame_strip = QFrame(self.centralwidget)
         self.frame_strip.setObjectName(u"frame_strip")
@@ -602,14 +605,14 @@ class Ui_ATC_reims(object):
 
         self.verticalLayout_11.addWidget(self.frame_boutons)
 
-        ATC_reims.setCentralWidget(self.centralwidget)
-        self.menubar = QMenuBar(ATC_reims)
+        ATC.setCentralWidget(self.centralwidget)
+        self.menubar = QMenuBar(ATC)
         self.menubar.setObjectName(u"menubar")
         self.menubar.setGeometry(QRect(0, 0, 900, 33))
-        ATC_reims.setMenuBar(self.menubar)
-        self.statusbar = QStatusBar(ATC_reims)
+        ATC.setMenuBar(self.menubar)
+        self.statusbar = QStatusBar(ATC)
         self.statusbar.setObjectName(u"statusbar")
-        ATC_reims.setStatusBar(self.statusbar)
+        ATC.setStatusBar(self.statusbar)
 
         if not self.label_5.map_pixmap.isNull():
             map_width = self.label_5.map_pixmap.width()
@@ -622,49 +625,49 @@ class Ui_ATC_reims(object):
 
 
 
-        self.retranslateUi(ATC_reims)
+        self.retranslateUi(ATC)
 
-        QMetaObject.connectSlotsByName(ATC_reims)
+        QMetaObject.connectSlotsByName(ATC)
 
     # setupUi
 
-    def retranslateUi(self, ATC_reims):
-        ATC_reims.setWindowTitle(QCoreApplication.translate("ATC_reims", u"MainWindow", None))
+    def retranslateUi(self, ATC):
+        ATC.setWindowTitle(QCoreApplication.translate("ATC", u"MainWindow", None))
         """self.label_5.setText("")"""
-        self.label.setText(QCoreApplication.translate("ATC_reims", u"Callsign", None))
-        self.label_2.setText(QCoreApplication.translate("ATC_reims", u"NONE", None))
-        self.label_3.setText(QCoreApplication.translate("ATC_reims", u"From", None))
-        self.label_4.setText(QCoreApplication.translate("ATC_reims", u"NONE", None))
-        self.label_9.setText(QCoreApplication.translate("ATC_reims", u"To", None))
-        self.label_10.setText(QCoreApplication.translate("ATC_reims", u"NONE", None))
-        self.label_11.setText(QCoreApplication.translate("ATC_reims", u"Type", None))
-        self.label_12.setText(QCoreApplication.translate("ATC_reims", u"NONE", None))
-        self.label_13.setText(QCoreApplication.translate("ATC_reims", u"Immat", None))
-        self.label_14.setText(QCoreApplication.translate("ATC_reims", u"NONE", None))
-        self.label_15.setText(QCoreApplication.translate("ATC_reims", u"Turb", None))
-        self.label_16.setText(QCoreApplication.translate("ATC_reims", u"NONE", None))
-        self.label_17.setText(QCoreApplication.translate("ATC_reims", u"Pax", None))
-        self.label_18.setText(QCoreApplication.translate("ATC_reims", u"NONE", None))
-        self.label_19.setText(QCoreApplication.translate("ATC_reims", u"Level", None))
-        self.label_20.setText(QCoreApplication.translate("ATC_reims", u"NONE", None))
-        self.label_21.setText(QCoreApplication.translate("ATC_reims", u"Sqwk", None))
-        self.label_22.setText(QCoreApplication.translate("ATC_reims", u"NONE", None))
-        self.txt_titre.setText(QCoreApplication.translate("ATC_reims", u"reims LFFF", None))
-        self.txt_heading.setText(QCoreApplication.translate("ATC_reims", u"Heading :", None))
+        self.label.setText(QCoreApplication.translate("ATC", u"Callsign", None))
+        self.label_2.setText(QCoreApplication.translate("ATC", u"NONE", None))
+        self.label_3.setText(QCoreApplication.translate("ATC", u"From", None))
+        self.label_4.setText(QCoreApplication.translate("ATC", u"NONE", None))
+        self.label_9.setText(QCoreApplication.translate("ATC", u"To", None))
+        self.label_10.setText(QCoreApplication.translate("ATC", u"NONE", None))
+        self.label_11.setText(QCoreApplication.translate("ATC", u"Type", None))
+        self.label_12.setText(QCoreApplication.translate("ATC", u"NONE", None))
+        self.label_13.setText(QCoreApplication.translate("ATC", u"Immat", None))
+        self.label_14.setText(QCoreApplication.translate("ATC", u"NONE", None))
+        self.label_15.setText(QCoreApplication.translate("ATC", u"Turb", None))
+        self.label_16.setText(QCoreApplication.translate("ATC", u"NONE", None))
+        self.label_17.setText(QCoreApplication.translate("ATC", u"Pax", None))
+        self.label_18.setText(QCoreApplication.translate("ATC", u"NONE", None))
+        self.label_19.setText(QCoreApplication.translate("ATC", u"Level", None))
+        self.label_20.setText(QCoreApplication.translate("ATC", u"NONE", None))
+        self.label_21.setText(QCoreApplication.translate("ATC", u"Sqwk", None))
+        self.label_22.setText(QCoreApplication.translate("ATC", u"NONE", None))
+        self.txt_titre.setText(QCoreApplication.translate("ATC", u"Paris LFFF", None))
+        self.txt_heading.setText(QCoreApplication.translate("ATC", u"Heading :", None))
         self.img_cercle.setText("")
-        self.txt_nord.setText(QCoreApplication.translate("ATC_reims", u"N", None))
-        self.txt_est.setText(QCoreApplication.translate("ATC_reims", u"E", None))
-        self.txt_sud.setText(QCoreApplication.translate("ATC_reims", u"S", None))
-        self.txt_ouest.setText(QCoreApplication.translate("ATC_reims", u"O", None))
-        self.txt_altitude.setText(QCoreApplication.translate("ATC_reims", u"Altitude :", None))
-        self.unit_altitude.setText(QCoreApplication.translate("ATC_reims", u" ft", None))
-        self.txt_vitesse.setText(QCoreApplication.translate("ATC_reims", u"Vitesse :", None))
-        self.txt_vitesse_verticale.setText(QCoreApplication.translate("ATC_reims", u"Vitesse Verticale :", None))
-        self.unit_vitesse.setText(QCoreApplication.translate("ATC_reims", u"kts", None))
-        self.unit_vitesse_verticale.setText(QCoreApplication.translate("ATC_reims", u" ft/min", None))
+        self.txt_nord.setText(QCoreApplication.translate("ATC", u"N", None))
+        self.txt_est.setText(QCoreApplication.translate("ATC", u"E", None))
+        self.txt_sud.setText(QCoreApplication.translate("ATC", u"S", None))
+        self.txt_ouest.setText(QCoreApplication.translate("ATC", u"O", None))
+        self.txt_altitude.setText(QCoreApplication.translate("ATC", u"Altitude :", None))
+        self.unit_altitude.setText(QCoreApplication.translate("ATC", u" ft", None))
+        self.txt_vitesse.setText(QCoreApplication.translate("ATC", u"Vitesse :", None))
+        self.txt_vitesse_verticale.setText(QCoreApplication.translate("ATC", u"Vitesse Verticale :", None))
+        self.unit_vitesse.setText(QCoreApplication.translate("ATC", u"kts", None))
+        self.unit_vitesse_verticale.setText(QCoreApplication.translate("ATC", u" ft/min", None))
         self.img_icon_avion.setText("")
-        self.unit_heading.setText(QCoreApplication.translate("ATC_reims", u"\u00b0", None))
-        self.btn_apply.setText(QCoreApplication.translate("ATC_reims", u"Apply", None))
+        self.unit_heading.setText(QCoreApplication.translate("ATC", u"\u00b0", None))
+        self.btn_apply.setText(QCoreApplication.translate("ATC", u"Apply", None))
         self.btn_accueil.setText("")
         self.btn_parametres.setText("")
         self.btn_sortie.setText("")
