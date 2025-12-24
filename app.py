@@ -154,9 +154,9 @@ class ATC_parislfff(QMainWindow, Ui_ATC_paris):
         self.label_16.setText(f'{avion.turb}')
         self.label_18.setText(f'{avion.pax}')
         self.label_20.setText(f'{avion.final_level}')
-        self.label_22.setText(f'{avion.sqwk}')
+        self.label_22.setText(f'{avion.sqwk}\n{avion.emergency}')
 
-        if refresh_only:
+        if not refresh_only:
             self.txt_heading_valeur.setText(str(int(avion.consigne['heading'])))
             self.txt_altitude_valeur.setText(str(int(avion.consigne['alt'])))
             self.txt_vitesse_valeur.setText(str(int(avion.consigne['speed'])))
@@ -185,16 +185,20 @@ class ATC_parislfff(QMainWindow, Ui_ATC_paris):
             speed = 400
 
         try:
-            avion.consigne_change({
-                'heading': hdg,
-                'alt': alt,
-                'speed': speed,
-                'vs': vs
-            })
-            self.statusBar().showMessage(
-                f"Commande appliquée à {avion.callsign}", 3000
-            )
-
+            if avion.sqwk != 7600:
+                avion.consigne_change({
+                    'heading': hdg,
+                    'alt': alt,
+                    'speed': speed,
+                    'vs': vs
+                })
+                self.statusBar().showMessage(
+                    f"Commande appliquée à {avion.callsign}", 3000
+                )
+            else:
+                self.statusBar().showMessage(
+                    f"{avion.callsign} => radio failure", 3000
+                )
         except ValueError:
             self.statusBar().showMessage("Saisie invalide", 3000)
 
@@ -324,7 +328,7 @@ class ATC_reimslfee(QMainWindow, Ui_ATC_reims):       #def de la page paris
         self.label_16.setText(f'{avion.turb}')
         self.label_18.setText(f'{avion.pax}')
         self.label_20.setText(f'{avion.final_level}')
-        self.label_22.setText(f'{avion.sqwk}')
+        self.label_22.setText(f'{avion.sqwk}\n{avion.emergency}')
 
         if not refresh_only:
             self.txt_heading_valeur.setText(str(int(avion.consigne['heading'])))
@@ -355,16 +359,20 @@ class ATC_reimslfee(QMainWindow, Ui_ATC_reims):       #def de la page paris
             speed = 400
 
         try:
-            avion.consigne_change({
-                'heading': hdg,
-                'alt': alt,
-                'speed': speed,
-                'vs': vs
-            })
-            self.statusBar().showMessage(
-                f"Commande appliquée à {avion.callsign}", 3000
-            )
-
+            if avion.sqwk != 7600:
+                avion.consigne_change({
+                    'heading': hdg,
+                    'alt': alt,
+                    'speed': speed,
+                    'vs': vs
+                })
+                self.statusBar().showMessage(
+                    f"Commande appliquée à {avion.callsign}", 3000
+                )
+            else:
+                self.statusBar().showMessage(
+                    f"{avion.callsign} => radio failure", 3000
+                )
         except ValueError:
             self.statusBar().showMessage("Saisie invalide", 3000)
 
@@ -493,7 +501,7 @@ class ATC_brestlfrr(QMainWindow, Ui_ATC_brest):       #def de la page paris
         self.label_16.setText(f'{avion.turb}')
         self.label_18.setText(f'{avion.pax}')
         self.label_20.setText(f'{avion.final_level}')
-        self.label_22.setText(f'{avion.sqwk}')
+        self.label_22.setText(f'{avion.sqwk}\n{avion.emergency}')
 
         if not refresh_only:
             self.txt_heading_valeur.setText(str(int(avion.consigne['heading'])))
@@ -524,15 +532,20 @@ class ATC_brestlfrr(QMainWindow, Ui_ATC_brest):       #def de la page paris
             speed = 400
 
         try:
-            avion.consigne_change({
-                'heading': hdg,
-                'alt': alt,
-                'speed': speed,
-                'vs': vs
-            })
-            self.statusBar().showMessage(
-                f"Commande appliquée à {avion.callsign}", 3000
-            )
+            if avion.sqwk != 7600:
+                avion.consigne_change({
+                    'heading': hdg,
+                    'alt': alt,
+                    'speed': speed,
+                    'vs': vs
+                })
+                self.statusBar().showMessage(
+                    f"Commande appliquée à {avion.callsign}", 3000
+                )
+            else:
+                self.statusBar().showMessage(
+                    f"{avion.callsign} => radio failure", 3000
+                )
 
         except ValueError:
             self.statusBar().showMessage("Saisie invalide", 3000)
@@ -662,7 +675,7 @@ class ATC_bordeauxlfbb(QMainWindow, Ui_ATC_bordeaux):       #def de la page pari
         self.label_16.setText(f'{avion.turb}')
         self.label_18.setText(f'{avion.pax}')
         self.label_20.setText(f'{avion.final_level}')
-        self.label_22.setText(f'{avion.sqwk}')
+        self.label_22.setText(f'{avion.sqwk}\n{avion.emergency}')
 
         if not refresh_only:
             self.txt_heading_valeur.setText(str(int(avion.consigne['heading'])))
@@ -693,15 +706,20 @@ class ATC_bordeauxlfbb(QMainWindow, Ui_ATC_bordeaux):       #def de la page pari
             speed = 400
 
         try:
-            avion.consigne_change({
-                'heading': hdg,
-                'alt': alt,
-                'speed': speed,
-                'vs': vs
-            })
-            self.statusBar().showMessage(
-                f"Commande appliquée à {avion.callsign}", 3000
-            )
+            if avion.sqwk != 7600:
+                avion.consigne_change({
+                    'heading': hdg,
+                    'alt': alt,
+                    'speed': speed,
+                    'vs': vs
+                })
+                self.statusBar().showMessage(
+                    f"Commande appliquée à {avion.callsign}", 3000
+                )
+            else:
+                self.statusBar().showMessage(
+                    f"{avion.callsign} => radio failure", 3000
+                )
 
         except ValueError:
             self.statusBar().showMessage("Saisie invalide", 3000)
@@ -831,7 +849,7 @@ class ATC_marseillelfmm(QMainWindow, Ui_ATC_marseille):       #def de la page pa
         self.label_16.setText(f'{avion.turb}')
         self.label_18.setText(f'{avion.pax}')
         self.label_20.setText(f'{avion.final_level}')
-        self.label_22.setText(f'{avion.sqwk}')
+        self.label_22.setText(f'{avion.sqwk}\n{avion.emergency}')
 
         if not refresh_only:
             self.txt_heading_valeur.setText(str(int(avion.consigne['heading'])))
@@ -861,15 +879,20 @@ class ATC_marseillelfmm(QMainWindow, Ui_ATC_marseille):       #def de la page pa
             speed = 400
 
         try:
-            avion.consigne_change({
-                'heading': hdg,
-                'alt': alt,
-                'speed': speed,
-                'vs': vs
-            })
-            self.statusBar().showMessage(
-                f"Commande appliquée à {avion.callsign}", 3000
-            )
+            if avion.sqwk != 7600:
+                avion.consigne_change({
+                    'heading': hdg,
+                    'alt': alt,
+                    'speed': speed,
+                    'vs': vs
+                })
+                self.statusBar().showMessage(
+                    f"Commande appliquée à {avion.callsign}", 3000
+                )
+            else:
+                self.statusBar().showMessage(
+                    f"{avion.callsign} => radio failure", 3000
+                )
 
         except ValueError:
             self.statusBar().showMessage("Saisie invalide", 3000)

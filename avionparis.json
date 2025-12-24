@@ -162,7 +162,7 @@
  {
    "callsign": "CRL959",
    "phonetic": "CORSAIR",
-   "from_": "\tFIMP",
+   "from_": "FIMP",
    "to": "LFPO",
    "type_": "A339",
    "immat": "F-HETE",
@@ -371,7 +371,7 @@
    "final_level": 300,
    "sqwk": 1000,
    "fuel": 5.2,
-   "pos": "ALPHA",
+   "pos": "BRAVO",
    "heading": 2,
    "speed": 348,
    "vs": 0,
@@ -381,8 +381,8 @@
  },
  {
    "callsign": "VOE2929",
-   "phonetic": "Volotea",
-   "from_": "\tLFMP",
+   "phonetic": "VOLOTEA",
+   "from_": "LFMP",
    "to": "LFQQ",
    "type_": "A320",
    "immat": "EC-NNZ",

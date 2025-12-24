@@ -53,7 +53,66 @@ def gestion_avion():
     global L
     dict_avion = init_avion()
     for key in dict_avion.keys():
+        if dict_avion[key].sqwk != 7600 and dict_avion[key].sqwk != 7700:
+            pb = randint(0, 500)
+            if pb == 25:
+                dict_avion[key].sqwk = 7600
+                dict_avion[key].emergency = 'radio off'
+            elif pb == 50:
+                dict_avion[key].sqwk = 7700
+                emergency = randint(0, 99)
+                if emergency >= 0 and emergency <= 7:
+                    dict_avion[key].emergency = 'engine failure'
+                elif emergency >= 8 and emergency <= 20:
+                    dict_avion[key].emergency = 'sick pax'
+                elif emergency >= 21 and emergency <= 30:
+                    dict_avion[key].emergency = 'electric failure'
+                elif emergency >= 31 and emergency <= 40:
+                    dict_avion[key].emergency = 'hydraulic failure'
+                elif emergency >= 41 and emergency <= 56:
+                    dict_avion[key].emergency = 'dangerous pax'
+                elif emergency >= 57 and emergency <= 64:
+                    dict_avion[key].emergency = 'engine fire'
+                elif emergency >= 65 and emergency <= 75:
+                    dict_avion[key].emergency = 'fire'
+                elif emergency >= 76 and emergency <= 78:
+                    dict_avion[key].emergency = 'fuel leak'
+                elif emergency >= 79 and emergency <= 89:
+                    dict_avion[key].emergency = 'pressure issue'
+                elif emergency >= 90 and emergency <= 99:
+                    dict_avion[key].emergency = 'unknown issue'
         etat = False
+        carbu = dict_avion[key].conso / 2
+        if  carbu >= dict_avion[key].fuel:
+            dict_avion[key].sqwk = 7700
+            if dict_avion[key].emergency != 'Normal':
+                dict_avion[key].emergency = 'fuel'
+            else:
+                dict_avion[key].emergency += '\nfuel'
+        if dict_avion[key].sqwk == 7600:
+            dict_avion[key].etat['can land'] = True
+            dict_avion[key].consigne_change({'landing' : True})
+        elif dict_avion[key].sqwk == 7700:
+            name = ['ALPHA', 'BRAVO', 'CHARLIE', 'DELTA', 'ECHO', 'FOXTROT']
+            dict =  {}
+            for data in dict_data.values():
+                if data['name'] not in name:
+                    dict_avion[key].to = [data['pos_x'], data['pos_y'], data['rwy_hdg']]
+                    dict[data['name']] = dict_avion[key].distance_airport()
+            airport = min(dict.values())
+            for key_arpt, value in dict.items():
+                if value == airport:
+                    dict_avion[key].aprt_code = key_arpt
+            if dict_avion[key].emergency == 'pressure issue':
+                if dict_avion[key].alt > 10000 and dict_avion[key].consigne['alt'] > 10000:
+                    dict_avion[key].consigne_change({'alt' : 10000, 'vs' : 6000})
+            elif dict_avion[key].emergency == 'fuel leak':
+                dict_avion[key].conso *= 1.5
+            elif dict_avion[key].emergency == 'engine failure' or dict_avion[key].emergency == 'engine fire':
+                if dict_avion[key].consigne['speed'] >= 200:
+                    dict_avion[key].consigne_change({'speed' : 200})
+                if dict_avion[key].consigne['alt'] >= 33000:
+                    dict_avion[key].consigne_change({'alt' : 330000})
         for key__ in dict_avion.keys():
             if key__ == key:
                 continue

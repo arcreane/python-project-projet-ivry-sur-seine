@@ -1,4 +1,4 @@
-from math import sin, cos, radians, sqrt, acos, pi
+from math import sin, cos, radians, sqrt
 from utilities import import_json_data
 
 class Avion:
@@ -28,11 +28,12 @@ class Avion:
         self.etat = {'can_land' : False, 'TCAS' : False, 'land ?' : False}
         self.aprt_code = aprt
         self.random_nb = random_nb
+        self.emergency = 'Normal'
         Avion.nb_avion += 1
 
     def horizontal_move(self):
-        vx = (self.speed * sin(radians(self.heading)) / 3600) * 100
-        vy = (self.speed * cos(radians(self.heading)) / 3600) * 100
+        vx = (self.speed * sin(radians(self.heading)) / 3600) * 75
+        vy = (self.speed * cos(radians(self.heading)) / 3600) * 75
         self.pos[0] += vx
         self.pos[1] -= vy
 
@@ -109,6 +110,7 @@ class Avion:
             self.etat['can_land'] = True
         else:
             self.etat['can_land'] = False
+        return distance
 
     def exit_scope(self):
         pts = import_json_data()

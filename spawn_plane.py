@@ -262,9 +262,13 @@ class AircraftMapWidget(QGraphicsView):
 
             # --- GESTION DES COULEURS ---
             if data.etat['TCAS']:
-                pen_color = QColor(255, 0, 0)  # Rouge
+                pen_color = QColor(255, 128, 0)
+            elif data.sqwk == 7600:
+                pen_color = QColor(255, 255, 0)
+            elif data.sqwk == 7700:
+                pen_color = QColor(255, 0, 0)
             elif data.consigne['landing']:
-                pen_color = QColor(0, 255, 0)  # Vert
+                pen_color = QColor(0, 255, 0)
             else:
                 pen_color = QColor(250, 250, 250)  # Blanc (normal)
 
