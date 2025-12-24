@@ -6,6 +6,7 @@ from math import sqrt, degrees, atan2
 dict_data = {}
 L = []
 dict_avion = {}
+nb_emergency = 0
 
 # creation du dico contenant les objets avion
 def init_avion():
@@ -51,15 +52,18 @@ def gestion_avion():
     global dict_data
     global dict_avion
     global L
+    global nb_emergency
     dict_avion = init_avion()
     for key in dict_avion.keys():
-        if dict_avion[key].sqwk != 7600 and dict_avion[key].sqwk != 7700:
+        if dict_avion[key].sqwk != 7600 and dict_avion[key].sqwk != 7700 and nb_emergency <= 3:
             pb = randint(0, 500)
             if pb == 25:
                 dict_avion[key].sqwk = 7600
                 dict_avion[key].emergency = 'radio off'
+                nb_emergency += 1
             elif pb == 50:
                 dict_avion[key].sqwk = 7700
+                nb_emergency += 1
                 emergency = randint(0, 99)
                 if emergency >= 0 and emergency <= 7:
                     dict_avion[key].emergency = 'engine failure'
@@ -79,7 +83,7 @@ def gestion_avion():
                     dict_avion[key].emergency = 'fuel leak'
                 elif emergency >= 79 and emergency <= 89:
                     dict_avion[key].emergency = 'pressure issue'
-                elif emergency >= 90 and emergency <= 99:
+                else:
                     dict_avion[key].emergency = 'unknown issue'
         etat = False
         carbu = dict_avion[key].conso / 2
@@ -184,11 +188,14 @@ def landing(dict):
 
 def check_avion():
     global dict_avion
+    global nb_emergency
     keys = []
     for key in dict_avion.keys():
         try:
             if dict_avion[key].etat['land ?'] == True:
                 keys.append(key)
+                if dict_avion[key].sqwk == 7600 or dict_avion[key].sqwk == 7700:
+                    nb_emergency -= 1
         except KeyError:
             continue
     for key in keys:

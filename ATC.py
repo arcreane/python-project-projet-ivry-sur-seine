@@ -671,5 +671,3 @@ class Ui_ATC(object):
         self.btn_accueil.setText("")
         self.btn_parametres.setText("")
         self.btn_sortie.setText("")
-    # retranslateUi
-

@@ -133,5 +133,3 @@ class Avion:
 
     def __del__(self):
         Avion.nb_avion -= 1
-
-
