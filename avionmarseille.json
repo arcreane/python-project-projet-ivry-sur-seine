@@ -28,7 +28,7 @@
    "immat": "F-HBLS",
    "turb": "MEDIUM",
    "pax": 115,
-   "final_level": 280,
+   "final_level": 260,
    "sqwk": 1200,
    "fuel": 6.4,
    "pos": "BRAVO",
@@ -36,7 +36,7 @@
    "speed": 351,
    "vs": 0,
    "conso": 5.4,
-   "alt": 28000,
+   "alt": 26000,
    "ldg_speed": 143
  },
  {

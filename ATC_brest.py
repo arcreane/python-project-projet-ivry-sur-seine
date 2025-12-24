@@ -7,6 +7,7 @@
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
+
 from PySide6.QtCore import (QPointF,QCoreApplication, QDate, QDateTime, QLocale,
                             QMetaObject, QObject, QPoint, QRect,
                             QSize, QTime, QUrl, Qt)
@@ -22,6 +23,7 @@ from PySide6.QtWidgets import (QApplication, QFrame, QHBoxLayout,
 from spawn_plane import AircraftMapWidget
 #___________________________________________________________________________________________________________
 
+
 class Ui_ATC_brest(object):
     def setupUi(self, ATC_brest):
         if not ATC_brest.objectName():
@@ -30,7 +32,8 @@ class Ui_ATC_brest(object):
         ATC_brest.resize(900, 648)
         ATC_brest.setMinimumSize(QSize(900, 620))
 
-        self.centralwidget = QWidget(ATC_brest)  # ligne de création
+
+        self.centralwidget = QWidget(ATC_brest)  #ligne de création
         self.centralwidget.setObjectName(u"centralwidget")
 
         self.main_grid_layout = QGridLayout(self.centralwidget)
@@ -40,6 +43,8 @@ class Ui_ATC_brest(object):
 
         sizePolicy_expanding = QSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
         sizePolicy_strip = QSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+
+
 
         self.frame_carte = QFrame(self.centralwidget)
         self.frame_carte.setObjectName(u"frame_carte")
@@ -61,7 +66,7 @@ class Ui_ATC_brest(object):
         self.main_grid_layout.addWidget(self.frame_carte, 0, 0, 1, 1)
 
         self.label_5.set_map_image(u"image/MAP_brest.png")
-        """ 
+
         self.frame_strip = QFrame(self.centralwidget)
         self.frame_strip.setObjectName(u"frame_strip")
 
@@ -80,7 +85,7 @@ class Ui_ATC_brest(object):
         self.verticalLayout_9 = QVBoxLayout(self.frame)
         self.verticalLayout_9.setObjectName(u"verticalLayout_9")
         self.label = QLabel(self.frame)
-        '''self.main_grid_layout.addWidget(self.frame_strip, 1, 0, 1, 1)'''
+        self.main_grid_layout.addWidget(self.frame_strip, 1, 0, 1, 1)
         self.label.setObjectName(u"label")
         self.label.setAlignment(Qt.AlignmentFlag.AlignCenter)
 
@@ -336,7 +341,7 @@ class Ui_ATC_brest(object):
         self.verticalLayout.addWidget(self.label_22)
 
         self.horizontalLayout_2.addWidget(self.frame_8)
-        """
+
         self.frame_11 = QFrame(self.centralwidget)
         self.frame_11.setObjectName(u"frame_11")
         sizePolicy_panel = QSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
@@ -529,7 +534,7 @@ class Ui_ATC_brest(object):
         # BLOC 4 : BOUTON APPLY
         # ----------------------------------------------------
 
-        # bouton apply
+        #bouton apply
         self.btn_apply = QPushButton(self.frame_stat)
         self.btn_apply.setObjectName(u"btn_apply")
         self.btn_apply.setFixedSize(91, 31)  # Taille fixe pour le bouton
@@ -541,7 +546,7 @@ class Ui_ATC_brest(object):
 
         self.stat_main_layout.addLayout(apply_h_layout)
 
-        # bouton land
+        #bouton land
         self.btn_land = QPushButton(self.frame_stat)
         self.btn_land.setObjectName(u"btn_land")
         self.btn_land.setText(u"Land")
@@ -576,7 +581,7 @@ class Ui_ATC_brest(object):
         self.btn_accueil.setIconSize(QSize(32, 32))
 
         self.horizontalLayout.addWidget(self.btn_accueil)
-        """
+
         self.btn_parametres = QPushButton(self.frame_boutons)
         self.btn_parametres.setObjectName(u"btn_parametres")
         icon1 = QIcon()
@@ -584,7 +589,7 @@ class Ui_ATC_brest(object):
         self.btn_parametres.setIcon(icon1)
         self.btn_parametres.setIconSize(QSize(32, 32))
 
-        self.horizontalLayout.addWidget(self.btn_parametres)"""
+        self.horizontalLayout.addWidget(self.btn_parametres)
 
         self.btn_sortie = QPushButton(self.frame_boutons)
         self.btn_sortie.setObjectName(u"btn_sortie")
@@ -611,7 +616,11 @@ class Ui_ATC_brest(object):
             map_height = self.label_5.map_pixmap.height()
 
             # Ajoute un deuxième avion un peu décalé avec un cap différent
-            # self.label_5.add_aircraft("BAW456", QPointF(map_width / 3, map_height / 4), 180)
+            #self.label_5.add_aircraft("BAW456", QPointF(map_width / 3, map_height / 4), 180)
+
+
+
+
 
         self.retranslateUi(ATC_brest)
 
@@ -622,33 +631,31 @@ class Ui_ATC_brest(object):
     def retranslateUi(self, ATC_brest):
         ATC_brest.setWindowTitle(QCoreApplication.translate("ATC_brest", u"MainWindow", None))
         """self.label_5.setText("")"""
-        '''
         self.label.setText(QCoreApplication.translate("ATC_brest", u"Callsign", None))
-        self.label_2.setText(QCoreApplication.translate("ATC_brest", u"AFR 002 Heavy", None))
+        self.label_2.setText(QCoreApplication.translate("ATC_brest", u"NONE", None))
         self.label_3.setText(QCoreApplication.translate("ATC_brest", u"From", None))
-        self.label_4.setText(QCoreApplication.translate("ATC_brest", u"D\u00e9part", None))
+        self.label_4.setText(QCoreApplication.translate("ATC_brest", u"NONE", None))
         self.label_9.setText(QCoreApplication.translate("ATC_brest", u"To", None))
-        self.label_10.setText(QCoreApplication.translate("ATC_brest", u"Arriv\u00e9", None))
+        self.label_10.setText(QCoreApplication.translate("ATC_brest", u"NONE", None))
         self.label_11.setText(QCoreApplication.translate("ATC_brest", u"Type", None))
-        self.label_12.setText(QCoreApplication.translate("ATC_brest", u"B777", None))
+        self.label_12.setText(QCoreApplication.translate("ATC_brest", u"NONE", None))
         self.label_13.setText(QCoreApplication.translate("ATC_brest", u"Immat", None))
-        self.label_14.setText(QCoreApplication.translate("ATC_brest", u"F-GSPZ", None))
+        self.label_14.setText(QCoreApplication.translate("ATC_brest", u"NONE", None))
         self.label_15.setText(QCoreApplication.translate("ATC_brest", u"Turb", None))
-        self.label_16.setText(QCoreApplication.translate("ATC_brest", u"Beaucoup", None))
+        self.label_16.setText(QCoreApplication.translate("ATC_brest", u"NONE", None))
         self.label_17.setText(QCoreApplication.translate("ATC_brest", u"Pax", None))
-        self.label_18.setText(QCoreApplication.translate("ATC_brest", u"312", None))
+        self.label_18.setText(QCoreApplication.translate("ATC_brest", u"NONE", None))
         self.label_19.setText(QCoreApplication.translate("ATC_brest", u"Level", None))
-        self.label_20.setText(QCoreApplication.translate("ATC_brest", u"360", None))
+        self.label_20.setText(QCoreApplication.translate("ATC_brest", u"NONE", None))
         self.label_21.setText(QCoreApplication.translate("ATC_brest", u"Sqwk", None))
-        self.label_22.setText(QCoreApplication.translate("ATC_brest", u"1000", None))
-        '''
+        self.label_22.setText(QCoreApplication.translate("ATC_brest", u"NONE", None))
         self.txt_titre.setText(QCoreApplication.translate("ATC_brest", u"brest LFFF", None))
         self.txt_heading.setText(QCoreApplication.translate("ATC_brest", u"Heading :", None))
         self.img_cercle.setText("")
-        self.txt_nord.setText(QCoreApplication.translate("ATC_brest", u"0", None))
-        self.txt_est.setText(QCoreApplication.translate("ATC_brest", u"90", None))
-        self.txt_sud.setText(QCoreApplication.translate("ATC_brest", u"180", None))
-        self.txt_ouest.setText(QCoreApplication.translate("ATC_brest", u"270", None))
+        self.txt_nord.setText(QCoreApplication.translate("ATC_brest", u"N", None))
+        self.txt_est.setText(QCoreApplication.translate("ATC_brest", u"E", None))
+        self.txt_sud.setText(QCoreApplication.translate("ATC_brest", u"S", None))
+        self.txt_ouest.setText(QCoreApplication.translate("ATC_brest", u"O", None))
         self.txt_altitude.setText(QCoreApplication.translate("ATC_brest", u"Altitude :", None))
         self.unit_altitude.setText(QCoreApplication.translate("ATC_brest", u" ft", None))
         self.txt_vitesse.setText(QCoreApplication.translate("ATC_brest", u"Vitesse :", None))
@@ -659,7 +666,7 @@ class Ui_ATC_brest(object):
         self.unit_heading.setText(QCoreApplication.translate("ATC_brest", u"\u00b0", None))
         self.btn_apply.setText(QCoreApplication.translate("ATC_brest", u"Apply", None))
         self.btn_accueil.setText("")
-        '''self.btn_parametres.setText("")'''
+        self.btn_parametres.setText("")
         self.btn_sortie.setText("")
     # retranslateUi
 

@@ -53,19 +53,19 @@ def gestion_avion():
     global L
     dict_avion = init_avion()
     for key in dict_avion.keys():
+        etat = False
         for key__ in dict_avion.keys():
             if key__ == key:
                 continue
             else:
                 distance, delta_altitude = distance_avion(dict_avion[key], dict_avion[key__])
-                if distance < 50 and delta_altitude <= 500:
-                    dict_avion[key].etat['TCAS'] = True
-                    dict_avion[key__].etat['TCAS'] = True
+                if distance < 50 and delta_altitude <= 1000:
+                    etat = True
                 elif distance <= 10 and delta_altitude <= 100:
-                    L.remove(dict_avion[key].random_nb)
-                    L.remove(dict_avion[key__].random_nb)
-                    del(dict_avion[key])
-                    del(dict_avion[key__])
+                    etat = True
+                    dict_avion[key].etat['land ?'] = True
+                    dict_avion[key__].etat['land ?'] = True
+        dict_avion[key].etat['TCAS'] = etat
         if dict_avion[key].consigne['landing'] == True:
             landing(dict_avion[key])
         else:

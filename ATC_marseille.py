@@ -8,7 +8,7 @@
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
 
-from PySide6.QtCore import (QPointF, QCoreApplication, QDate, QDateTime, QLocale,
+from PySide6.QtCore import (QPointF,QCoreApplication, QDate, QDateTime, QLocale,
                             QMetaObject, QObject, QPoint, QRect,
                             QSize, QTime, QUrl, Qt)
 from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
@@ -21,9 +21,7 @@ from PySide6.QtWidgets import (QApplication, QFrame, QHBoxLayout,
                                QWidget, QGridLayout)
 
 from spawn_plane import AircraftMapWidget
-
-
-# ___________________________________________________________________________________________________________
+#___________________________________________________________________________________________________________
 
 
 class Ui_ATC_marseille(object):
@@ -34,7 +32,8 @@ class Ui_ATC_marseille(object):
         ATC_marseille.resize(900, 648)
         ATC_marseille.setMinimumSize(QSize(900, 620))
 
-        self.centralwidget = QWidget(ATC_marseille)  # ligne de création
+
+        self.centralwidget = QWidget(ATC_marseille)  #ligne de création
         self.centralwidget.setObjectName(u"centralwidget")
 
         self.main_grid_layout = QGridLayout(self.centralwidget)
@@ -44,6 +43,8 @@ class Ui_ATC_marseille(object):
 
         sizePolicy_expanding = QSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
         sizePolicy_strip = QSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+
+
 
         self.frame_carte = QFrame(self.centralwidget)
         self.frame_carte.setObjectName(u"frame_carte")
@@ -65,7 +66,7 @@ class Ui_ATC_marseille(object):
         self.main_grid_layout.addWidget(self.frame_carte, 0, 0, 1, 1)
 
         self.label_5.set_map_image(u"image/MAP_marseille.png")
-        """ 
+
         self.frame_strip = QFrame(self.centralwidget)
         self.frame_strip.setObjectName(u"frame_strip")
 
@@ -84,7 +85,7 @@ class Ui_ATC_marseille(object):
         self.verticalLayout_9 = QVBoxLayout(self.frame)
         self.verticalLayout_9.setObjectName(u"verticalLayout_9")
         self.label = QLabel(self.frame)
-        '''self.main_grid_layout.addWidget(self.frame_strip, 1, 0, 1, 1)'''
+        self.main_grid_layout.addWidget(self.frame_strip, 1, 0, 1, 1)
         self.label.setObjectName(u"label")
         self.label.setAlignment(Qt.AlignmentFlag.AlignCenter)
 
@@ -340,7 +341,7 @@ class Ui_ATC_marseille(object):
         self.verticalLayout.addWidget(self.label_22)
 
         self.horizontalLayout_2.addWidget(self.frame_8)
-        """
+
         self.frame_11 = QFrame(self.centralwidget)
         self.frame_11.setObjectName(u"frame_11")
         sizePolicy_panel = QSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
@@ -533,7 +534,7 @@ class Ui_ATC_marseille(object):
         # BLOC 4 : BOUTON APPLY
         # ----------------------------------------------------
 
-        # bouton apply
+        #bouton apply
         self.btn_apply = QPushButton(self.frame_stat)
         self.btn_apply.setObjectName(u"btn_apply")
         self.btn_apply.setFixedSize(91, 31)  # Taille fixe pour le bouton
@@ -545,7 +546,7 @@ class Ui_ATC_marseille(object):
 
         self.stat_main_layout.addLayout(apply_h_layout)
 
-        # bouton land
+        #bouton land
         self.btn_land = QPushButton(self.frame_stat)
         self.btn_land.setObjectName(u"btn_land")
         self.btn_land.setText(u"Land")
@@ -580,7 +581,7 @@ class Ui_ATC_marseille(object):
         self.btn_accueil.setIconSize(QSize(32, 32))
 
         self.horizontalLayout.addWidget(self.btn_accueil)
-        """
+
         self.btn_parametres = QPushButton(self.frame_boutons)
         self.btn_parametres.setObjectName(u"btn_parametres")
         icon1 = QIcon()
@@ -588,7 +589,7 @@ class Ui_ATC_marseille(object):
         self.btn_parametres.setIcon(icon1)
         self.btn_parametres.setIconSize(QSize(32, 32))
 
-        self.horizontalLayout.addWidget(self.btn_parametres)"""
+        self.horizontalLayout.addWidget(self.btn_parametres)
 
         self.btn_sortie = QPushButton(self.frame_boutons)
         self.btn_sortie.setObjectName(u"btn_sortie")
@@ -615,7 +616,11 @@ class Ui_ATC_marseille(object):
             map_height = self.label_5.map_pixmap.height()
 
             # Ajoute un deuxième avion un peu décalé avec un cap différent
-            # self.label_5.add_aircraft("BAW456", QPointF(map_width / 3, map_height / 4), 180)
+            #self.label_5.add_aircraft("BAW456", QPointF(map_width / 3, map_height / 4), 180)
+
+
+
+
 
         self.retranslateUi(ATC_marseille)
 
@@ -626,33 +631,31 @@ class Ui_ATC_marseille(object):
     def retranslateUi(self, ATC_marseille):
         ATC_marseille.setWindowTitle(QCoreApplication.translate("ATC_marseille", u"MainWindow", None))
         """self.label_5.setText("")"""
-        '''
         self.label.setText(QCoreApplication.translate("ATC_marseille", u"Callsign", None))
-        self.label_2.setText(QCoreApplication.translate("ATC_marseille", u"AFR 002 Heavy", None))
+        self.label_2.setText(QCoreApplication.translate("ATC_marseille", u"NONE", None))
         self.label_3.setText(QCoreApplication.translate("ATC_marseille", u"From", None))
-        self.label_4.setText(QCoreApplication.translate("ATC_marseille", u"D\u00e9part", None))
+        self.label_4.setText(QCoreApplication.translate("ATC_marseille", u"NONE", None))
         self.label_9.setText(QCoreApplication.translate("ATC_marseille", u"To", None))
-        self.label_10.setText(QCoreApplication.translate("ATC_marseille", u"Arriv\u00e9", None))
+        self.label_10.setText(QCoreApplication.translate("ATC_marseille", u"NONE", None))
         self.label_11.setText(QCoreApplication.translate("ATC_marseille", u"Type", None))
-        self.label_12.setText(QCoreApplication.translate("ATC_marseille", u"B777", None))
+        self.label_12.setText(QCoreApplication.translate("ATC_marseille", u"NONE", None))
         self.label_13.setText(QCoreApplication.translate("ATC_marseille", u"Immat", None))
-        self.label_14.setText(QCoreApplication.translate("ATC_marseille", u"F-GSPZ", None))
+        self.label_14.setText(QCoreApplication.translate("ATC_marseille", u"NONE", None))
         self.label_15.setText(QCoreApplication.translate("ATC_marseille", u"Turb", None))
-        self.label_16.setText(QCoreApplication.translate("ATC_marseille", u"Beaucoup", None))
+        self.label_16.setText(QCoreApplication.translate("ATC_marseille", u"NONE", None))
         self.label_17.setText(QCoreApplication.translate("ATC_marseille", u"Pax", None))
-        self.label_18.setText(QCoreApplication.translate("ATC_marseille", u"312", None))
+        self.label_18.setText(QCoreApplication.translate("ATC_marseille", u"NONE", None))
         self.label_19.setText(QCoreApplication.translate("ATC_marseille", u"Level", None))
-        self.label_20.setText(QCoreApplication.translate("ATC_marseille", u"360", None))
+        self.label_20.setText(QCoreApplication.translate("ATC_marseille", u"NONE", None))
         self.label_21.setText(QCoreApplication.translate("ATC_marseille", u"Sqwk", None))
-        self.label_22.setText(QCoreApplication.translate("ATC_marseille", u"1000", None))
-        '''
-        self.txt_titre.setText(QCoreApplication.translate("ATC_marseille", u"Marseille LFMM", None))
+        self.label_22.setText(QCoreApplication.translate("ATC_marseille", u"NONE", None))
+        self.txt_titre.setText(QCoreApplication.translate("ATC_marseille", u"marseille LFFF", None))
         self.txt_heading.setText(QCoreApplication.translate("ATC_marseille", u"Heading :", None))
         self.img_cercle.setText("")
-        self.txt_nord.setText(QCoreApplication.translate("ATC_marseille", u"0", None))
-        self.txt_est.setText(QCoreApplication.translate("ATC_marseille", u"90", None))
-        self.txt_sud.setText(QCoreApplication.translate("ATC_marseille", u"180", None))
-        self.txt_ouest.setText(QCoreApplication.translate("ATC_marseille", u"270", None))
+        self.txt_nord.setText(QCoreApplication.translate("ATC_marseille", u"N", None))
+        self.txt_est.setText(QCoreApplication.translate("ATC_marseille", u"E", None))
+        self.txt_sud.setText(QCoreApplication.translate("ATC_marseille", u"S", None))
+        self.txt_ouest.setText(QCoreApplication.translate("ATC_marseille", u"O", None))
         self.txt_altitude.setText(QCoreApplication.translate("ATC_marseille", u"Altitude :", None))
         self.unit_altitude.setText(QCoreApplication.translate("ATC_marseille", u" ft", None))
         self.txt_vitesse.setText(QCoreApplication.translate("ATC_marseille", u"Vitesse :", None))
@@ -663,7 +666,7 @@ class Ui_ATC_marseille(object):
         self.unit_heading.setText(QCoreApplication.translate("ATC_marseille", u"\u00b0", None))
         self.btn_apply.setText(QCoreApplication.translate("ATC_marseille", u"Apply", None))
         self.btn_accueil.setText("")
-        '''self.btn_parametres.setText("")'''
+        self.btn_parametres.setText("")
         self.btn_sortie.setText("")
     # retranslateUi
 

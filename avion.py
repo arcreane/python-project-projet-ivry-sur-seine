@@ -107,6 +107,8 @@ class Avion:
         distance = sqrt((self.pos[0] - airport_infos[0]) ** 2 + (self.pos[1] - airport_infos[1]) ** 2)
         if distance < 80:
             self.etat['can_land'] = True
+        else:
+            self.etat['can_land'] = False
 
     def exit_scope(self):
         pts = import_json_data()

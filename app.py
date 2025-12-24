@@ -24,7 +24,7 @@ from gestion_avion import init_avion, clear_dict_avion
 
 LANDING_DISTANCE_THRESHOLD = 80
 LANDING_THRESHOLD_PIXELS = 80
-REMOVAL_THRESHOLD_PIXELS = 10 # Seuil de retrait (doit être atteint
+REMOVAL_THRESHOLD_PIXELS = 10 # Seuil de retrait (doit être atteint)
 #__________________________class_accueil________________________________
 
 class ATC_accueil(QMainWindow, Ui_ATC_accueil):          #def de la page accueil
@@ -51,6 +51,7 @@ class ATC_accueil(QMainWindow, Ui_ATC_accueil):          #def de la page accueil
         self.btn_sortie.clicked.connect(QApplication.quit)
 
     def ouvrir_paris(self): #fonction qui ouvre paris
+        clear_dict_avion()
         json_data('paris')
         json_avion('paris')
         self.fenetre_paris = ATC_parislfff()
@@ -58,6 +59,7 @@ class ATC_accueil(QMainWindow, Ui_ATC_accueil):          #def de la page accueil
         self.close()
 
     def ouvrir_reims(self):           #fonction qui ouvre reims
+        clear_dict_avion()
         json_data('reims')
         json_avion('reims')
         self.fenetre_reims = ATC_reimslfee()
@@ -65,6 +67,7 @@ class ATC_accueil(QMainWindow, Ui_ATC_accueil):          #def de la page accueil
         self.close()
 
     def ouvrir_marseille(self):           #fonction qui ouvre marseille
+        clear_dict_avion()
         json_data('marseille')
         json_avion('marseille')
         self.fenetre_marseille = ATC_marseillelfmm()
@@ -72,6 +75,7 @@ class ATC_accueil(QMainWindow, Ui_ATC_accueil):          #def de la page accueil
         self.close()
 
     def ouvrir_bordeaux(self):           #fonction qui ouvre bordeaux
+        clear_dict_avion()
         json_data('bordeaux')
         json_avion('bordeaux')
         self.fenetre_bordeaux = ATC_bordeauxlfbb()
@@ -79,6 +83,7 @@ class ATC_accueil(QMainWindow, Ui_ATC_accueil):          #def de la page accueil
         self.close()
 
     def ouvrir_brest(self):           #fonction qui ouvre brest
+        clear_dict_avion()
         json_data('brest')
         json_avion('brest')
         self.fenetre_brest = ATC_brestlfrr()
@@ -141,8 +146,17 @@ class ATC_parislfff(QMainWindow, Ui_ATC_paris):
         avion = self.aircrafts[callsign]
 
         self.txt_titre.setText(f"Contrôle – {callsign}")
+        self.label_2.setText(f'{callsign}\n{avion.phonetic}')
+        self.label_4.setText(f'{avion.from_}')
+        self.label_10.setText(f'{avion.aprt_code}')
+        self.label_12.setText(f'{avion.type_}')
+        self.label_14.setText(f'{avion.immat}')
+        self.label_16.setText(f'{avion.turb}')
+        self.label_18.setText(f'{avion.pax}')
+        self.label_20.setText(f'{avion.final_level}')
+        self.label_22.setText(f'{avion.sqwk}')
 
-        if not refresh_only:
+        if refresh_only:
             self.txt_heading_valeur.setText(str(int(avion.consigne['heading'])))
             self.txt_altitude_valeur.setText(str(int(avion.consigne['alt'])))
             self.txt_vitesse_valeur.setText(str(int(avion.consigne['speed'])))
@@ -214,7 +228,7 @@ class ATC_parislfff(QMainWindow, Ui_ATC_paris):
         CODES = ['LFPG', 'LFPO', 'LFQQ']
 
         font = QFont("Arial", 13)
-        text_color = QColor(255, 255, 0)
+        text_color = QColor(0, 128, 255)
 
         for airport in CODES:
 
@@ -239,6 +253,8 @@ class ATC_parislfff(QMainWindow, Ui_ATC_paris):
 
     def back_home(self):
         clear_dict_avion()
+        self.aircrafts = {}
+        self.label_5.all_aircraft_details = self.aircrafts
         self.home = ATC_accueil()
         self.home.showMaximized()
         self.close()
@@ -300,6 +316,15 @@ class ATC_reimslfee(QMainWindow, Ui_ATC_reims):       #def de la page paris
         avion = self.aircrafts[callsign]
 
         self.txt_titre.setText(f"Contrôle – {callsign}")
+        self.label_2.setText(f'{callsign}\n{avion.phonetic}')
+        self.label_4.setText(f'{avion.from_}')
+        self.label_10.setText(f'{avion.aprt_code}')
+        self.label_12.setText(f'{avion.type_}')
+        self.label_14.setText(f'{avion.immat}')
+        self.label_16.setText(f'{avion.turb}')
+        self.label_18.setText(f'{avion.pax}')
+        self.label_20.setText(f'{avion.final_level}')
+        self.label_22.setText(f'{avion.sqwk}')
 
         if not refresh_only:
             self.txt_heading_valeur.setText(str(int(avion.consigne['heading'])))
@@ -373,7 +398,7 @@ class ATC_reimslfee(QMainWindow, Ui_ATC_reims):       #def de la page paris
         CODES = ['LFSB', 'LFST', 'LFGJ']
 
         font = QFont("Arial", 13)
-        text_color = QColor(255, 255, 0)
+        text_color = QColor(0, 128, 255)
 
         for airport in CODES:
 
@@ -398,6 +423,8 @@ class ATC_reimslfee(QMainWindow, Ui_ATC_reims):       #def de la page paris
 
     def back_home(self):
         clear_dict_avion()
+        self.aircrafts = {}
+        self.label_5.all_aircraft_details = self.aircrafts
         self.home = ATC_accueil()
         self.home.showMaximized()
         self.close()
@@ -458,6 +485,15 @@ class ATC_brestlfrr(QMainWindow, Ui_ATC_brest):       #def de la page paris
         avion = self.aircrafts[callsign]
 
         self.txt_titre.setText(f"Contrôle – {callsign}")
+        self.label_2.setText(f'{callsign}\n{avion.phonetic}')
+        self.label_4.setText(f'{avion.from_}')
+        self.label_10.setText(f'{avion.aprt_code}')
+        self.label_12.setText(f'{avion.type_}')
+        self.label_14.setText(f'{avion.immat}')
+        self.label_16.setText(f'{avion.turb}')
+        self.label_18.setText(f'{avion.pax}')
+        self.label_20.setText(f'{avion.final_level}')
+        self.label_22.setText(f'{avion.sqwk}')
 
         if not refresh_only:
             self.txt_heading_valeur.setText(str(int(avion.consigne['heading'])))
@@ -531,7 +567,7 @@ class ATC_brestlfrr(QMainWindow, Ui_ATC_brest):       #def de la page paris
         CODES = ['LFRB', 'LFRS', 'LFRN']
 
         font = QFont("Arial", 13)
-        text_color = QColor(255, 255, 0)
+        text_color = QColor(0, 128, 255)
 
         for airport in CODES:
 
@@ -556,6 +592,8 @@ class ATC_brestlfrr(QMainWindow, Ui_ATC_brest):       #def de la page paris
 
     def back_home(self):
         clear_dict_avion()
+        self.aircrafts = {}
+        self.label_5.all_aircraft_details = self.aircrafts
         self.home = ATC_accueil()
         self.home.showMaximized()
         self.close()
@@ -616,6 +654,15 @@ class ATC_bordeauxlfbb(QMainWindow, Ui_ATC_bordeaux):       #def de la page pari
         avion = self.aircrafts[callsign]
 
         self.txt_titre.setText(f"Contrôle – {callsign}")
+        self.label_2.setText(f'{callsign}\n{avion.phonetic}')
+        self.label_4.setText(f'{avion.from_}')
+        self.label_10.setText(f'{avion.aprt_code}')
+        self.label_12.setText(f'{avion.type_}')
+        self.label_14.setText(f'{avion.immat}')
+        self.label_16.setText(f'{avion.turb}')
+        self.label_18.setText(f'{avion.pax}')
+        self.label_20.setText(f'{avion.final_level}')
+        self.label_22.setText(f'{avion.sqwk}')
 
         if not refresh_only:
             self.txt_heading_valeur.setText(str(int(avion.consigne['heading'])))
@@ -689,7 +736,7 @@ class ATC_bordeauxlfbb(QMainWindow, Ui_ATC_bordeaux):       #def de la page pari
         CODES = ['LFBD', 'LFBO', 'LFBZ']
 
         font = QFont("Arial", 13)
-        text_color = QColor(255, 255, 0)
+        text_color = QColor(0, 128, 255)
 
         for airport in CODES:
 
@@ -714,6 +761,8 @@ class ATC_bordeauxlfbb(QMainWindow, Ui_ATC_bordeaux):       #def de la page pari
 
     def back_home(self):
         clear_dict_avion()
+        self.aircrafts = {}
+        self.label_5.all_aircraft_details = self.aircrafts
         self.home = ATC_accueil()
         self.home.showMaximized()
         self.close()
@@ -774,13 +823,21 @@ class ATC_marseillelfmm(QMainWindow, Ui_ATC_marseille):       #def de la page pa
         avion = self.aircrafts[callsign]
 
         self.txt_titre.setText(f"Contrôle – {callsign}")
+        self.label_2.setText(f'{callsign}\n{avion.phonetic}')
+        self.label_4.setText(f'{avion.from_}')
+        self.label_10.setText(f'{avion.aprt_code}')
+        self.label_12.setText(f'{avion.type_}')
+        self.label_14.setText(f'{avion.immat}')
+        self.label_16.setText(f'{avion.turb}')
+        self.label_18.setText(f'{avion.pax}')
+        self.label_20.setText(f'{avion.final_level}')
+        self.label_22.setText(f'{avion.sqwk}')
 
         if not refresh_only:
             self.txt_heading_valeur.setText(str(int(avion.consigne['heading'])))
             self.txt_altitude_valeur.setText(str(int(avion.consigne['alt'])))
             self.txt_vitesse_valeur.setText(str(int(avion.consigne['speed'])))
             self.txt_vitesse_verticale_valeur.setText(str(int(avion.consigne['vs'])))
-
 
     def apply_command(self):
         if not self.selected_callsign:
@@ -847,7 +904,7 @@ class ATC_marseillelfmm(QMainWindow, Ui_ATC_marseille):       #def de la page pa
         CODES = ['LFML', 'LFMN', 'LFLL']
 
         font = QFont("Arial", 13)
-        text_color = QColor(255, 255, 0)
+        text_color = QColor(0, 128, 255)
 
         for airport in CODES:
 
@@ -872,6 +929,8 @@ class ATC_marseillelfmm(QMainWindow, Ui_ATC_marseille):       #def de la page pa
 
     def back_home(self):
         clear_dict_avion()
+        self.aircrafts = {}
+        self.label_5.all_aircraft_details = self.aircrafts
         self.home = ATC_accueil()
         self.home.showMaximized()
         self.close()

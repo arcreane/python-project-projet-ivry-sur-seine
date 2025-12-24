@@ -22,11 +22,9 @@ class AirportDot(QGraphicsEllipseItem):
 
         #apparence en jaune
         self.setPen(QPen(QColor(0, 0, 0), 1))
-        self.default_brush = QBrush(QColor(255, 255, 0))  #jaune
-        self.hover_brush = QBrush(QColor(255, 165, 0))  #orange
+        self.default_brush = QBrush(QColor(0, 128, 255))
         self.setBrush(self.default_brush)
 
         #definir le ToolTip pour afficher les données au survol
-        self.default_brush = QBrush(QColor(255, 255, 0))  #jaune
-        self.hover_brush = QBrush(QColor(255, 165, 0))  #orange
+        self.default_brush = QBrush(QColor(0, 128, 255))
         self.setBrush(self.default_brush)
