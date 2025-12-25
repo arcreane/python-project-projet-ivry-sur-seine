@@ -1,6 +1,5 @@
 from math import sqrt, atan2, degrees
 import json
-from types import new_class
 
 FIR = ''
 
