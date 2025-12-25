@@ -95,6 +95,9 @@ def gestion_avion():
                 dict_avion[key].emergency = 'fuel'
             else:
                 dict_avion[key].emergency += '\nfuel'
+        if dict_avion[key].fuel <= 0:
+            dict_avion[key].etat['land ?'] = True
+            continue
         if dict_avion[key].sqwk == 7600:
             dict_avion[key].etat['can land'] = True
             dict_avion[key].consigne_change({'landing' : True})

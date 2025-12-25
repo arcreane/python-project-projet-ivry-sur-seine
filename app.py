@@ -159,6 +159,10 @@ class ATC(QMainWindow, Ui_ATC):       #def de la page paris
         self.label_18.setText(f'{avion.pax}')
         self.label_20.setText(f'{avion.final_level}')
         self.label_22.setText(f'{avion.sqwk}\n{avion.emergency}')
+        self.txt_altitude.setText(f"Altitude actuelle : {avion.alt}\nconsigne d'altitude :")
+        self.txt_vitesse.setText(f"Vitesse actuelle : {avion.speed}\nconsigne de vitesse :")
+        self.txt_vitesse_verticale.setText(f"Vitesse verticale actuelle : {avion.vs}\nconsigne de vitesse verticale :")
+        self.txt_heading.setText(f"cap actuel : {avion.heading}\nconsigne pour le cap :")
 
         if not refresh_only:
             self.txt_heading_valeur.setText(str(int(avion.consigne['heading'])))
@@ -181,7 +185,7 @@ class ATC(QMainWindow, Ui_ATC):       #def de la page paris
         if alt < 3500:
             alt = 3500
         if abs(vs) > avion.max['vs']:
-            vs = avion.max[vs]
+            vs = avion.max['vs']
         if speed < avion.landing_speed:
             speed = avion.landing_speed
         if speed > avion.max['speed']:
