@@ -5,7 +5,7 @@ class Avion:
 
     nb_avion = 0
 
-    def __init__(self, callsign, phonetic, from_, to, type_, immat, turb, pax, final_level, sqwk, fuel, pos, heading, speed, vs, conso, alt, ld_speed, aprt, random_nb):
+    def __init__(self, callsign, phonetic, from_, to, type_, immat, turb, pax, final_level, sqwk, fuel, pos, heading, speed, vs, conso, alt, ld_speed, aprt, random_nb, max):
         self.callsign = callsign
         self.phonetic = phonetic
         self.from_ = from_
@@ -29,6 +29,7 @@ class Avion:
         self.aprt_code = aprt
         self.random_nb = random_nb
         self.emergency = 'Normal'
+        self.max = max
         Avion.nb_avion += 1
 
     def horizontal_move(self):

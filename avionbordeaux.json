@@ -17,7 +17,8 @@
    "vs": 0,
    "conso": 4.4,
    "alt": 24000,
-   "ldg_speed": 134
+   "ldg_speed": 134,
+   "max" : {"alt" :  39000, "speed" :  380, "vs" :  7500}
  },
  {
    "callsign": "AFR16WN",
@@ -37,7 +38,8 @@
    "vs": 0,
    "conso": 4,
    "alt": 22000,
-   "ldg_speed": 138
+   "ldg_speed": 138,
+   "max" : {"alt" :  35000, "speed" :  380, "vs" :  7500}
  },
  {
    "callsign": "RYR25HV",
@@ -57,7 +59,8 @@
    "vs": 0,
    "conso": 4.4,
    "alt": 36000,
-   "ldg_speed": 136
+   "ldg_speed": 136,
+   "max" : {"alt" :  39000, "speed" :  380, "vs" :  7500}
  },
  {
    "callsign": "AFR72YT",
@@ -77,7 +80,8 @@
    "vs": 0,
    "conso": 4.1,
    "alt": 26000,
-   "ldg_speed": 129
+   "ldg_speed": 129,
+   "max" : {"alt" :  35000, "speed" :  380, "vs" :  7500}
  },
  {
    "callsign": "RYR5331",
@@ -97,7 +101,8 @@
    "vs": 0,
    "conso": 5.1,
    "alt": 34000,
-   "ldg_speed": 134
+   "ldg_speed": 134,
+   "max" : {"alt" :  39000, "speed" :  380, "vs" :  7500}
  },
  {
    "callsign": "TVF75BW",
@@ -117,7 +122,8 @@
    "vs": 0,
    "conso": 5,
    "alt": 35000,
-   "ldg_speed": 139
+   "ldg_speed": 139,
+   "max" : {"alt" :  39000, "speed" :  380, "vs" :  7500}
  },
  {
    "callsign": "ANE02TH",
@@ -137,7 +143,8 @@
    "vs": 0,
    "conso": 5.5,
    "alt": 23000,
-   "ldg_speed": 127
+   "ldg_speed": 127,
+   "max" : {"alt" :  39000, "speed" :  380, "vs" :  7500}
  },
  {
    "callsign": "EZY78EW",
@@ -157,7 +164,8 @@
    "vs": 0,
    "conso": 5.1,
    "alt": 31000,
-   "ldg_speed": 127
+   "ldg_speed": 127,
+   "max" : {"alt" :  39000, "speed" :  380, "vs" :  7500}
  },
  {
    "callsign": "TVF49GN",
@@ -177,7 +185,8 @@
    "vs": 0,
    "conso": 4.8,
    "alt": 33000,
-   "ldg_speed": 142
+   "ldg_speed": 142,
+   "max" : {"alt" :  39000, "speed" :  380, "vs" :  7500}
  },
  {
    "callsign": "BAW2DP",
@@ -197,7 +206,8 @@
    "vs": 0,
    "conso": 5.3,
    "alt": 36000,
-   "ldg_speed": 126
+   "ldg_speed": 126,
+   "max" : {"alt" :  39000, "speed" :  380, "vs" :  7500}
  },
  {
    "callsign": "BGA131J",
@@ -217,7 +227,8 @@
    "vs": 0,
    "conso": 4.3,
    "alt": 28000,
-   "ldg_speed": 128
+   "ldg_speed": 145,
+   "max" : {"alt" :  39000, "speed" :  380, "vs" :  7500}
  },
  {
    "callsign": "UVL761F",
@@ -237,7 +248,8 @@
    "vs": 0,
    "conso": 4.1,
    "alt": 16000,
-   "ldg_speed": 125
+   "ldg_speed": 125,
+   "max" : {"alt" :  39000, "speed" :  380, "vs" :  7500}
  },
  {
    "callsign": "ACA878",
@@ -257,7 +269,8 @@
    "vs": 0,
    "conso": 4.4,
    "alt": 39000,
-   "ldg_speed": 128
+   "ldg_speed": 142,
+   "max" : {"alt" :  41000, "speed" :  380, "vs" :  7500}
  },
  {
    "callsign": "EJU48PB",
@@ -277,7 +290,8 @@
    "vs": 0,
    "conso": 4.9,
    "alt": 31000,
-   "ldg_speed": 145
+   "ldg_speed": 145,
+   "max" : {"alt" :  39000, "speed" :  380, "vs" :  7500}
  },
  {
    "callsign": "WMT8SL",
@@ -297,7 +311,8 @@
    "vs": 0,
    "conso": 4.4,
    "alt": 36000,
-   "ldg_speed": 138
+   "ldg_speed": 138,
+   "max" : {"alt" :  39000, "speed" :  380, "vs" :  7500}
  },
  {
    "callsign": "SWR1WY",
@@ -317,7 +332,8 @@
    "vs": 0,
    "conso": 4.4,
    "alt": 20000,
-   "ldg_speed": 131
+   "ldg_speed": 131,
+   "max" : {"alt" :  39000, "speed" :  380, "vs" :  7500}
  },
  {
    "callsign": "EJU1840",
@@ -337,7 +353,8 @@
    "vs": 0,
    "conso": 4,
    "alt": 33000,
-   "ldg_speed": 127
+   "ldg_speed": 127,
+   "max" : {"alt" :  39000, "speed" :  380, "vs" :  7500}
  },
  {
    "callsign": "AFR7432",
@@ -357,7 +374,8 @@
    "vs": 0,
    "conso": 3.9,
    "alt": 22000,
-   "ldg_speed": 133
+   "ldg_speed": 133,
+   "max" : {"alt" :  39000, "speed" :  380, "vs" :  7500}
  },
  {
    "callsign": "VOE2437",
@@ -377,7 +395,8 @@
    "vs": 0,
    "conso": 4.2,
    "alt": 29000,
-   "ldg_speed": 140
+   "ldg_speed": 140,
+   "max" : {"alt" :  39000, "speed" :  380, "vs" :  7500}
  },
  {
    "callsign": "EJU48ZF",
@@ -397,6 +416,7 @@
    "vs": 0,
    "conso": 4.3,
    "alt": 31000,
-   "ldg_speed": 131
+   "ldg_speed": 131,
+   "max" : {"alt" :  39000, "speed" :  380, "vs" :  7500}
  }
 ]

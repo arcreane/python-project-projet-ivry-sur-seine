@@ -17,7 +17,8 @@
    "vs": 0,
    "conso": 5.4,
    "alt": 35000,
-   "ldg_speed": 137
+   "ldg_speed": 137,
+   "max" : {"alt" :  39000, "speed" :  380, "vs" :  7500}
  },
  {
    "callsign": "TVF9849",
@@ -37,7 +38,8 @@
    "vs": 0,
    "conso": 5.4,
    "alt": 33000,
-   "ldg_speed": 137
+   "ldg_speed": 137,
+   "max" : {"alt" :  39000, "speed" :  380, "vs" :  7500}
  },
  {
    "callsign": "OYO9",
@@ -57,7 +59,8 @@
    "vs": 0,
    "conso": 6.2,
    "alt": 34000,
-   "ldg_speed": 123
+   "ldg_speed": 123,
+   "max" : {"alt" :  35000, "speed" :  390, "vs" :  7500}
  },
  {
    "callsign": "FBU98B",
@@ -77,7 +80,8 @@
    "vs": 0,
    "conso": 4.9,
    "alt": 39000,
-   "ldg_speed": 147
+   "ldg_speed": 147,
+   "max" : {"alt" :  41000, "speed" :  380, "vs" :  7500}
  },
  {
    "callsign": "AFR21YN",
@@ -97,7 +101,8 @@
    "vs": 0,
    "conso": 5.2,
    "alt": 32000,
-   "ldg_speed": 136
+   "ldg_speed": 136,
+   "max" : {"alt" :  39000, "speed" :  380, "vs" :  7500}
  },
  {
    "callsign": "FWI649",
@@ -117,7 +122,8 @@
    "vs": 0,
    "conso": 5.5,
    "alt": 37000,
-   "ldg_speed": 143
+   "ldg_speed": 143,
+   "max" : {"alt" :  41000, "speed" :  380, "vs" :  7500}
  },
  {
    "callsign": "DJT304",
@@ -137,7 +143,8 @@
    "vs": 0,
    "conso": 4.1,
    "alt": 36000,
-   "ldg_speed": 137
+   "ldg_speed": 137,
+   "max" : {"alt" :  39000, "speed" :  380, "vs" :  7500}
  },
  {
    "callsign": "FBU73D",
@@ -157,7 +164,8 @@
    "vs": 0,
    "conso": 4.9,
    "alt": 40000,
-   "ldg_speed": 148
+   "ldg_speed": 148,
+   "max" : {"alt" :  41000, "speed" :  380, "vs" :  7500}
  },
  {
    "callsign": "CRL959",
@@ -177,7 +185,8 @@
    "vs": 0,
    "conso": 5,
    "alt": 38000,
-   "ldg_speed": 145
+   "ldg_speed": 145,
+   "max" : {"alt" :  41000, "speed" :  380, "vs" :  7500}
  },
  {
    "callsign": "UAE73",
@@ -197,7 +206,8 @@
    "vs": 0,
    "conso": 5.9,
    "alt": 38000,
-   "ldg_speed": 142
+   "ldg_speed": 142,
+   "max" : {"alt" :  41000, "speed" :  380, "vs" :  7500}
  },
  {
    "callsign": "WJA10",
@@ -217,7 +227,8 @@
    "vs": 0,
    "conso": 5,
    "alt": 37000,
-   "ldg_speed": 145
+   "ldg_speed": 145,
+   "max" : {"alt" :  41000, "speed" :  380, "vs" :  7500}
  },
  {
    "callsign": "AFR1607",
@@ -237,7 +248,8 @@
    "vs": 0,
    "conso": 3.9,
    "alt": 24000,
-   "ldg_speed": 127
+   "ldg_speed": 127,
+   "max" : {"alt" :  33000, "speed" :  350, "vs" :  7500}
  },
  {
    "callsign": "EJU56AU",
@@ -257,7 +269,8 @@
    "vs": 0,
    "conso": 5.2,
    "alt": 36000,
-   "ldg_speed": 136
+   "ldg_speed": 136,
+   "max" : {"alt" :  39000, "speed" :  380, "vs" :  7500}
  },
  {
    "callsign": "AFR83TZ",
@@ -277,7 +290,8 @@
    "vs": 0,
    "conso": 4.3,
    "alt": 23000,
-   "ldg_speed": 134
+   "ldg_speed": 134,
+   "max" : {"alt" :  39000, "speed" :  380, "vs" :  7500}
  },
  {
    "callsign": "DAL290",
@@ -297,7 +311,8 @@
    "vs": 0,
    "conso": 4.9,
    "alt": 41000,
-   "ldg_speed": 147
+   "ldg_speed": 147,
+   "max" : {"alt" :  41000, "speed" :  380, "vs" :  7500}
  },
  {
    "callsign": "AFR501",
@@ -317,7 +332,8 @@
    "vs": 0,
    "conso": 5.2,
    "alt": 37000,
-   "ldg_speed": 155
+   "ldg_speed": 155,
+   "max" : {"alt" :  41000, "speed" :  380, "vs" :  7500}
  },
  {
    "callsign": "AFR401",
@@ -337,7 +353,8 @@
    "vs": 0,
    "conso": 4.9,
    "alt": 41000,
-   "ldg_speed": 147
+   "ldg_speed": 147,
+   "max" : {"alt" :  41000, "speed" :  380, "vs" :  7500}
  },
  {
    "callsign": "AFR97GD",
@@ -357,7 +374,8 @@
    "vs": 0,
    "conso": 4.3,
    "alt": 28000,
-   "ldg_speed": 134
+   "ldg_speed": 134,
+   "max" : {"alt" :  39000, "speed" :  380, "vs" :  7500}
  },
  {
    "callsign": "EJU483A",
@@ -377,7 +395,8 @@
    "vs": 0,
    "conso": 5.2,
    "alt": 30000,
-   "ldg_speed": 136
+   "ldg_speed": 136,
+   "max" : {"alt" :  39000, "speed" :  380, "vs" :  7500}
  },
  {
    "callsign": "VOE2929",
@@ -397,6 +416,7 @@
    "vs": 0,
    "conso": 5.2,
    "alt": 34000,
-   "ldg_speed": 136
+   "ldg_speed": 136,
+   "max" : {"alt" :  39000, "speed" :  380, "vs" :  7500}
  }
 ]

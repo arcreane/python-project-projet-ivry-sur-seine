@@ -44,7 +44,8 @@ def init_avion():
                                   int(dict_cara['alt']),
                                   int(dict_cara['ldg_speed']),
                                   dict_cara['to'],
-                                  n)
+                                  n,
+                                  dict_cara['max'])
     return dict_avion
 
 # gestion des mise à jours des paramètres avions et de la carte en fonction de l'échelle

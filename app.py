@@ -179,16 +179,16 @@ class ATC(QMainWindow, Ui_ATC):       #def de la page paris
         speed = int(self.txt_vitesse_valeur.toPlainText())
         vs = int(self.txt_vitesse_verticale_valeur.toPlainText())
 
-        if alt > 42000:
-            alt = 42000
+        if alt > avion.max['alt']:
+            alt = avion.max['alt']
         if alt < 3500:
             alt = 3500
-        if abs(vs) > 6000:
-            vs = 6000
+        if abs(vs) > avion.max['vs']:
+            vs = avion.max[vs]
         if speed < avion.landing_speed:
             speed = avion.landing_speed
-        if speed > 400:
-            speed = 400
+        if speed > avion.max['speed']:
+            speed = avion.max['speed']
 
         try:
             if avion.sqwk != 7600:
@@ -257,7 +257,6 @@ class ATC(QMainWindow, Ui_ATC):       #def de la page paris
             airport_dot_item = AirportDot(data[airport])
             self.label_5.scene.addItem(airport_dot_item)
 
-            # Label IATA
             label = QGraphicsTextItem(airport)
             label.setFont(font)
             label.setDefaultTextColor(text_color)

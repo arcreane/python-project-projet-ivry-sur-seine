@@ -17,7 +17,8 @@
    "vs": 0,
    "conso": 4,
    "alt": 27000,
-   "ldg_speed": 127
+   "ldg_speed": 127,
+   "max" : {"alt" :  35000, "speed" :  380, "vs" :  7500}
  },
  {
    "callsign": "RYR4DH",
@@ -37,7 +38,8 @@
    "vs": 0,
    "conso": 4.5,
    "alt": 35000,
-   "ldg_speed": 138
+   "ldg_speed": 138,
+   "max" : {"alt" :  39000, "speed" :  380, "vs" :  7500}
  },
  {
    "callsign": "EJU167W",
@@ -53,11 +55,12 @@
    "fuel": 6.3,
    "pos": "CHARLIE",
    "heading": 25,
-   "speed": 385,
+   "speed": 380,
    "vs": 0,
    "conso": 5.2,
    "alt": 33000,
-   "ldg_speed": 136
+   "ldg_speed": 136,
+   "max" : {"alt" :  39000, "speed" :  380, "vs" :  7500}
  },
  {
    "callsign": "TAR247",
@@ -77,7 +80,8 @@
    "vs": 0,
    "conso": 4.2,
    "alt": 37000,
-   "ldg_speed": 135
+   "ldg_speed": 135,
+   "max" : {"alt" :  39000, "speed" :  380, "vs" :  7500}
  },
  {
    "callsign": "THY7UW",
@@ -97,7 +101,8 @@
    "vs": 0,
    "conso": 5,
    "alt": 38000,
-   "ldg_speed": 137
+   "ldg_speed": 137,
+   "max" : {"alt" :  39000, "speed" :  380, "vs" :  7500}
  },
  {
    "callsign": "DHK4904",
@@ -117,7 +122,8 @@
    "vs": 0,
    "conso": 6,
    "alt": 28000,
-   "ldg_speed": 145
+   "ldg_speed": 145,
+   "max" : {"alt" :  39000, "speed" :  380, "vs" :  7500}
  },
  {
    "callsign": "BAW758",
@@ -137,7 +143,8 @@
    "vs": 0,
    "conso": 5.2,
    "alt": 31000,
-   "ldg_speed": 136
+   "ldg_speed": 136,
+   "max" : {"alt" :  39000, "speed" :  380, "vs" :  7500}
  },
  {
    "callsign": "RYR72DF",
@@ -157,7 +164,8 @@
    "vs": 0,
    "conso": 5.4,
    "alt": 24000,
-   "ldg_speed": 137
+   "ldg_speed": 137,
+   "max" : {"alt" :  39000, "speed" :  380, "vs" :  7500}
  },
  {
    "callsign": "RYR9025",
@@ -177,7 +185,8 @@
    "vs": 0,
    "conso": 5.4,
    "alt": 31000,
-   "ldg_speed": 137
+   "ldg_speed": 137,
+   "max" : {"alt" :  39000, "speed" :  380, "vs" :  7500}
  },
  {
    "callsign": "EJU58HR",
@@ -197,7 +206,8 @@
    "vs": 0,
    "conso": 4.2,
    "alt": 35000,
-   "ldg_speed": 135
+   "ldg_speed": 135,
+   "max" : {"alt" :  39000, "speed" :  380, "vs" :  7500}
  },
  {
    "callsign": "DLA5UT",
@@ -217,7 +227,8 @@
    "vs": 0,
    "conso": 4,
    "alt": 20000,
-   "ldg_speed": 127
+   "ldg_speed": 127,
+   "max" : {"alt" :  35000, "speed" :  380, "vs" :  7500}
  },
  {
    "callsign": "KLM1949",
@@ -237,7 +248,8 @@
    "vs": 0,
    "conso": 4,
    "alt": 25000,
-   "ldg_speed": 125
+   "ldg_speed": 125,
+   "max" : {"alt" :  35000, "speed" :  380, "vs" :  7500}
  },
  {
    "callsign": "BCS4958",
@@ -257,7 +269,8 @@
    "vs": 0,
    "conso": 6,
    "alt": 24000,
-   "ldg_speed": 145
+   "ldg_speed": 145,
+   "max" : {"alt" :  39000, "speed" :  380, "vs" :  7500}
  },
  {
    "callsign": "AEH070",
@@ -277,11 +290,12 @@
    "vs": 0,
    "conso": 5.2,
    "alt": 37000,
-   "ldg_speed": 125
+   "ldg_speed": 125,
+   "max" : {"alt" :  39000, "speed" :  380, "vs" :  7500}
  },
  {
    "callsign": "OK-LPB",
-   "phonetic": "NONE",
+   "phonetic": "OSCAR KILO LIMA PAPA BRAVO",
    "from_": "LKPM",
    "to": "LFST",
    "type_": "S22T",
@@ -297,7 +311,8 @@
    "vs": 0,
    "conso": 0.3,
    "alt": 6500,
-   "ldg_speed": 75
+   "ldg_speed": 75,
+   "max" : {"alt" :  12000, "speed" :  130, "vs" :  2000}
  },
  {
    "callsign": "ANE2242",
@@ -317,7 +332,8 @@
    "vs": 0,
    "conso": 3.8,
    "alt": 33000,
-   "ldg_speed": 120
+   "ldg_speed": 120,
+   "max" : {"alt" :  39000, "speed" :  380, "vs" :  7500}
  },
  {
    "callsign": "TVF94LR",
@@ -337,18 +353,19 @@
    "vs": 0,
    "conso": 5.4,
    "alt": 39000,
-   "ldg_speed": 137
+   "ldg_speed": 137,
+   "max" : {"alt" :  39000, "speed" :  380, "vs" :  7500}
  },
  {
    "callsign": "F-GFXH",
-   "phonetic": "NONE",
+   "phonetic": "FOX GOLF FOX XRAY HOTEL",
    "from_": "LFLH",
    "to": "LFGJ",
    "type_": "DR40",
    "immat": "F-GFXH",
    "turb": "LIGHT",
    "pax": 2,
-   "final_level": 15,
+   "final_level": 35,
    "sqwk": 7000,
    "fuel": 0.3,
    "pos": "BRAVO",
@@ -356,8 +373,9 @@
    "speed": 65,
    "vs": 0,
    "conso": 0.1,
-   "alt": 1500,
-   "ldg_speed": 50
+   "alt": 3500,
+   "ldg_speed": 70,
+   "max" : {"alt" :  10000, "speed" :  121, "vs" :  1500}
  },
  {
    "callsign": "NGN7121",
@@ -377,12 +395,13 @@
    "vs": 0,
    "conso": 5.2,
    "alt": 35000,
-   "ldg_speed": 136
+   "ldg_speed": 136,
+   "max" : {"alt" :  39000, "speed" :  380, "vs" :  7500}
  },
  {
    "callsign": "BVL9221",
    "phonetic": "BULGARY",
-   "from_": "\tLBSF",
+   "from_": "LBSF",
    "to": "LFSB",
    "type_": "B733",
    "immat": "LZ-BOO",
@@ -397,6 +416,7 @@
    "vs": 0,
    "conso": 5.8,
    "alt": 34000,
-   "ldg_speed": 133
+   "ldg_speed": 133,
+   "max" : {"alt" :  39000, "speed" :  380, "vs" :  7500}
  }
 ]
