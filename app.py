@@ -21,9 +21,6 @@ LANDING_THRESHOLD_PIXELS = 80
 REMOVAL_THRESHOLD_PIXELS = 10 # Seuil de retrait (doit être atteint)
 zone = ''
 
-def get_zone():
-    global zone
-    return zone
 
 #__________________________class_accueil________________________________
 
