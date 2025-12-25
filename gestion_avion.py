@@ -90,6 +90,7 @@ def gestion_avion():
         carbu = dict_avion[key].conso / 2
         if  carbu >= dict_avion[key].fuel:
             dict_avion[key].sqwk = 7700
+            nb_emergency += 1
             if dict_avion[key].emergency != 'Normal':
                 dict_avion[key].emergency = 'fuel'
             else:

@@ -37,6 +37,7 @@ class Avion:
         vy = (self.speed * cos(radians(self.heading)) / 3600) * 75
         self.pos[0] += vx
         self.pos[1] -= vy
+        self.fuel -= self.conso / 3600
 
     def vertical_move(self):
         alt = self.alt
