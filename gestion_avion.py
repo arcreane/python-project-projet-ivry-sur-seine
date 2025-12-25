@@ -211,5 +211,7 @@ def check_avion():
 def clear_dict_avion():
     global dict_avion
     global L
+    global nb_emergency
+    nb_emergency = 0
     dict_avion = {}
     L =  []
