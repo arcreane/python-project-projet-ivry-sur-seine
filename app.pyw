@@ -1,7 +1,5 @@
 #___________________________________les_imports________________________________________
-import os
 import sys
-from os.path import abspath
 
 from PySide6.QtWidgets import QMainWindow, QGraphicsTextItem # Mis à jour
 from PySide6.QtGui import QColor, QFont # Mis à jour
@@ -120,7 +118,6 @@ class ATC(QMainWindow, Ui_ATC):       #def de la page paris
         self.btn_accueil.clicked.connect(self.back_home)
         self.btn_sortie.clicked.connect(QApplication.quit)
         self.btn_land.clicked.connect(self.apply_landing)
-        self.btn_aide.clicked.connect(self.open_help)
 
         # --- timer simulation (1 tick = 1 update)
         self.timer = QTimer(self)
@@ -274,10 +271,6 @@ class ATC(QMainWindow, Ui_ATC):       #def de la page paris
                 target_pos,
                 LANDING_THRESHOLD_PIXELS
             )
-
-    def open_help(self):
-        path = abspath('Player_guide.pdf')
-        os.system(path)
 
     def back_home(self):
         clear_dict_avion()

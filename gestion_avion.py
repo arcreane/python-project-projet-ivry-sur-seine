@@ -103,15 +103,17 @@ def gestion_avion():
             dict_avion[key].consigne_change({'landing' : True})
         elif dict_avion[key].sqwk == 7700:
             name = ['ALPHA', 'BRAVO', 'CHARLIE', 'DELTA', 'ECHO', 'FOXTROT']
-            dict =  {}
+            dict_dist =  {}
             for data in dict_data.values():
                 if data['name'] not in name:
                     dict_avion[key].to = [data['pos_x'], data['pos_y'], data['rwy_hdg']]
-                    dict[data['name']] = dict_avion[key].distance_airport()
-            airport = min(dict.values())
-            for key_arpt, value in dict.items():
+                    dict_dist[data['name']] = dict_avion[key].distance_airport()
+            airport = min(dict_dist.values())
+            for key_arpt, value in dict_dist.items():
                 if value == airport:
                     dict_avion[key].aprt_code = key_arpt
+                    dict_cara = dict_data[key_arpt]
+                    dict_avion[key].to = [dict_cara['pos_x'], dict_cara['pos_y'], dict_cara['rwy_hdg']]
             if dict_avion[key].emergency == 'pressure issue':
                 if dict_avion[key].alt > 10000 and dict_avion[key].consigne['alt'] > 10000:
                     dict_avion[key].consigne_change({'alt' : 10000, 'vs' : 6000})

@@ -585,14 +585,14 @@ class Ui_ATC(object):
 
         self.horizontalLayout.addWidget(self.btn_accueil)
 
-        self.btn_parametres = QPushButton(self.frame_boutons)
-        self.btn_parametres.setObjectName(u"btn_parametres")
+        self.btn_aide = QPushButton(self.frame_boutons)
+        self.btn_aide.setObjectName(u"btn_aide")
         icon1 = QIcon()
-        icon1.addFile(u"image/parametres.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
-        self.btn_parametres.setIcon(icon1)
-        self.btn_parametres.setIconSize(QSize(32, 32))
+        icon1.addFile(u"image/livre-ouvert.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
+        self.btn_aide.setIcon(icon1)
+        self.btn_aide.setIconSize(QSize(32, 32))
 
-        self.horizontalLayout.addWidget(self.btn_parametres)
+        self.horizontalLayout.addWidget(self.btn_aide)
 
         self.btn_sortie = QPushButton(self.frame_boutons)
         self.btn_sortie.setObjectName(u"btn_sortie")
@@ -617,14 +617,6 @@ class Ui_ATC(object):
         if not self.label_5.map_pixmap.isNull():
             map_width = self.label_5.map_pixmap.width()
             map_height = self.label_5.map_pixmap.height()
-
-            # Ajoute un deuxième avion un peu décalé avec un cap différent
-            #self.label_5.add_aircraft("BAW456", QPointF(map_width / 3, map_height / 4), 180)
-
-
-
-
-
         self.retranslateUi(ATC)
 
         QMetaObject.connectSlotsByName(ATC)
@@ -669,5 +661,5 @@ class Ui_ATC(object):
         self.unit_heading.setText(QCoreApplication.translate("ATC", u"\u00b0", None))
         self.btn_apply.setText(QCoreApplication.translate("ATC", u"Apply", None))
         self.btn_accueil.setText("")
-        self.btn_parametres.setText("")
+        self.btn_aide.setText("")
         self.btn_sortie.setText("")
