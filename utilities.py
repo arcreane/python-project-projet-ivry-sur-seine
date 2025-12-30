@@ -1,6 +1,7 @@
 from math import sqrt, atan2, degrees
 import json
 
+nb_avion = 0
 FIR = ''
 
 def distance_avion(plane_1, plane_2):
@@ -53,3 +54,11 @@ def change_FIR(FIR_new):
 def get_FIR():
     global FIR
     return FIR
+
+def new_nb_avion(nb):
+    global nb_avion
+    nb_avion = nb - 1
+
+def get_nb_avion():
+    global nb_avion
+    return nb_avion

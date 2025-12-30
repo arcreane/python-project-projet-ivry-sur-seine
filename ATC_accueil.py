@@ -372,7 +372,7 @@ class Ui_ATC_accueil(object):
         self.ATC_marseillelfmm.setText(QCoreApplication.translate("ATC_accueil", u"Marseille LFMM", None))
         self.ATC_bordeauxlfbb.setText(QCoreApplication.translate("ATC_accueil", u"Bordeaux LFBB", None))
         self.txt_titre.setText(QCoreApplication.translate("ATC_accueil", u"ATC SIMULATOR", None))
-        self.txt_intro.setText(QCoreApplication.translate("ATC_accueil", u"Bienvenue dans ATC Simulator. Ce logiciel imite un software typique de la DGAC (Dir\u00e9ction G\u00e9n\u00e9ral de l'Aviation Civile) ou bien des tours de contr\u00f4les d'a\u00e9roports. Pour commencer, s\u00e9lectionnez une zone de la France.", None))
+        self.txt_intro.setText(QCoreApplication.translate("ATC_accueil", u"Bienvenue dans ATC Simulator. Ce logiciel imite un software typique de la DGAC (Dir\u00e9ction G\u00e9n\u00e9ral de l'Aviation Civile) ou bien des tours de contr\u00f4les d'a\u00e9roports.\n\nLe boutons repésentant un livre permet d'ouvrir le manuel d'utilisateur.\n\nPour commencer, s\u00e9lectionnez une zone de la France.", None))
         self.btn_aide.setText("")
         self.btn_parametre.setText("")
         self.btn_sortie.setText("")

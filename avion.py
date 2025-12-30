@@ -108,10 +108,11 @@ class Avion:
     def distance_airport(self):
         airport_infos = self.to
         distance = sqrt((self.pos[0] - airport_infos[0]) ** 2 + (self.pos[1] - airport_infos[1]) ** 2)
-        if distance < 80:
-            self.etat['can_land'] = True
-        else:
-            self.etat['can_land'] = False
+        if self.sqwk != 7700 or self.sqwk != 7600:
+            if distance < 80 and self.alt <= 5000:
+                self.etat['can_land'] = True
+            else:
+                self.etat['can_land'] = False
         return distance
 
     def exit_scope(self):

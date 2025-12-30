@@ -3,16 +3,15 @@ import os
 import sys
 from os.path import abspath
 
-from PySide6.QtWidgets import QMainWindow, QGraphicsTextItem # Mis à jour
 from PySide6.QtGui import QColor, QFont # Mis à jour
-from PySide6.QtWidgets import QApplication
+from PySide6.QtWidgets import QApplication, QInputDialog,QMainWindow, QGraphicsTextItem
 from PySide6.QtCore import QTimer, QPointF
 #__________________________________les_imports_de_fichiers_________________________________________
 from ATC import Ui_ATC
 
 from ATC_accueil import Ui_ATC_accueil  #import de la main window
 from airport_dots import AirportDot  #on importe ce qui permet de dessiner les aeroports
-from utilities import json_data, json_avion, import_json_data, change_FIR, get_FIR
+from utilities import json_data, json_avion, import_json_data, change_FIR, get_FIR, new_nb_avion, get_nb_avion
 from gestion_avion import init_avion, clear_dict_avion
 
 
@@ -48,6 +47,7 @@ class ATC_accueil(QMainWindow, Ui_ATC_accueil):          #def de la page accueil
         self.fenetre_brest = None
         #______________________________btn_sorti
         self.btn_sortie.clicked.connect(QApplication.quit)
+        self.btn_parametre.clicked.connect(self.settings)
 
     def ouvrir_paris(self): #fonction qui ouvre paris
         clear_dict_avion()
@@ -93,6 +93,18 @@ class ATC_accueil(QMainWindow, Ui_ATC_accueil):          #def de la page accueil
         self.fenetre_brest = ATC()
         self.fenetre_brest.showMaximized() #permet douvrir la fenetre en pleine ecran
         self.close()
+
+    def settings(self):
+        valeur, ok = QInputDialog.getText(
+            None,
+            "Paramètre",
+            f"Nombre d'avion en jeu ?\nnombre d'avion actuel : {get_nb_avion()}\nEntrez une valeur entre 1 et 20:",
+        )
+
+        if ok and valeur:
+            if int(valeur) >= 1 and int(valeur) <= 20:
+                new_nb_avion(int(valeur))
+
 
 class ATC(QMainWindow, Ui_ATC):       #def de la page paris
     def __init__(self):
@@ -223,7 +235,7 @@ class ATC(QMainWindow, Ui_ATC):       #def de la page paris
         avion = self.aircrafts[self.selected_callsign]
 
         # Vérification optionnelle : autorisation d'atterrir
-        if not avion.etat.get("can_land", False):
+        if not avion.etat.get("can_land", False) and avion.sqwk != 7700:
             self.statusBar().showMessage(
                 f"{avion.callsign} n'est pas en zone d'approche", 3000
             )
@@ -276,7 +288,7 @@ class ATC(QMainWindow, Ui_ATC):       #def de la page paris
             )
 
     def open_help(self):
-        path = abspath('Player_guide.pdf')
+        path = abspath('User_guide.pdf')
         os.system(path)
 
     def back_home(self):
@@ -289,6 +301,7 @@ class ATC(QMainWindow, Ui_ATC):       #def de la page paris
 
 
 if __name__ == "__main__":   # lance par defaut la fenetre accueil
+    new_nb_avion(5)
     app = QApplication(sys.argv)
     window = ATC_accueil()
     window.showMaximized()

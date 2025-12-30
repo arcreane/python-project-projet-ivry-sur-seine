@@ -95,11 +95,7 @@ class AircraftItem(QGraphicsRectItem):
     def create_tooltip_text(self):
         #Construit le texte du ToolTip à partir des données de l'avion
         return (
-            f"Vol : {self.callsign}\n"
-            f"Cap : {self.data.heading}°\n"
-            f"Alt : {self.data.alt} ft\n"
-            f"Vitesse : {self.data.speed} kts\n"
-            f"Vers : {self.data.aprt_code}"
+            f"Vol : {self.callsign}"
         )
 
     def hoverEnterEvent(self, event):
@@ -203,10 +199,6 @@ class AircraftMapWidget(QGraphicsView):
         # construction du txt
         info_text = (
             f"**Vol : {callsign}**<hr>"
-            f"Cap : {data['heading']:.0f}°<br>"
-            f"Pos X : {data['position'].x():.1f}<br>"
-            f"Pos Y : {data['position'].y():.1f}"
-            f"To : {data.aprt_code:.f}<br>"
         )
 
         #affiche la bulle d'aide à la position globale du curseur

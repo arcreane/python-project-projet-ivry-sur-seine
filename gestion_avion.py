@@ -1,20 +1,26 @@
 from avion import Avion
 from random import randint
-from utilities import distance_avion, import_json_avion, import_json_data
+from utilities import distance_avion, import_json_avion, import_json_data, get_nb_avion
 from math import sqrt, degrees, atan2
 
 dict_data = {}
 L = []
 dict_avion = {}
 nb_emergency = 0
+max_emergency = 0
 
 # creation du dico contenant les objets avion
 def init_avion():
     global L
     global dict_data
     global dict_avion
+    global max_emergency
+    if (int(get_nb_avion()) / 2) >= 4:
+        max_emergency = 4
+    else:
+        max_emergency = round(int(get_nb_avion()) / 2)
     dict_data = import_json_data()
-    while len(dict_avion.keys()) <= 5:
+    while len(dict_avion.keys()) <= int(get_nb_avion()):
             n = randint(0, 19)
             while n in L:
                 n = randint(0, 19)
@@ -54,9 +60,10 @@ def gestion_avion():
     global dict_avion
     global L
     global nb_emergency
+    global max_emergency
     dict_avion = init_avion()
     for key in dict_avion.keys():
-        if dict_avion[key].sqwk != 7600 and dict_avion[key].sqwk != 7700 and nb_emergency <= 3:
+        if dict_avion[key].sqwk != 7600 and dict_avion[key].sqwk != 7700 and nb_emergency <= max_emergency:
             pb = randint(0, 500)
             if pb == 25:
                 dict_avion[key].sqwk = 7600
@@ -99,9 +106,10 @@ def gestion_avion():
             dict_avion[key].etat['land ?'] = True
             continue
         if dict_avion[key].sqwk == 7600:
-            dict_avion[key].etat['can land'] = True
+            dict_avion[key].etat['can_land'] = True
             dict_avion[key].consigne_change({'landing' : True})
         elif dict_avion[key].sqwk == 7700:
+            dict_avion[key].etat['can_land'] = True
             name = ['ALPHA', 'BRAVO', 'CHARLIE', 'DELTA', 'ECHO', 'FOXTROT']
             dict_dist =  {}
             for data in dict_data.values():
@@ -131,7 +139,7 @@ def gestion_avion():
                 distance, delta_altitude = distance_avion(dict_avion[key], dict_avion[key__])
                 if distance < 50 and delta_altitude <= 1000:
                     etat = True
-                elif distance <= 10 and delta_altitude <= 100:
+                if distance <= 10 and delta_altitude <= 100:
                     etat = True
                     dict_avion[key].etat['land ?'] = True
                     dict_avion[key__].etat['land ?'] = True
@@ -140,13 +148,13 @@ def gestion_avion():
             landing(dict_avion[key])
         else:
             dict_avion[key].exit_scope()
+            dict_avion[key].distance_airport()
         try:
             dict_avion[key].heading_change()
             dict_avion[key].speed_change()
             dict_avion[key].vs_change()
             dict_avion[key].horizontal_move()
             dict_avion[key].vertical_move()
-            dict_avion[key].distance_airport()
         except KeyError:
             continue
     return dict_avion
